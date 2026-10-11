@@ -25,7 +25,7 @@ const COVERED: Record<string, string> = {
   "Azir Rammus": "azir-rammus-reroll",
   "Caitlyn Hunters": "caitlyn-reroll",
   "Defender Cassio": "defender-cassiopeia",
-  "Draven AD 9": "draven-fast-9",
+  "Draven Ezreal 9": "draven-fast-9",
   "Malphite AP Flex": "flora-malphite",
   "Ahri Morgana": "invoker-morgana-ahri",
   "Lunarwood Kha'zix": "khazix-reroll",

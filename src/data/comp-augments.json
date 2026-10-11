@@ -1,6 +1,6 @@
 {
   "patch": "18.4b",
-  "checkedAt": "2026-10-08",
+  "checkedAt": "2026-10-11",
   "sources": [
     "https://tftacademy.com/tierlist/comps",
     "https://seemeta.com/en/tft/set-18/augments",
@@ -135,7 +135,7 @@
       {"augment": "DA_CarveAPath", "strength": "good"},
       {"augment": "DA_BoxingLessons", "strength": "good"}
     ],
-    "6-juggernaut-flex": [
+    "zyra-juggernaut": [
       {"augment": "DA_BlackthornTraitAugment", "strength": "good"},
       {"augment": "DA_18_BigGrabBag", "strength": "good"},
       {"augment": "DA_CyberneticUplink_Gold", "strength": "good"},
@@ -157,15 +157,33 @@
       {"augment": "DA_OneBuffTwoBuff", "strength": "good"},
       {"augment": "DA_EpicRolldown", "strength": "good"}
     ],
-    "dragon-9": [
+    "10-riftbeast": [
+      {"augment": "DA_18_RiftbeastTraitAugment", "strength": "strong", "note": "Omega Riftbeast gives a second Alpha Riftbeast to the ten-Riftbeast board."},
+      {"augment": "DA_Coronation", "strength": "good"},
+      {"augment": "DA_LevelUp", "strength": "good"},
+      {"augment": "DA_LateGameSpecialist", "strength": "good"},
+      {"augment": "DA_Swordsmith", "strength": "good"},
+      {"augment": "DA_ExplosiveGrowthPlus", "strength": "good"}
+    ],
+    "ap-fast-9": [
       {"augment": "DA_BirthdayReunion", "strength": "good"},
       {"augment": "DA_BirthdayPresent", "strength": "good"},
+      {"augment": "DA_UpwardMobility", "strength": "good"},
       {"augment": "DA_LevelUp", "strength": "good"},
       {"augment": "DA_LuxurySubscription", "strength": "good"},
-      {"augment": "DA_18_DuoQueue", "strength": "good"},
       {"augment": "DA_LateGameSpecialist", "strength": "good"},
       {"augment": "DA_LateGameScaling", "strength": "good"},
-      {"augment": "DA_Swordsmith", "strength": "good"}
+      {"augment": "DA_ExplosiveGrowthPlus", "strength": "good"}
+    ],
+    "bronze-for-life-ahri": [
+      {"augment": "DA_BronzeForLifeII", "strength": "core", "note": "The comp is built to stack Bronze-tier traits, each adding 2.5% Damage Amp and 4 Armor and Magic Resist to the team."},
+      {"augment": "DA_BronzeForLifeI", "strength": "core", "note": "The comp is built to stack Bronze-tier traits, each adding 2.5% Damage Amp to the team."},
+      {"augment": "DA_JeweledLotus_I", "strength": "good"},
+      {"augment": "DA_JeweledLotus_II", "strength": "good"},
+      {"augment": "DA_GlassCannon_Silver", "strength": "good"},
+      {"augment": "DA_18_FOURcing", "strength": "good"},
+      {"augment": "DA_Staffsmith", "strength": "good"},
+      {"augment": "DA_CyberneticUplink_Gold", "strength": "good"}
     ],
     "moo-nara": [
       {"augment": "DA_WorththeWaitII", "strength": "good"},

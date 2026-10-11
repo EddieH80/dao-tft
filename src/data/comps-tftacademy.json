@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.4b",
-  "fetchedAt": "2026-10-08",
+  "fetchedAt": "2026-10-11",
   "comps": [
     {
       "slug": "aphelios-nidalee",
@@ -11,7 +11,7 @@
       "summary": "A 4-Cost Fast 8 comp carried by Aphelios and Nidalee, with Sentinel tanking.",
       "playWhen": [
         "You can reach level 8 on time with enough gold to roll for Aphelios",
-        "You have components for Red Buff"
+        "You have components for Infinity Edge"
       ],
       "carries": [
         "DA_18_Aphelios",
@@ -35,24 +35,19 @@
       ],
       "targetItems": [
         {
-          "item": "DA_RedBuff",
-          "unit": "DA_18_Aphelios",
-          "weight": 3
-        },
-        {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_Aphelios",
-          "weight": 3
-        },
-        {
-          "item": "DA_GiantSlayer",
-          "unit": "DA_18_Aphelios",
-          "weight": 3
-        },
-        {
           "item": "DA_InfinityEdge",
-          "unit": "DA_Nidalee18_AP",
-          "weight": 2
+          "unit": "DA_18_Aphelios",
+          "weight": 3
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Aphelios",
+          "weight": 3
+        },
+        {
+          "item": "DA_KrakensFury",
+          "unit": "DA_18_Aphelios",
+          "weight": 3
         },
         {
           "item": "DA_SpearOfShojin",
@@ -61,6 +56,11 @@
         },
         {
           "item": "DA_SteraksGage",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 2
+        },
+        {
+          "item": "DA_InfinityEdge",
           "unit": "DA_Nidalee18_AP",
           "weight": 2
         },
@@ -75,21 +75,6 @@
           "weight": 2
         },
         {
-          "item": "DA_GuinsoosRageblade",
-          "unit": "DA_18_Aphelios",
-          "weight": 1
-        },
-        {
-          "item": "DA_InfinityEdge",
-          "unit": "DA_18_Aphelios",
-          "weight": 1
-        },
-        {
-          "item": "DA_KrakensFury",
-          "unit": "DA_18_Aphelios",
-          "weight": 1
-        },
-        {
           "item": "DA_BlueBuff",
           "unit": "DA_Nidalee18_AP",
           "weight": 1
@@ -97,9 +82,9 @@
       ],
       "opener": {
         "units": [
-          "DA_18_Ornn",
-          "DA_18_Varus",
-          "DA_18_Xayah",
+          "DA_18_Akali_AD",
+          "DA_18_Camille",
+          "DA_18_Leona",
           "DA_18_Shen"
         ],
         "note": "Open with a strong win streak AD tempo around Rapidfires."
@@ -122,8 +107,264 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
+          "item": "DA_Artifact_GoldCollector",
+          "unit": "DA_18_Aphelios"
+        },
+        {
           "item": "DA_Artifact_SilvermereDawn",
           "unit": "DA_Nidalee18_AP"
+        }
+      ]
+    },
+    {
+      "slug": "zyra-juggernaut",
+      "name": "Zyra Juggernaut",
+      "tier": "B",
+      "style": "fast-8",
+      "summary": "A 4-Cost Fast 8 comp carried by Zyra and Nidalee, with Amumu tanking.",
+      "playWhen": [
+        "You can reach level 8 on time with enough gold to roll for Zyra",
+        "You have components for Spear of Shojin"
+      ],
+      "carries": [
+        "DA_18_Zyra",
+        "DA_Nidalee18_AP"
+      ],
+      "frontline": [
+        "DA_18_Rakan",
+        "DA_18_Yorick",
+        "DA_Scuttlecrab18",
+        "DA_Vi18",
+        "DA_Amumu18",
+        "DA_18_Maokai"
+      ],
+      "endBoard": [
+        "DA_18_Rakan",
+        "DA_18_Yorick",
+        "DA_Scuttlecrab18",
+        "DA_Vi18",
+        "DA_Amumu18",
+        "DA_Nidalee18_AP",
+        "DA_18_Zyra",
+        "DA_18_Maokai",
+        "DA_18_Ivern"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Zyra",
+          "weight": 3
+        },
+        {
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_18_Zyra",
+          "weight": 3
+        },
+        {
+          "item": "DA_HextechGunblade",
+          "unit": "DA_18_Zyra",
+          "weight": 3
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_BrambleVest",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_DragonsClaw",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 2
+        },
+        {
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 2
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ivern",
+          "weight": 2
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Ivern",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Rakan",
+          "DA_18_Yorick",
+          "DA_Karma18",
+          "DA_18_Yunara"
+        ],
+        "note": "Open with a strong AP opener, preferably around Blossom."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with a strong AP opener, preferably around Blossom. Slam generic AP items and Tank items for a win streak."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Ideally start holding more juggernauts to pair with the Yorick blossom opener, consider moving karma items to LB or Cassio 2."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level and roll for 6 Juggernauts + Zyra and a duo-carry. You can push 9 when you hit Zyra 2. Tank Vi 2 over Amumu 1. End game move items to Maokai."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_Item_Artifact_TalismanOfAscension",
+          "unit": "DA_18_Zyra"
+        }
+      ]
+    },
+    {
+      "slug": "elderwood-executioners",
+      "name": "Elderwood Executioners",
+      "tier": "B",
+      "style": "fast-8",
+      "summary": "A 4-Cost Fast 8 comp carried by Ezreal and Soraka, with Hecarim tanking.",
+      "playWhen": [
+        "You can reach level 8 on time with enough gold to roll for Ezreal",
+        "You have components for Spear of Shojin"
+      ],
+      "carries": [
+        "DA_18_Ezreal",
+        "DA_18_Soraka"
+      ],
+      "frontline": [
+        "DA_18_Ornn",
+        "DA_Fiddlesticks18",
+        "DA_18_Hecarim",
+        "DA_18_Kennen",
+        "DA_Taric18",
+        "DA_18_GnarSmall"
+      ],
+      "endBoard": [
+        "DA_18_Ornn",
+        "DA_Fiddlesticks18",
+        "DA_18_Hecarim",
+        "DA_18_Ezreal",
+        "DA_18_Soraka",
+        "DA_18_Kennen",
+        "DA_Taric18",
+        "DA_18_GnarSmall",
+        "DA_Lux18_Base"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_Deathblade",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_DragonsClaw",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_BrambleVest",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_SunfireCape",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemElderwood",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_ThiefsGloves",
+          "unit": "DA_18_GnarSmall",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_Lux18_Base",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Ornn",
+          "DA_18_Xayah",
+          "DA_18_Shen",
+          "DA_18_LeBlanc"
+        ],
+        "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah. LeBlanc can farm copies of units on your board so avoid fielding unwanted units."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Add more Elderwood as you level with Spellweavers. If you start getting AD items, play them on Xayah / Rapidfires."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level to 8 and look for Ezreal and Soraka with 7 Elderwood. Try not to roll to 0g because we need gold to get to level 9."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemElderwood",
+          "unit": "DA_18_Soraka"
+        },
+        {
+          "item": "DA_Artifact_Dawncore",
+          "unit": "DA_18_Ezreal"
+        },
+        {
+          "item": "DA_Artifact_GoldCollector",
+          "unit": "DA_18_Ezreal"
         }
       ]
     },
@@ -254,368 +495,6 @@
       ]
     },
     {
-      "slug": "invoker-morgana",
-      "name": "Invoker Morgana",
-      "tier": "B",
-      "style": "lose-streak",
-      "summary": "A Lose Streak comp carried by Morgana and Brambleback, with Sentinel tanking.",
-      "playWhen": [
-        "Your board and items point toward Morgana",
-        "You have components for Morellonomicon"
-      ],
-      "carries": [
-        "DA_18_Morgana",
-        "DA_Brambleback18"
-      ],
-      "frontline": [
-        "DA_18_Diana",
-        "DA_18_Hecarim",
-        "DA_Sentinel18",
-        "DA_Taric18"
-      ],
-      "endBoard": [
-        "DA_18_Sentry",
-        "DA_18_Diana",
-        "DA_18_Hecarim",
-        "DA_KogMaw18_AD",
-        "DA_Brambleback18",
-        "DA_18_Morgana",
-        "DA_Sentinel18",
-        "DA_Taric18",
-        "DA_18_Alune"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_Morellonomicon",
-          "unit": "DA_18_Morgana",
-          "weight": 3
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Morgana",
-          "weight": 3
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_18_Morgana",
-          "weight": 3
-        },
-        {
-          "item": "DA_EdgeOfNight",
-          "unit": "DA_Brambleback18",
-          "weight": 2
-        },
-        {
-          "item": "DA_GiantSlayer",
-          "unit": "DA_Brambleback18",
-          "weight": 2
-        },
-        {
-          "item": "DA_Quicksilver",
-          "unit": "DA_Brambleback18",
-          "weight": 2
-        },
-        {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_AdaptiveHelm",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_18_EmblemInvoker",
-          "unit": "DA_18_Alune",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Kobuko",
-          "DA_18_Sentry",
-          "DA_18_Teemo",
-          "DA_18_Rammus"
-        ],
-        "note": "Open with a strong AP opener, preferably around Invokers."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with a strong AP opener, preferably around Invokers. Teemo is an example shown but you can also play Pebbles, Spellweavers, or Coven."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "If lose streaking with Coven, try to kill some units each fight to preserve HP. If win streaking, push standard winstreak tempo (6 @ 3-2, 7 @ 3-5) and save econ."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Cash out / roll down on level 8 for Morgana 2, Sentinel, and 4 Invoker. If you don't have Bramble items, flex in another AP carry like Ahri / Nidalee."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemInvoker",
-          "unit": "DA_18_Alune"
-        },
-        {
-          "item": "DA_Artifact_BlightingJewel",
-          "unit": "DA_18_Morgana"
-        }
-      ]
-    },
-    {
-      "slug": "6-juggernaut-flex",
-      "name": "6 Juggernaut Flex",
-      "tier": "B",
-      "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Amumu, Sivir and Zyra.",
-      "playWhen": [
-        "You can reach level 8 on time with enough gold to roll for Amumu",
-        "You have components for Warmog's Armor"
-      ],
-      "carries": [
-        "DA_Amumu18",
-        "DA_18_Sivir",
-        "DA_18_Zyra"
-      ],
-      "frontline": [
-        "DA_18_Yorick",
-        "DA_Scuttlecrab18",
-        "DA_Vi18",
-        "DA_18_Maokai",
-        "DA_18_Kennen"
-      ],
-      "endBoard": [
-        "DA_18_Yorick",
-        "DA_Scuttlecrab18",
-        "DA_Vi18",
-        "DA_Amumu18",
-        "DA_18_Sivir",
-        "DA_18_Zyra",
-        "DA_18_Ashe",
-        "DA_18_Maokai",
-        "DA_18_Kennen"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_Amumu18",
-          "weight": 3
-        },
-        {
-          "item": "DA_BrambleVest",
-          "unit": "DA_Amumu18",
-          "weight": 3
-        },
-        {
-          "item": "DA_DragonsClaw",
-          "unit": "DA_Amumu18",
-          "weight": 3
-        },
-        {
-          "item": "DA_RedBuff",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_GiantSlayer",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_InfinityEdge",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Zyra",
-          "weight": 2
-        },
-        {
-          "item": "DA_ArchangelsStaff",
-          "unit": "DA_18_Zyra",
-          "weight": 2
-        },
-        {
-          "item": "DA_HextechGunblade",
-          "unit": "DA_18_Zyra",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Rakan",
-          "DA_18_Yorick",
-          "DA_Karma18",
-          "DA_18_Yunara"
-        ],
-        "note": "Open with a strong AP opener, preferably around Blossom."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with a strong AP opener, preferably around Blossom. Slam generic AP items and Tank items for a win streak."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Ideally start holding more juggernauts to pair with the Yorick blossom opener, consider moving karma items to LB or Cassio 2."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Level and roll for 6 juggernauts +Zyra and a duo-carry. You can push 9 when you hit zyra 2. Tank Vi 2 over Amumu 1. End game move items to Maokai."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemJuggernaut",
-          "unit": "DA_18_Kennen"
-        }
-      ]
-    },
-    {
-      "slug": "dragon-9",
-      "name": "Dragon 9",
-      "tier": "B",
-      "style": "fast-9",
-      "summary": "A Fast 9 comp carried by Elder Dragon and Ivern, with Morgana tanking.",
-      "playWhen": [
-        "You have the economy to reach level 9 and find Elder Dragon",
-        "You have components for Infinity Edge"
-      ],
-      "carries": [
-        "DA_18_ElderDragon",
-        "DA_18_Ivern"
-      ],
-      "frontline": [
-        "DA_Amumu18",
-        "DA_Sentinel18",
-        "DA_18_Morgana",
-        "DA_Taric18",
-        "DA_18_Kennen",
-        "DA_18_Maokai"
-      ],
-      "endBoard": [
-        "DA_Amumu18",
-        "DA_Sentinel18",
-        "DA_18_Morgana",
-        "DA_Taric18",
-        "DA_18_Kennen",
-        "DA_18_ElderDragon",
-        "DA_18_Ivern",
-        "DA_18_Maokai"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_InfinityEdge",
-          "unit": "DA_18_ElderDragon",
-          "weight": 3
-        },
-        {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_ElderDragon",
-          "weight": 3
-        },
-        {
-          "item": "DA_StrikersFlail",
-          "unit": "DA_18_ElderDragon",
-          "weight": 3
-        },
-        {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_JeweledGauntlet",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_ThiefsGloves",
-          "unit": "DA_18_Kennen",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ivern",
-          "weight": 2
-        },
-        {
-          "item": "DA_AdaptiveHelm",
-          "unit": "DA_18_Ivern",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Maokai",
-          "weight": 2
-        },
-        {
-          "item": "DA_Crownguard",
-          "unit": "DA_18_Maokai",
-          "weight": 2
-        },
-        {
-          "item": "DA_Evenshroud",
-          "unit": "DA_18_Maokai",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_Cinderling18",
-          "DA_18_Sentry",
-          "DA_18_Yorick",
-          "DA_Scuttlecrab18"
-        ],
-        "note": "Slam items aggressively and play for full win streak with Riftbeast items."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Slam items aggressively and play for full win streak with Riftbeast items. Ideal opener will be Riftbeasts featuring Cinderling / Gromp / Mama Beak carry."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Continue prioritize win streaking. If you have an econ augment, you can go Fast 7 (before 3-3) to maintain win streak if needed."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "You can start losing rounds while focusing on econ. Fast 9 by the beginning of Stage 5 and look for your 5 costs. You want around 70g+ minimum for the rolldown."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_Artifact_GoldCollector",
-          "unit": "DA_18_ElderDragon"
-        }
-      ]
-    },
-    {
       "slug": "yi-rengar",
       "name": "Yi Rengar",
       "tier": "B",
@@ -656,7 +535,7 @@
           "weight": 3
         },
         {
-          "item": "DA_KrakensFury",
+          "item": "DA_GuinsoosRageblade",
           "unit": "DA_18_MasterYi_AD",
           "weight": 3
         },
@@ -711,7 +590,7 @@
           "weight": 1
         },
         {
-          "item": "DA_GuinsoosRageblade",
+          "item": "DA_Quicksilver",
           "unit": "DA_18_MasterYi_AD",
           "weight": 1
         }
@@ -747,6 +626,10 @@
           "unit": "DA_18_MasterYi_AD"
         },
         {
+          "item": "DA_Artifact_HellfireHatchet",
+          "unit": "DA_18_MasterYi_AD"
+        },
+        {
           "item": "DA_Artifact_WitsEnd",
           "unit": "DA_18_MasterYi_AD"
         },
@@ -761,67 +644,67 @@
       ]
     },
     {
-      "slug": "elderwood-executioners",
-      "name": "Elderwood Executioners",
+      "slug": "ap-fast-9",
+      "name": "AP Fast 9",
       "tier": "B",
-      "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Ezreal and Soraka, with Hecarim tanking.",
+      "style": "fast-9",
+      "summary": "A Fast 9 comp carried by Alune and Lux, with Sentinel tanking.",
       "playWhen": [
-        "You can reach level 8 on time with enough gold to roll for Ezreal",
-        "You have components for Spear of Shojin"
+        "You have the economy to reach level 9 and find Alune",
+        "You have components for Blue Buff"
       ],
       "carries": [
-        "DA_18_Ezreal",
-        "DA_18_Soraka"
+        "DA_18_Alune",
+        "DA_Lux18_Base"
       ],
       "frontline": [
-        "DA_18_Ornn",
+        "DA_18_Rakan",
+        "DA_18_Diana",
         "DA_Fiddlesticks18",
-        "DA_18_Hecarim",
-        "DA_18_GnarSmall",
-        "DA_18_Kennen",
+        "DA_18_Lillia",
+        "DA_Sentinel18",
         "DA_Taric18"
       ],
       "endBoard": [
-        "DA_18_Ornn",
-        "DA_18_Ezreal",
-        "DA_18_Soraka",
-        "DA_Lux18_Base",
+        "DA_18_Rakan",
+        "DA_18_Diana",
         "DA_Fiddlesticks18",
-        "DA_18_Hecarim",
-        "DA_18_GnarSmall",
-        "DA_18_Kennen",
-        "DA_Taric18"
+        "DA_18_Lillia",
+        "DA_Sentinel18",
+        "DA_Taric18",
+        "DA_18_Alune",
+        "DA_Lux18_Base",
+        "DA_18_Ivern"
       ],
       "targetItems": [
         {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ezreal",
+          "item": "DA_BlueBuff",
+          "unit": "DA_18_Alune",
           "weight": 3
         },
         {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Ezreal",
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_18_Alune",
           "weight": 3
         },
         {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_Ezreal",
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Alune",
           "weight": 3
         },
         {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Soraka",
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Sentinel18",
           "weight": 2
         },
         {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Soraka",
+          "item": "DA_Crownguard",
+          "unit": "DA_Sentinel18",
           "weight": 2
         },
         {
-          "item": "DA_18_EmblemElderwood",
-          "unit": "DA_18_Soraka",
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_Sentinel18",
           "weight": 2
         },
         {
@@ -830,133 +713,23 @@
           "weight": 2
         },
         {
-          "item": "DA_DragonsClaw",
-          "unit": "DA_18_Hecarim",
+          "item": "DA_VoidStaff",
+          "unit": "DA_Lux18_Base",
           "weight": 2
         },
         {
-          "item": "DA_BrambleVest",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_SunfireCape",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_ThiefsGloves",
-          "unit": "DA_18_GnarSmall",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Ornn",
-          "DA_18_Xayah",
-          "DA_18_Shen",
-          "DA_18_LeBlanc"
-        ],
-        "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah. LeBlanc can farm copies of units on your board so avoid fielding unwanted units."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Add more Elderwood as you level with Spellweavers. If you start getting AD items, play them on Xayah / Rapidfires."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Level to 8 and look for Ezreal and Soraka with 7 Elderwood. Try not to roll to 0g because we need gold to get to level 9."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemElderwood",
-          "unit": "DA_18_Soraka"
-        }
-      ]
-    },
-    {
-      "slug": "ashe-juggernauts",
-      "name": "Ashe Juggernauts",
-      "tier": "C",
-      "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Ashe and Sivir, with Amumu tanking.",
-      "playWhen": [
-        "You can reach level 8 on time with enough gold to roll for Ashe",
-        "You have components for Spear of Shojin"
-      ],
-      "carries": [
-        "DA_18_Ashe",
-        "DA_18_Sivir"
-      ],
-      "frontline": [
-        "DA_18_Rakan",
-        "DA_Vi18",
-        "DA_Amumu18",
-        "DA_18_Maokai",
-        "DA_Taric18"
-      ],
-      "endBoard": [
-        "DA_18_Rakan",
-        "DA_Vi18",
-        "DA_Amumu18",
-        "DA_18_Sivir",
-        "DA_18_Ivern",
-        "DA_18_Maokai",
-        "DA_Taric18",
-        "DA_18_Ashe"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ashe",
-          "weight": 3
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Ashe",
-          "weight": 3
-        },
-        {
-          "item": "DA_RedBuff",
-          "unit": "DA_18_Ashe",
-          "weight": 3
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_Amumu18",
-          "weight": 2
-        },
-        {
-          "item": "DA_BrambleVest",
-          "unit": "DA_Amumu18",
-          "weight": 2
-        },
-        {
-          "item": "DA_DragonsClaw",
-          "unit": "DA_Amumu18",
-          "weight": 2
-        },
-        {
-          "item": "DA_InfinityEdge",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_StrikersFlail",
-          "unit": "DA_18_Sivir",
+          "item": "DA_Morellonomicon",
+          "unit": "DA_Lux18_Base",
           "weight": 2
         },
         {
           "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Sivir",
+          "unit": "DA_18_Ivern",
+          "weight": 2
+        },
+        {
+          "item": "DA_AdaptiveHelm",
+          "unit": "DA_18_Ivern",
           "weight": 2
         }
       ],
@@ -967,30 +740,25 @@
           "DA_18_Yorick",
           "DA_18_Yunara"
         ],
-        "note": "Open with a strong AD opener, preferably around Yunara."
+        "note": "Slam items aggressively and play for full win streak with AP items."
       },
       "slams": [],
       "stages": [
         {
           "stage": "Stage 2",
-          "tip": "Open with a strong AD opener, preferably around Yunara. Slam generic AD items and Tank items for a win streak."
+          "tip": "Slam items aggressively and play for full win streak with AP items. Ideal opener will be Blossom featuring Karma / Spellweavers."
         },
         {
           "stage": "Stage 3",
-          "tip": "Level up for more juggernauts and executioners to pair with our blossom opener."
+          "tip": "Continue prioritize win streaking. If you have an econ augment, you can go Fast 7 (before 3-3) to maintain win streak if needed."
         },
         {
           "stage": "Stage 4",
-          "tip": "Level and roll for 6 juggernauts +Sivir. Once stable, go 9 and look for Ashe and transition your board to 5 costs."
+          "tip": "You can start losing rounds while focusing on econ. Fast 9 by the beginning of Stage 5 and look for your 5 costs. You want around 70g+ minimum for the rolldown."
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemJuggernaut",
-          "unit": "DA_18_Kennen"
-        }
-      ]
+      "keyItems": []
     },
     {
       "slug": "solar-melee",
@@ -1108,20 +876,369 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
-          "item": "DA_Artifact_Fishbones",
+          "item": "DA_Artifact_SilvermereDawn",
           "unit": "DA_18_Camille"
         },
         {
-          "item": "DA_Artifact_LichBane",
-          "unit": "DA_18_Akali_AD"
+          "item": "DA_Artifact_Mittens",
+          "unit": "DA_18_Camille"
         },
         {
-          "item": "DA_Artifact_Dawncore",
+          "item": "DA_Artifact_InfinityForce",
+          "unit": "DA_18_Camille"
+        },
+        {
+          "item": "DA_Artifact_Fishbones",
           "unit": "DA_18_Akali_AD"
         },
         {
           "item": "DA_Artifact_RapidFireCannon",
           "unit": "DA_18_Akali_AD"
+        },
+        {
+          "item": "DA_Artifact_LudensTempest",
+          "unit": "DA_18_Akali_AD"
+        }
+      ]
+    },
+    {
+      "slug": "10-riftbeast",
+      "name": "10 Riftbeast",
+      "tier": "B",
+      "style": "fast-9",
+      "summary": "A Fast 9 comp carried by Elder Dragon, with Brambleback tanking.",
+      "playWhen": [
+        "You have the economy to reach level 9 and find Elder Dragon",
+        "You have components for Infinity Edge"
+      ],
+      "carries": [
+        "DA_18_ElderDragon"
+      ],
+      "frontline": [
+        "DA_Scuttlecrab18",
+        "DA_Krug18",
+        "DA_Brambleback18",
+        "DA_Sentinel18",
+        "DA_Taric18"
+      ],
+      "endBoard": [
+        "DA_18_Sentry",
+        "DA_Gromp18_AP",
+        "DA_Murkwolf18",
+        "DA_Scuttlecrab18",
+        "DA_Krug18",
+        "DA_CrimsonRaptor18",
+        "DA_Brambleback18",
+        "DA_Sentinel18",
+        "DA_Taric18",
+        "DA_18_GnarSmall",
+        "DA_18_ElderDragon"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_InfinityEdge",
+          "unit": "DA_18_ElderDragon",
+          "weight": 3
+        },
+        {
+          "item": "DA_StrikersFlail",
+          "unit": "DA_18_ElderDragon",
+          "weight": 3
+        },
+        {
+          "item": "DA_Deathblade",
+          "unit": "DA_18_ElderDragon",
+          "weight": 3
+        },
+        {
+          "item": "DA_EdgeOfNight",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_Quicksilver",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_GiantSlayer",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_Crownguard",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_ThiefsGloves",
+          "unit": "DA_18_GnarSmall",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_Cinderling18",
+          "DA_18_Sentry",
+          "DA_Scuttlecrab18",
+          "DA_18_Yorick"
+        ],
+        "note": "Slam items aggressively and play for full win streak with Riftbeast items."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Slam items aggressively and play for full win streak with Riftbeast items. Ideal opener will be Riftbeasts featuring Cinderling / Gromp / Mama Beak carry."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Continue prioritize win streaking. If you have an econ augment, you can go Fast 7 (before 3-3) to maintain win streak if needed."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "You can start losing rounds while focusing on econ. Fast 9 by the beginning of Stage 5 and look for your 5 costs. You want around 70g+ minimum for the rolldown."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": []
+    },
+    {
+      "slug": "invoker-morgana",
+      "name": "Invoker Morgana",
+      "tier": "C",
+      "style": "lose-streak",
+      "summary": "A Lose Streak comp carried by Morgana and Brambleback, with Sentinel tanking.",
+      "playWhen": [
+        "Your board and items point toward Morgana",
+        "You have components for Morellonomicon"
+      ],
+      "carries": [
+        "DA_18_Morgana",
+        "DA_Brambleback18"
+      ],
+      "frontline": [
+        "DA_18_Diana",
+        "DA_18_Hecarim",
+        "DA_Sentinel18",
+        "DA_Taric18"
+      ],
+      "endBoard": [
+        "DA_18_Sentry",
+        "DA_18_Diana",
+        "DA_18_Hecarim",
+        "DA_KogMaw18_AD",
+        "DA_Brambleback18",
+        "DA_18_Morgana",
+        "DA_Sentinel18",
+        "DA_Taric18",
+        "DA_18_Alune"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_Morgana",
+          "weight": 3
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_18_Morgana",
+          "weight": 3
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_Morgana",
+          "weight": 3
+        },
+        {
+          "item": "DA_EdgeOfNight",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_GiantSlayer",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_Quicksilver",
+          "unit": "DA_Brambleback18",
+          "weight": 2
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_AdaptiveHelm",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemInvoker",
+          "unit": "DA_18_Alune",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Kobuko",
+          "DA_18_Sentry",
+          "DA_18_Teemo",
+          "DA_18_Rammus"
+        ],
+        "note": "Open with a strong AP opener, preferably around Invokers."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with a strong AP opener, preferably around Invokers. Teemo is an example shown but you can also play Pebbles, Spellweavers, or Coven."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "If lose streaking with Coven, try to kill some units each fight to preserve HP. If win streaking, push standard winstreak tempo (6 @ 3-2, 7 @ 3-5) and save econ."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Cash out / roll down on level 8 for Morgana 2, Sentinel, and 4 Invoker. If you don't have Bramble items, flex in another AP carry like Ahri / Nidalee."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemInvoker",
+          "unit": "DA_18_Alune"
+        },
+        {
+          "item": "DA_Artifact_BlightingJewel",
+          "unit": "DA_18_Morgana"
+        }
+      ]
+    },
+    {
+      "slug": "ashe-juggernauts",
+      "name": "Ashe Juggernauts",
+      "tier": "C",
+      "style": "fast-8",
+      "summary": "A 4-Cost Fast 8 comp carried by Ashe and Sivir, with Amumu tanking.",
+      "playWhen": [
+        "You can reach level 8 on time with enough gold to roll for Ashe",
+        "You have components for Spear of Shojin"
+      ],
+      "carries": [
+        "DA_18_Ashe",
+        "DA_18_Sivir"
+      ],
+      "frontline": [
+        "DA_18_Rakan",
+        "DA_Vi18",
+        "DA_Amumu18",
+        "DA_18_Maokai",
+        "DA_Taric18"
+      ],
+      "endBoard": [
+        "DA_18_Rakan",
+        "DA_Vi18",
+        "DA_Amumu18",
+        "DA_18_Sivir",
+        "DA_18_Ivern",
+        "DA_18_Maokai",
+        "DA_Taric18",
+        "DA_18_Ashe"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ashe",
+          "weight": 3
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Ashe",
+          "weight": 3
+        },
+        {
+          "item": "DA_RedBuff",
+          "unit": "DA_18_Ashe",
+          "weight": 3
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_BrambleVest",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_DragonsClaw",
+          "unit": "DA_Amumu18",
+          "weight": 2
+        },
+        {
+          "item": "DA_InfinityEdge",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        },
+        {
+          "item": "DA_StrikersFlail",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_Karma18",
+          "DA_18_Rakan",
+          "DA_18_Yorick",
+          "DA_18_Yunara"
+        ],
+        "note": "Open with a strong AD opener, preferably around Yunara."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with a strong AD opener, preferably around Yunara. Slam generic AD items and Tank items for a win streak."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Level up for more juggernauts and executioners to pair with our blossom opener."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level and roll for 6 juggernauts +Sivir. Once stable, go 9 and look for Ashe and transition your board to 5 costs."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemJuggernaut",
+          "unit": "DA_18_Kennen"
         }
       ]
     },
@@ -1672,7 +1789,7 @@
       "name": "Coven Elise",
       "tier": "C",
       "style": "reroll-2",
-      "summary": "A 2-Cost Reroll comp carried by Elise, Morgana and Cassiopeia.",
+      "summary": "A 2-Cost Reroll comp carried by Elise, Cassiopeia and Morgana.",
       "playWhen": [
         "You find early copies of Elise and can slow roll at level 6",
         "You have components for Titan's Resolve",
@@ -1680,21 +1797,21 @@
       ],
       "carries": [
         "DA_18_Elise",
-        "DA_18_Morgana",
-        "DA_18_Cassiopeia"
+        "DA_18_Cassiopeia",
+        "DA_18_Morgana"
       ],
       "frontline": [
         "DA_18_Diana",
         "DA_Sentinel18"
       ],
       "endBoard": [
-        "DA_18_Alune",
         "DA_18_Elise",
         "DA_18_Diana",
-        "DA_18_Morgana",
-        "DA_Sentinel18",
+        "DA_18_Hecarim",
         "DA_18_Cassiopeia",
-        "DA_18_Hecarim"
+        "DA_Sentinel18",
+        "DA_18_Morgana",
+        "DA_18_Alune"
       ],
       "targetItems": [
         {
@@ -1713,8 +1830,18 @@
           "weight": 3
         },
         {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Morgana",
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Cassiopeia",
+          "weight": 2
+        },
+        {
+          "item": "DA_HextechGunblade",
+          "unit": "DA_18_Cassiopeia",
+          "weight": 2
+        },
+        {
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_18_Cassiopeia",
           "weight": 2
         },
         {
@@ -1728,18 +1855,8 @@
           "weight": 2
         },
         {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Cassiopeia",
-          "weight": 2
-        },
-        {
-          "item": "DA_HextechGunblade",
-          "unit": "DA_18_Cassiopeia",
-          "weight": 2
-        },
-        {
-          "item": "DA_ArchangelsStaff",
-          "unit": "DA_18_Cassiopeia",
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Morgana",
           "weight": 2
         },
         {
@@ -1777,6 +1894,134 @@
         {
           "item": "DA_18_EmblemSlayer",
           "unit": "DA_18_Elise"
+        }
+      ]
+    },
+    {
+      "slug": "bronze-for-life-ahri",
+      "name": "Bronze For Life Ahri",
+      "tier": "C",
+      "style": "fast-8",
+      "summary": "A 4-Cost Fast 8 comp carried by Ahri and Zyra, with Sett tanking.",
+      "playWhen": [
+        "You can reach level 8 on time with enough gold to roll for Ahri",
+        "You have components for Jeweled Gauntlet",
+        "Situational: Play when you hit Zyra 2 on your Ahri rolldown instead of Morgana."
+      ],
+      "carries": [
+        "DA_18_Ahri",
+        "DA_18_Zyra"
+      ],
+      "frontline": [
+        "DA_18_Rakan",
+        "DA_18_Yorick",
+        "DA_Fiddlesticks18",
+        "DA_18_Lillia",
+        "DA_18_Sett",
+        "DA_Taric18"
+      ],
+      "endBoard": [
+        "DA_18_Rakan",
+        "DA_18_Yorick",
+        "DA_Fiddlesticks18",
+        "DA_18_Lillia",
+        "DA_18_Ahri",
+        "DA_18_Sett",
+        "DA_18_Zyra",
+        "DA_Taric18",
+        "DA_18_GnarSmall"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Ahri",
+          "weight": 3
+        },
+        {
+          "item": "DA_StrikersFlail",
+          "unit": "DA_18_Ahri",
+          "weight": 3
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ahri",
+          "weight": 3
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_18_Lillia",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Sett",
+          "weight": 2
+        },
+        {
+          "item": "DA_BrambleVest",
+          "unit": "DA_18_Sett",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpiritVisage",
+          "unit": "DA_18_Sett",
+          "weight": 2
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_Zyra",
+          "weight": 2
+        },
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_Zyra",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Zyra",
+          "weight": 2
+        },
+        {
+          "item": "DA_ThiefsGloves",
+          "unit": "DA_18_GnarSmall",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemLunar",
+          "unit": "DA_18_Ahri",
+          "weight": 1
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_Karma18",
+          "DA_18_Rakan",
+          "DA_18_Yorick",
+          "DA_18_Yunara"
+        ],
+        "note": "Look for 3 Blossom early and play for win streak."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Look for 3 Blossom early and play for win streak. Karma can hold items for Ahri. Itemize Yorick or any other 2* tank."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Flex in more Spellweavers + frontline as you get them. You can tank all kinds of frontline: Juggernauts, Defenders, or Vanguards."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level and roll for Ahri, Zyra, and the 4 Spellweavers. Play Cassio or LeBlanc until you find Alune."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemLunar",
+          "unit": "DA_18_Ahri"
         }
       ]
     },
@@ -2139,6 +2384,91 @@
       ]
     },
     {
+      "slug": "veigar-consuming-flora",
+      "name": "Veigar Consuming Flora",
+      "tier": "C",
+      "style": "reroll-1",
+      "summary": "A 1-Cost Reroll comp carried by Veigar, with Rek'Sai tanking.",
+      "playWhen": [
+        "You find early copies of Veigar and can slow roll at level 5 or 6",
+        "You have components for Jeweled Gauntlet",
+        "Situational: Very strong with Dawncore and Ludens as well."
+      ],
+      "carries": [
+        "DA_18_Veigar"
+      ],
+      "frontline": [
+        "DA_18_RekSai"
+      ],
+      "endBoard": [
+        "DA_18_Kobuko",
+        "DA_18_RekSai",
+        "DA_18_Veigar",
+        "DA_18_Teemo",
+        "DA_Fiddlesticks18",
+        "DA_18_Rammus",
+        "DA_18_Sett",
+        "DA_18_GnarSmall"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Veigar",
+          "weight": 3
+        },
+        {
+          "item": "DA_BlueBuff",
+          "unit": "DA_18_Veigar",
+          "weight": 3
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_RekSai",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_RekSai",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Kobuko",
+          "DA_18_RekSai",
+          "DA_18_Veigar",
+          "DA_18_Teemo"
+        ],
+        "note": "Only play around this opener with early upgrades so Veigar can snowball and gain stacks."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Only play around this opener with early upgrades so Veigar can snowball and gain stacks. Prioritize Veigar items."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "If you are close to Veigar 3 (7+ copies), consider rolling until you hit 3*. If far (3-4 copies), slow roll above 50g for 3*."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Once you finish your 3*, push levels for more Spyrkin, Blackthorn, or Brawlers."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_Artifact_Dawncore",
+          "unit": "DA_18_Veigar"
+        },
+        {
+          "item": "DA_Artifact_LudensTempest",
+          "unit": "DA_18_Veigar"
+        }
+      ]
+    },
+    {
       "slug": "emblem-rengar",
       "name": "Emblem Rengar",
       "tier": "C",
@@ -2250,91 +2580,6 @@
         {
           "item": "DA_18_EmblemFae",
           "unit": "DA_18_Rengar"
-        }
-      ]
-    },
-    {
-      "slug": "veigar-consuming-flora",
-      "name": "Veigar Consuming Flora",
-      "tier": "C",
-      "style": "reroll-1",
-      "summary": "A 1-Cost Reroll comp carried by Veigar, with Rek'Sai tanking.",
-      "playWhen": [
-        "You find early copies of Veigar and can slow roll at level 5 or 6",
-        "You have components for Jeweled Gauntlet",
-        "Situational: Very strong with Dawncore and Ludens as well."
-      ],
-      "carries": [
-        "DA_18_Veigar"
-      ],
-      "frontline": [
-        "DA_18_RekSai"
-      ],
-      "endBoard": [
-        "DA_18_Kobuko",
-        "DA_18_RekSai",
-        "DA_18_Veigar",
-        "DA_18_Teemo",
-        "DA_Fiddlesticks18",
-        "DA_18_Rammus",
-        "DA_18_Sett",
-        "DA_18_GnarSmall"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_JeweledGauntlet",
-          "unit": "DA_18_Veigar",
-          "weight": 3
-        },
-        {
-          "item": "DA_BlueBuff",
-          "unit": "DA_18_Veigar",
-          "weight": 3
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_RekSai",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_RekSai",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Kobuko",
-          "DA_18_RekSai",
-          "DA_18_Veigar",
-          "DA_18_Teemo"
-        ],
-        "note": "Only play around this opener with early upgrades so Veigar can snowball and gain stacks."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Only play around this opener with early upgrades so Veigar can snowball and gain stacks. Prioritize Veigar items."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "If you are close to Veigar 3 (7+ copies), consider rolling until you hit 3*. If far (3-4 copies), slow roll above 50g for 3*."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Once you finish your 3*, push levels for more Spyrkin, Blackthorn, or Brawlers."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_Artifact_Dawncore",
-          "unit": "DA_18_Veigar"
-        },
-        {
-          "item": "DA_Artifact_LudensTempest",
-          "unit": "DA_18_Veigar"
         }
       ]
     },
@@ -2695,6 +2940,16 @@
     }
   ],
   "curatedKeyItems": {
+    "azir-rammus-reroll": [
+      {
+        "item": "DA_Artifact_NavoriFlickerblade",
+        "unit": "DA_18_Azir"
+      },
+      {
+        "item": "DA_Artifact_LightshieldCrest",
+        "unit": "DA_18_Rammus"
+      }
+    ],
     "khazix-reroll": [
       {
         "item": "DA_Artifact_LichBane",
@@ -2721,23 +2976,12 @@
         "unit": "DA_18_KhaZix"
       }
     ],
-    "azir-rammus-reroll": [
+    "riftbeast-reroll": [
       {
-        "item": "DA_Artifact_NavoriFlickerblade",
-        "unit": "DA_18_Azir"
-      },
-      {
-        "item": "DA_Artifact_LightshieldCrest",
-        "unit": "DA_18_Rammus"
+        "item": "DA_Artifact_EternalPact",
+        "unit": "DA_18_Sentry"
       }
     ],
-    "invoker-morgana-ahri": [
-      {
-        "item": "DA_18_EmblemInvoker",
-        "unit": "DA_18_Ahri"
-      }
-    ],
-    "riftbeast-reroll": [],
     "draven-fast-9": [
       {
         "item": "DA_Artifact_GoldCollector",
@@ -2764,6 +3008,34 @@
         "unit": "DA_18_Maokai"
       }
     ],
+    "invoker-morgana-ahri": [
+      {
+        "item": "DA_18_EmblemInvoker",
+        "unit": "DA_18_Ahri"
+      },
+      {
+        "item": "DA_Artifact_BlightingJewel",
+        "unit": "DA_18_Morgana"
+      }
+    ],
+    "defender-cassiopeia": [
+      {
+        "item": "DA_18_EmblemDefender",
+        "unit": "DA_18_Rengar"
+      },
+      {
+        "item": "DA_Artifact_Dawncore",
+        "unit": "DA_18_Cassiopeia"
+      },
+      {
+        "item": "DA_Artifact_BlightingJewel",
+        "unit": "DA_18_Cassiopeia"
+      },
+      {
+        "item": "DA_Item_Artifact_TalismanOfAscension",
+        "unit": "DA_18_Cassiopeia"
+      }
+    ],
     "veigar-reroll": [
       {
         "item": "DA_Artifact_Dawncore",
@@ -2776,42 +3048,30 @@
     ],
     "flora-malphite": [
       {
-        "item": "DA_Artifact_MogulsMail",
-        "unit": "DA_18_Malphite"
-      },
-      {
-        "item": "DA_Artifact_LightshieldCrest",
-        "unit": "DA_18_Malphite"
-      },
-      {
-        "item": "DA_Artifact_TheIndomitable",
-        "unit": "DA_18_Malphite"
-      },
-      {
         "item": "DA_18_EmblemExecutioner",
         "unit": "DA_18_Zyra"
-      }
-    ],
-    "defender-cassiopeia": [
-      {
-        "item": "DA_18_EmblemDefender",
-        "unit": "DA_18_Rengar"
-      },
-      {
-        "item": "DA_Artifact_Manazane",
-        "unit": "DA_18_Cassiopeia"
       },
       {
         "item": "DA_Artifact_Dawncore",
-        "unit": "DA_18_Cassiopeia"
+        "unit": "DA_18_Soraka"
       },
       {
-        "item": "DA_Artifact_BlightingJewel",
-        "unit": "DA_18_Cassiopeia"
+        "item": "DA_Artifact_LichBane",
+        "unit": "DA_18_Soraka"
       },
       {
         "item": "DA_Artifact_EternalPact",
-        "unit": "DA_18_Cassiopeia"
+        "unit": "DA_18_Soraka"
+      }
+    ],
+    "primal-malphite": [
+      {
+        "item": "DA_18_EmblemHunter",
+        "unit": "DA_Nidalee18_AP"
+      },
+      {
+        "item": "DA_Artifact_SilvermereDawn",
+        "unit": "DA_Nidalee18_AP"
       }
     ],
     "caitlyn-reroll": [
@@ -2826,16 +3086,6 @@
       {
         "item": "DA_Artifact_GoldCollector",
         "unit": "DA_18_Caitlyn"
-      }
-    ],
-    "primal-malphite": [
-      {
-        "item": "DA_18_EmblemHunter",
-        "unit": "DA_Nidalee18_AP"
-      },
-      {
-        "item": "DA_Artifact_SilvermereDawn",
-        "unit": "DA_Nidalee18_AP"
       }
     ]
   }
