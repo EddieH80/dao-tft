@@ -1,6 +1,6 @@
 {
   "patch": "18.4b",
-  "checkedAt": "2026-10-11",
+  "checkedAt": "2026-10-17",
   "sources": [
     "https://tftacademy.com/tierlist/comps",
     "https://seemeta.com/en/tft/set-18/augments",
@@ -205,15 +205,15 @@
       {"augment": "DA_LegionOfThrees", "strength": "good"},
       {"augment": "DA_18_BigGrabBag", "strength": "good"}
     ],
-    "warwick-reroll": [
-      {"augment": "DA_18_CaretakersAlly", "strength": "good"},
+    "warwick-ravager": [
       {"augment": "DA_WorththeWaitII", "strength": "good"},
-      {"augment": "DA_PortableForge", "strength": "good"},
-      {"augment": "DA_LivingForge", "strength": "good"},
       {"augment": "DA_HeroicGrabBagPlus", "strength": "good"},
-      {"augment": "DA_NestingAnvils", "strength": "good"},
       {"augment": "DA_URF", "strength": "good"},
-      {"augment": "DA_UrfsGrabBag", "strength": "good"}
+      {"augment": "DA_UrfsGrabBag", "strength": "good"},
+      {"augment": "DA_CookingPot", "strength": "good"},
+      {"augment": "DA_GroupHugI", "strength": "good"},
+      {"augment": "DA_CarveAPath", "strength": "good"},
+      {"augment": "DA_SwordOverflow", "strength": "good"}
     ],
     "solar-melee": [
       {"augment": "DA_PandorasBench", "strength": "good"},
@@ -303,15 +303,24 @@
       {"augment": "DA_LegionOfThrees", "strength": "good"},
       {"augment": "DA_18_BigGrabBag", "strength": "good"}
     ],
-    "ravager-elise": [
-      {"augment": "DA_18_CovenTraitAugment_LootToAP", "strength": "strong", "note": "Dark Ritual turns Coven cashouts into AP for Elise; Coven Elise leans on it harder."},
-      {"augment": "DA_18_CovenTraitAugment", "strength": "strong", "note": "Coven Acolyte supports Coven Elise."},
-      {"augment": "DA_WorththeWaitII", "strength": "good"},
-      {"augment": "DA_CookingPot", "strength": "good"},
+    "fae-ezreal": [
+      {"augment": "DA_18_ElderwoodTraitAugment", "strength": "strong", "note": "Nature's Shelter powers up Elderwood Ezreal."},
+      {"augment": "DA_BodyguardTraining", "strength": "good"},
+      {"augment": "DA_SwordOverflow", "strength": "good"},
+      {"augment": "DA_Swordsmith", "strength": "good"},
+      {"augment": "DA_CommerceCore", "strength": "good"},
+      {"augment": "DA_URF", "strength": "good"},
+      {"augment": "DA_UrfsGrabBag", "strength": "good"},
+      {"augment": "DA_SpreadingRoots", "strength": "good"}
+    ],
+    "solar-eclipse": [
+      {"augment": "DA_18_SolarTraitAugment", "strength": "strong", "note": "Chosen of the Sun powers up the comp's three Solar units."},
+      {"augment": "DA_PandorasBench", "strength": "good"},
+      {"augment": "DA_PrismaticTicket", "strength": "good"},
       {"augment": "DA_HeroicGrabBagPlus", "strength": "good"},
-      {"augment": "DA_SoloPlate", "strength": "good"},
-      {"augment": "DA_Staffsmith", "strength": "good"},
-      {"augment": "DA_Expedition", "strength": "good"}
+      {"augment": "DA_MissedConnections", "strength": "good"},
+      {"augment": "DA_PortableForge", "strength": "good"},
+      {"augment": "DA_CraftedCrafting", "strength": "good"}
     ],
     "fae-tristana": [
       {"augment": "DA_18_BranchingOutPlus", "strength": "strong", "note": "Branching Out+ hands out the Fae emblem this comp needs."},
@@ -353,15 +362,15 @@
       {"augment": "DA_WandOverflow", "strength": "good"},
       {"augment": "DA_CommerceCore", "strength": "good"}
     ],
-    "solara-yunara": [
+    "solar-blossom": [
       {"augment": "DA_18_CaretakersAlly", "strength": "good"},
-      {"augment": "DA_Swordsmith", "strength": "good"},
       {"augment": "DA_SwordOverflow", "strength": "good"},
       {"augment": "DA_HeroicGrabBag", "strength": "good"},
       {"augment": "DA_SoloPlate", "strength": "good"},
       {"augment": "DA_PandorasBench", "strength": "good"},
       {"augment": "DA_PrismaticTicket", "strength": "good"},
-      {"augment": "DA_KickStart", "strength": "good"}
+      {"augment": "DA_TradeSector", "strength": "good"},
+      {"augment": "DA_18_WispRebatePlusPlus", "strength": "good"}
     ],
     "coven-elise": [
       {"augment": "DA_18_CovenTraitAugment_LootToAP", "strength": "core", "note": "The guide plays Coven Elise with Dark Ritual, turning cashouts into AP."},
