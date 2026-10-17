@@ -6,8 +6,8 @@
  *
  * Usage: npm run fetch-data
  */
-import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { writeData } from "./write-data";
 
 const SET_KEY = "18";
 const SOURCE = "https://raw.communitydragon.org/latest/cdragon/tft/en_us.json";
@@ -148,7 +148,7 @@ async function main() {
     augments,
   };
   const out = resolve(__dirname, "../src/data/snapshot.json");
-  writeFileSync(out, JSON.stringify(snapshot, null, 2) + "\n");
+  writeData(out, snapshot);
   console.log(
     `Wrote ${out}: ${components.length} components, ${items.length} items, ${uncraftables.length} uncraftables, ${units.length} units, ${traits.length} traits, ${augments.length} augments`,
   );

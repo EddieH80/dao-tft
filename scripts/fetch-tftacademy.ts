@@ -12,9 +12,10 @@
  *
  * Usage: npm run fetch-comps
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Comp, CompAugments, Snapshot } from "../src/data/schema";
+import { writeData } from "./write-data";
 
 const PAGE = "https://tftacademy.com/tierlist/comps";
 // SvelteKit serves the page's load data here; the flags ask for every node.
@@ -223,7 +224,7 @@ async function main() {
 
   const out = resolve(__dirname, "../src/data/comps-tftacademy.json");
   const file = { source: PAGE, patch, fetchedAt: new Date().toISOString().slice(0, 10), comps, curatedKeyItems };
-  writeFileSync(out, JSON.stringify(file, null, 2) + "\n");
+  writeData(out, file);
   console.log(`Wrote ${out}: ${comps.length} comps (${live.length - comps.length} already hand-written)`);
 
   reportMissingAugments(live, snapshot, patch);

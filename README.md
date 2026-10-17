@@ -85,6 +85,10 @@ The engine runs entirely in the browser, so results are instant and the whole si
 
 GitHub Actions runs lint, typecheck, tests and the production build on every push.
 
+## Daily data refresh
+
+[`.github/workflows/refresh-data.yml`](.github/workflows/refresh-data.yml) runs `fetch-data`, `fetch-comps` and `fetch-items` every day at 13:00 UTC, and can be started by hand from the Actions tab. If the data changed and lint, typecheck, tests and the build pass, it commits to `main` and Vercel deploys. If the check fails, for example because TFT Academy renamed a guide that `comp-augments.json` lists, it force-pushes the data to the `data-refresh` branch, opens a pull request and fails the run, so `main` never gets data that breaks the build. The run summary lists what changed and the augments TFT Academy recommends that `comp-augments.json` is missing. A file's `fetchedAt` changes only when its data does, so a day with no new data makes no commit.
+
 ## What is and is not here
 
 This is an MVP built in a week, so it is deliberately narrow.
@@ -93,7 +97,7 @@ This is an MVP built in a week, so it is deliberately narrow.
 - The rest of the comps are converted from [TFT Academy's tier list](https://tftacademy.com/tierlist/comps) by `npm run fetch-comps`. Boards, items and stage tips come from the guides; summaries and "play when" lines are generated from them, and Situational comps are listed as C tier. Comps the curated set already covers are skipped.
 - Augment picks are hand-edited in `src/data/comp-augments.json`: TFT Academy's recommended augments for each guide, plus strengths judged from the guides' tips and comp names and from [SeeMeta's augment pages](https://seemeta.com/en/tft/set-18/augments). They are editorial, not measured lifts.
 - Scouting is manual input only.
-- **Not built**: patch history/selector, hex board view, flowchart visualisation, Riot API integration, desktop overlay, automatic PR on patch change.
+- **Not built**: patch history/selector, hex board view, flowchart visualisation, Riot API integration, desktop overlay. The daily refresh pulls new data but does not edit hand-curated comps or augment picks.
 
 ## Updating augments after a patch
 

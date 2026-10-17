@@ -11,9 +11,10 @@
  *
  * Usage: npm run fetch-items
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { Snapshot } from "../src/data/schema";
+import { writeData } from "./write-data";
 
 const PAGE = "https://tactics.tools/items";
 // Lux has one variant per trait; the snapshot keeps only the base unit.
@@ -76,7 +77,7 @@ async function main() {
     holders,
     topItems,
   };
-  writeFileSync(out, JSON.stringify(file, null, 2) + "\n");
+  writeData(out, file);
   console.log(
     `Wrote ${out}: holders for ${Object.keys(holders).length} artifacts/emblems, top items for ${Object.keys(topItems).length} units`,
   );

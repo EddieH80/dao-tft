@@ -1,0 +1,84 @@
+name: Refresh data
+
+# Pulls the latest meta every day: the Community Dragon snapshot, TFT Academy's
+# comps and tactics.tools' item stats. If the data changed and the full check
+# passes, it is committed to main and Vercel deploys it. If the check fails
+# (say a patch removed a unit a hand-written comp uses), the data goes to the
+# data-refresh branch as a pull request instead, and the run fails.
+on:
+  schedule:
+    - cron: "0 13 * * *" # 13:00 UTC, early morning in the Americas
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      # The comp and item scripts read the snapshot, so it goes first.
+      - run: npm run fetch-data
+      - name: npm run fetch-comps
+        run: |
+          set -o pipefail
+          npm run --silent fetch-comps | tee "$RUNNER_TEMP/comps.log"
+      - run: npm run fetch-items
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No data changed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            { echo '## Changed'; echo '```'; git diff --stat; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          fi
+          { echo '## TFT Academy augments'; echo '```'; cat "$RUNNER_TEMP/comps.log"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify
+        id: verify
+        if: steps.changes.outputs.changed == 'true'
+        continue-on-error: true
+        run: npm run lint && npm run typecheck && npm test && npm run build
+
+      - name: Commit
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -aq -m "Refresh data ($(date -u +%F))" -m "$(git diff --stat)"
+
+      - name: Push to main
+        if: steps.changes.outputs.changed == 'true' && steps.verify.outcome == 'success'
+        run: |
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Open a pull request instead
+        if: steps.changes.outputs.changed == 'true' && steps.verify.outcome != 'success'
+        run: |
+          git push --force origin HEAD:refs/heads/data-refresh
+          if [ -z "$(gh pr list --head data-refresh --state open --json number --jq '.[].number')" ]; then
+            gh pr create --head data-refresh --base main \
+              --title "Refresh data: the check fails" \
+              --body "The daily data refresh changed data that fails lint, typecheck, tests or the build. See ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} for the error and the augments TFT Academy recommends that comp-augments.json is missing. Fix the data on this branch, then merge. The next failing refresh force-pushes over this branch." \
+              || echo "::warning::Could not open a pull request. Allow GitHub Actions to create pull requests in Settings > Actions > General."
+          fi
+          echo "::error::The refreshed data fails the check; it was pushed to the data-refresh branch, not main."
+          exit 1
