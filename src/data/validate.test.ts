@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { augmentStages, catalog, comps } from "./index";
+import { aliases, augmentStages, catalog, comps } from "./index";
 import compAugmentsJson from "./comp-augments.json";
 import { applyCompAugments } from "./compAugments";
 import { AUGMENT_STRENGTH_BONUS, CompAugmentsSchema, CompSchema, MAX_COMP_AUGMENTS, type Comp } from "./schema";
-import { validateComps } from "./validate";
+import { validateAliases, validateComps } from "./validate";
 
 describe("curated comps", () => {
   it("are all consistent with the Community Dragon snapshot", () => {
@@ -159,5 +159,15 @@ describe("applyCompAugments", () => {
 
   it("rejects a strength it does not know", () => {
     expect(() => file([{ augment: "DA_18_BigGrabBag", strength: "great" }])).toThrow();
+  });
+});
+
+describe("quick bar aliases", () => {
+  it("all point at something in the snapshot", () => {
+    expect(validateAliases(aliases, catalog)).toEqual([]);
+  });
+
+  it("catch an id the snapshot does not have", () => {
+    expect(validateAliases({ note: "", aliases: { zz: "DA_NotAThing" } }, catalog)).toHaveLength(1);
   });
 });

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import economyJson from "@/data/economy.json";
 import { COMP_STYLES, EconomyModelSchema, type CompStyle } from "@/data/schema";
-import { stageIndex, stageLabel, stageLabels, styleOutlook, type Economy } from "./economy";
+import { isCarousel, nextStage, roundIncome, stageIndex, stageLabel, stageLabels, styleOutlook, type Economy } from "./economy";
 
 const model = EconomyModelSchema.parse(economyJson);
 const verdicts = (economy: Economy) =>
@@ -70,5 +70,22 @@ describe("stages", () => {
     for (const s of Object.values(model.styles)) {
       expect(stageIndex(s.deadline, model)).toBeGreaterThanOrEqual(stageIndex(s.ideal, model));
     }
+  });
+
+  it("steps to the next round, starting at 2-1 and stopping at the last", () => {
+    expect(nextStage(null, model)).toBe("2-1");
+    expect(nextStage("3-2", model)).toBe("3-3");
+    expect(nextStage("3-7", model)).toBe("4-1");
+    expect(nextStage("7-7", model)).toBe("7-7");
+  });
+});
+
+describe("roundIncome", () => {
+  it("pays base income plus capped interest, and knows the carousel round", () => {
+    expect(roundIncome(9, model)).toBe(5);
+    expect(roundIncome(34, model)).toBe(8);
+    expect(roundIncome(120, model)).toBe(10);
+    expect(isCarousel(stageIndex("3-4", model), model)).toBe(true);
+    expect(isCarousel(stageIndex("3-5", model), model)).toBe(false);
   });
 });

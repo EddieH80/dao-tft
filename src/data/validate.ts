@@ -1,4 +1,4 @@
-import type { Comp } from "./schema";
+import type { Aliases, Comp } from "./schema";
 import type { Catalog } from "@/engine/catalog";
 
 /** Returns every problem found in `comps`; an empty list means the data is consistent with the snapshot. */
@@ -50,4 +50,14 @@ export function validateComps(comps: Comp[], catalog: Catalog): string[] {
     }
   }
   return problems;
+}
+
+/** Every quick bar alias must name something the snapshot has. */
+export function validateAliases(aliases: Aliases, catalog: Catalog): string[] {
+  return Object.entries(aliases.aliases)
+    .filter(
+      ([, id]) =>
+        !catalog.componentIds.includes(id) && !catalog.holdable(id) && !catalog.hasUnit(id) && !catalog.hasAugment(id),
+    )
+    .map(([alias, id]) => `aliases.json: "${alias}" points at unknown id "${id}"`);
 }

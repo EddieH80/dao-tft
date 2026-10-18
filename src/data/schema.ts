@@ -198,3 +198,10 @@ export interface Snapshot {
   traits: SnapshotTrait[];
   augments: { id: string; name: string; icon: string }[];
 }
+
+/** Quick bar shorthand (src/data/aliases.json): what a player types -> a component, item, unit or augment id. */
+export const AliasesSchema = z.object({
+  note: z.string(),
+  aliases: z.record(z.string().regex(/^[a-z0-9]+$/), z.string()),
+});
+export type Aliases = z.infer<typeof AliasesSchema>;

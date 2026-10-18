@@ -22,6 +22,7 @@ export function BoardPicker() {
   const full = board.length >= level;
   const skip = useGame((s) => s.skipBoard);
   const gold = useGame((s) => s.gold);
+  const goldEstimated = useGame((s) => s.goldEstimated);
   const hp = useGame((s) => s.hp);
   const stage = useGame((s) => s.stage);
   const setGold = useGame((s) => s.setGold);
@@ -98,7 +99,7 @@ export function BoardPicker() {
             ))}
           </select>
         </label>
-        <NumberField label="Gold" value={gold} onChange={setGold} max={200} />
+        <NumberField label="Gold" value={gold} onChange={setGold} max={200} estimated={goldEstimated} />
         <NumberField label="HP" value={hp} onChange={setHp} max={100} />
       </div>
       {outlooks.size > 0 ? (
@@ -237,15 +238,21 @@ function NumberField({
   value,
   onChange,
   max,
+  estimated = false,
 }: {
   label: string;
   value: number | null;
   onChange: (value: number | null) => void;
   max: number;
+  /** The value was projected by "next round", not entered. */
+  estimated?: boolean;
 }) {
   return (
-    <label className="flex items-center gap-2">
-      <span className="text-muted">{label}</span>
+    <label className="flex items-center gap-2" title={estimated ? "Estimated from last round's income; correct it" : undefined}>
+      <span className="text-muted">
+        {label}
+        {estimated && <span className="text-warn"> ~</span>}
+      </span>
       <input
         type="number"
         inputMode="numeric"

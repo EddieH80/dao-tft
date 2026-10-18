@@ -1,4 +1,5 @@
 import { Catalog } from "@/engine/catalog";
+import aliasesJson from "./aliases.json";
 import { TftEngine } from "@/engine/router";
 import augments21Json from "./augments-2-1.json";
 import augments32Json from "./augments-3-2.json";
@@ -9,6 +10,7 @@ import compsTftAcademy from "./comps-tftacademy.json";
 import economyJson from "./economy.json";
 import itemStatsJson from "./item-stats.json";
 import {
+  AliasesSchema,
   CompAugmentsSchema,
   CompSchema,
   EconomyModelSchema,
@@ -18,7 +20,7 @@ import {
   type Snapshot,
 } from "./schema";
 import snapshotJson from "./snapshot.json";
-import { validateComps } from "./validate";
+import { validateAliases, validateComps } from "./validate";
 
 import apheliosFlex from "./comps/aphelios-flex.json";
 import asheFast9 from "./comps/ashe-fast-9.json";
@@ -65,7 +67,10 @@ const ownLists = raw.filter((c) => "augmentModifiers" in (c as object)).map((c) 
 const withAugments = applyCompAugments(parsed, CompAugmentsSchema.parse(compAugmentsJson), catalog, ownLists);
 export const comps: Comp[] = withAugments.comps;
 
-const problems = [...withAugments.problems, ...validateComps(comps, catalog)];
+/** Quick bar shorthand, hand-edited. */
+export const aliases = AliasesSchema.parse(aliasesJson);
+
+const problems = [...withAugments.problems, ...validateComps(comps, catalog), ...validateAliases(aliases, catalog)];
 if (problems.length) throw new Error(`Invalid comp data:\n${problems.join("\n")}`);
 
 /** The three augment selections, in the order they are offered. */

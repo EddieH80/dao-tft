@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { engine } from "@/data";
 import { bagSize } from "@/engine/catalog";
 import { useGame, useScout } from "@/store/useGame";
@@ -8,6 +8,8 @@ import { AugmentPanel } from "./AugmentPanel";
 import { BoardPicker } from "./BoardPicker";
 import { ComponentPicker } from "./ComponentPicker";
 import { HeldItemsPicker } from "./HeldItemsPicker";
+import { LiveSummary } from "./LiveSummary";
+import { QuickBar } from "./QuickBar";
 import { Branch, Connector, FlowLabel, SideArrow } from "./flow";
 import { RecommendationCard } from "./RecommendationCard";
 import { ScoutPanel } from "./ScoutPanel";
@@ -24,14 +26,22 @@ export function RouterApp() {
   const gold = useGame((s) => s.gold);
   const hp = useGame((s) => s.hp);
   const stage = useGame((s) => s.stage);
+  const goldEstimated = useGame((s) => s.goldEstimated);
   const scout = useScout();
   const boardSkipped = useGame((s) => s.boardSkipped);
   const augmentSkipped = useGame((s) => s.augmentSkipped);
+
+  // The saved game loads after the first render, so the static HTML matches it.
+  useEffect(() => {
+    void useGame.persist.rehydrate();
+  }, []);
 
   // Each step appears once the one before it has an answer.
   const showBoard = bagSize(components) > 0 || items.length > 0;
   const showAugment = showBoard && (board.length > 0 || boardSkipped);
   const showResults = showAugment && (augments.length > 0 || augmentSkipped);
+  // The quick bar can set any part of the game in any order, so the summary shows as soon as there is one.
+  const started = showBoard || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
 
   const state = useMemo(
     () => ({ components, items, board, augments, scout, level, gold, hp, stage }),
@@ -57,7 +67,20 @@ export function RouterApp() {
   );
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-8">
+    <main className="mx-auto max-w-7xl px-4 pb-8">
+      <QuickBar />
+      {started && (
+        <LiveSummary
+          ranking={ranking}
+          hits={hits}
+          stage={stage}
+          level={level}
+          gold={gold}
+          goldEstimated={goldEstimated}
+          hp={hp}
+        />
+      )}
+
       {!showBoard && (
         <div className="mx-auto mb-6 max-w-2xl text-center">
           <h1 className="text-3xl font-semibold text-gold">What are you holding?</h1>

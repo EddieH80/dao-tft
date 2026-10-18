@@ -33,6 +33,22 @@ npm run fetch-comps # refresh src/data/comps-tftacademy.json from TFT Academy's 
 npm run fetch-items # refresh src/data/item-stats.json (artifact/emblem holders) from tactics.tools
 ```
 
+## Playing live
+
+The quick bar at the top of the page takes every update as one line of text, and it is focused whenever you alt-tab back, so a round between fights is a few keystrokes. The top three comps sit right under it, one line each.
+
+| Type | Does |
+|---|---|
+| Enter on an empty bar, or `n` | next round: the round moves on and gold gets a round's income, shown as `~` until you type the real figure |
+| `38`, `l7`, `h64`, `4-2` | gold, level, HP, round |
+| `jinx`, `bow`, `ie`, `unrivaled` | add a unit, component, item or augment by name, prefix or shorthand |
+| `-bf` | remove it |
+| `+ie` | add an item without using up components (an item crafted from held components uses them up) |
+| `u`, or Ctrl/Cmd+Z on an empty bar | undo |
+| Shift+N on an empty bar | new game |
+
+So a typical round is Enter, then `41 h72`. Chips under the bar show what a line will do before Enter, and a word it does not understand turns red and blocks the line. The game is saved in the browser, so a reload keeps it; undo history lasts until the page reloads. Shorthand lives in [`src/data/aliases.json`](src/data/aliases.json), and the build fails on an alias the snapshot does not know. The parser is [`src/engine/quick.ts`](src/engine/quick.ts).
+
 ## How the ranking works
 
 Each curated comp lists the completed items it wants, weighted 1 (flex) to 3 (core). The problem is that every item **consumes two components**, so a comp's items compete for the same pool. A simple overlap score hides that, and it cannot tell you what to craft.

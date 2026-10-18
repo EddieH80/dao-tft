@@ -45,6 +45,23 @@ export function stageLabels(model: EconomyModel): string[] {
   return Array.from({ length: last }, (_, i) => stageLabel(i, model));
 }
 
+/** The round after `stage`, or 2-1 when the stage is unknown; the last round stays put. */
+export function nextStage(stage: string | null, model: EconomyModel): string {
+  const labels = stageLabels(model);
+  if (stage === null) return labels[0];
+  return stageLabel(Math.min(stageIndex(stage, model) + 1, labels.length - 1), model);
+}
+
+/** Whether `round` (rounds since 2-1) is a carousel, which pays no income. */
+export function isCarousel(round: number, model: EconomyModel): boolean {
+  return (round % model.rounds.perStage) + 1 === model.rounds.carousel;
+}
+
+/** Base income plus interest on `gold`, paid at the start of every round but the carousel. */
+export function roundIncome(gold: number, model: EconomyModel): number {
+  return model.income.base + Math.min(model.income.interestMax, Math.floor(gold / model.income.interestPer));
+}
+
 /** XP to climb from `from` to `to`, less what the player has likely banked toward the next level (the app does not ask). */
 function xpBetween(from: number, to: number, model: EconomyModel): number {
   let xp = 0;
@@ -102,8 +119,8 @@ export function styleOutlook(style: CompStyle, economy: Economy, model: EconomyM
             : `Getting to ${target} and rolling takes about ${cost(passive)} gold, which you won't have before ${deadline}.`,
       };
     }
-    if ((round % model.rounds.perStage) + 1 !== model.rounds.carousel) {
-      gold += model.income.base + Math.min(model.income.interestMax, Math.floor(gold / model.income.interestPer));
+    if (!isCarousel(round, model)) {
+      gold += roundIncome(gold, model);
       passive += model.passiveXp;
     }
   }
