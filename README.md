@@ -35,7 +35,7 @@ npm run fetch-items # refresh src/data/item-stats.json (artifact/emblem holders)
 
 ## Playing live
 
-The quick bar at the top of the page takes every update as one line of text, and it is focused whenever you alt-tab back, so a round between fights is a few keystrokes. The top three comps sit right under it, one line each.
+The quick bar on the [Quick](/quick) page (the header switches between it and the guided flow at `/`; both share one saved game) takes every update as one line of text, and it is focused whenever you alt-tab back, so a round between fights is a few keystrokes. The top three comps sit right under it, one line each.
 
 | Type | Does |
 |---|---|
