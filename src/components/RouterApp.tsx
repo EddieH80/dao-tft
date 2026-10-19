@@ -16,12 +16,14 @@ const EXTRA = 2;
 
 export function RouterApp() {
   const { state, ranking, hits } = useRanking(BRANCHES + EXTRA);
-  const { components, items, board, augments, scout } = state;
+  const { components, items, board, augments, scout, stage, gold } = state;
   const boardSkipped = useGame((s) => s.boardSkipped);
   const augmentSkipped = useGame((s) => s.augmentSkipped);
 
   // Each step appears once the one before it has an answer.
-  const showBoard = bagSize(components) > 0 || items.length > 0;
+  // A game started from the quick bar may have no components yet, so anything entered opens the board step.
+  const showBoard =
+    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
   const showAugment = showBoard && (board.length > 0 || boardSkipped);
   const showResults = showAugment && (augments.length > 0 || augmentSkipped);
 
