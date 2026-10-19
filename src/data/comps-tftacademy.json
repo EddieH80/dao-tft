@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.4b",
-  "fetchedAt": "2026-10-17",
+  "fetchedAt": "2026-10-19",
   "comps": [
     {
       "slug": "elderwood-executioners",
@@ -122,110 +122,6 @@
         {
           "item": "DA_18_EmblemElderwood",
           "unit": "DA_18_Soraka"
-        },
-        {
-          "item": "DA_Artifact_Dawncore",
-          "unit": "DA_18_Ezreal"
-        },
-        {
-          "item": "DA_Artifact_GoldCollector",
-          "unit": "DA_18_Ezreal"
-        }
-      ]
-    },
-    {
-      "slug": "fae-ezreal",
-      "name": "Fae Ezreal",
-      "tier": "B",
-      "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Ezreal, with Lillia tanking.",
-      "playWhen": [
-        "You can reach level 8 on time with enough gold to roll for Ezreal",
-        "You have components for Spear of Shojin"
-      ],
-      "carries": [
-        "DA_18_Ezreal"
-      ],
-      "frontline": [
-        "DA_18_Hecarim",
-        "DA_Amumu18",
-        "DA_18_Rakan",
-        "DA_Fiddlesticks18",
-        "DA_18_Lillia",
-        "DA_18_Kennen"
-      ],
-      "endBoard": [
-        "DA_18_Ezreal",
-        "DA_18_Xayah",
-        "DA_18_Soraka",
-        "DA_18_Hecarim",
-        "DA_Amumu18",
-        "DA_18_Rakan",
-        "DA_Fiddlesticks18",
-        "DA_18_Lillia",
-        "DA_18_Kennen"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_Evenshroud",
-          "unit": "DA_Amumu18",
-          "weight": 2
-        },
-        {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_18_Lillia",
-          "weight": 2
-        },
-        {
-          "item": "DA_Crownguard",
-          "unit": "DA_18_Lillia",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Xayah",
-          "DA_18_LeBlanc",
-          "DA_18_Hecarim",
-          "DA_18_Rakan"
-        ],
-        "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah. LeBlanc can farm copies of units on your board so avoid fielding unwanted units."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Don't play 4 fae in the midgame until you have at least 4 pixie stats. Level for more elderwoods/frontline and save gold."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Level to 8 and look for Ezreal and Lillia for 4 Fae. Roll aggressively for 2 stars on level 8 because Fae can give us gold later.."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Ezreal"
         },
         {
           "item": "DA_Artifact_Dawncore",
@@ -615,32 +511,32 @@
       "name": "AP Fast 9",
       "tier": "B",
       "style": "fast-9",
-      "summary": "A Fast 9 comp carried by Alune and Lux, with Sentinel tanking.",
+      "summary": "A Fast 9 comp carried by Alune, with Morgana tanking.",
       "playWhen": [
         "You have the economy to reach level 9 and find Alune",
         "You have components for Blue Buff"
       ],
       "carries": [
-        "DA_18_Alune",
-        "DA_Lux18_Base"
+        "DA_18_Alune"
       ],
       "frontline": [
-        "DA_18_Rakan",
+        "DA_18_Morgana",
         "DA_18_Diana",
         "DA_Fiddlesticks18",
         "DA_18_Lillia",
         "DA_Sentinel18",
-        "DA_Taric18"
+        "DA_Taric18",
+        "DA_18_Rakan"
       ],
       "endBoard": [
-        "DA_18_Rakan",
+        "DA_18_Morgana",
         "DA_18_Diana",
         "DA_Fiddlesticks18",
         "DA_18_Lillia",
         "DA_Sentinel18",
         "DA_Taric18",
         "DA_18_Alune",
-        "DA_Lux18_Base",
+        "DA_18_Rakan",
         "DA_18_Ivern"
       ],
       "targetItems": [
@@ -660,6 +556,16 @@
           "weight": 3
         },
         {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        },
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        },
+        {
           "item": "DA_WarmogsArmor",
           "unit": "DA_Sentinel18",
           "weight": 2
@@ -672,21 +578,6 @@
         {
           "item": "DA_ProtectorsVow",
           "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_Lux18_Base",
-          "weight": 2
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_Lux18_Base",
-          "weight": 2
-        },
-        {
-          "item": "DA_Morellonomicon",
-          "unit": "DA_Lux18_Base",
           "weight": 2
         },
         {
@@ -846,124 +737,6 @@
         {
           "item": "DA_Item_Artifact_TalismanOfAscension",
           "unit": "DA_18_Zyra"
-        }
-      ]
-    },
-    {
-      "slug": "eclipse-kayle",
-      "name": "Eclipse Kayle",
-      "tier": "B",
-      "style": "reroll-2",
-      "summary": "A 2-Cost Reroll comp carried by Kayle, with Sejuani tanking.",
-      "playWhen": [
-        "You find early copies of Kayle and can slow roll at level 6",
-        "You have components for Guinsoo's Rageblade"
-      ],
-      "carries": [
-        "DA_18_Kayle"
-      ],
-      "frontline": [
-        "DA_18_Sejuani",
-        "DA_18_Diana",
-        "DA_Amumu18"
-      ],
-      "endBoard": [
-        "DA_18_Leona",
-        "DA_18_Varus",
-        "DA_18_Shen",
-        "DA_18_Kayle",
-        "DA_18_Sejuani",
-        "DA_18_Diana",
-        "DA_Amumu18",
-        "DA_18_Aphelios"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_GuinsoosRageblade",
-          "unit": "DA_18_Kayle",
-          "weight": 3
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Kayle",
-          "weight": 3
-        },
-        {
-          "item": "DA_RedBuff",
-          "unit": "DA_18_Kayle",
-          "weight": 3
-        },
-        {
-          "item": "DA_18_EmblemLunar",
-          "unit": "DA_18_Varus",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Sejuani",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpiritVisage",
-          "unit": "DA_18_Sejuani",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Sejuani",
-          "weight": 2
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Aphelios",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Leona",
-          "DA_18_Varus",
-          "DA_18_Shen",
-          "DA_18_Kayle"
-        ],
-        "note": "Ideally open with Kayle and upgraded frontline."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Ideally open with Kayle and upgraded frontline. After Rageblade, prioritize tank items. Econ up as much as possible. Don't spend gold on leveling."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Bench priority: Kayle 3 > Sejuani 3 > Leona 3 > Shen 3 / Varus 3. Once you finish Kayle 3, begin pushing levels for Lunar units."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Finish your 3* and level for Lunar units to get Eclipse in. Lunar Lux or Solar Lux are both good."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemLunar",
-          "unit": "DA_18_Varus"
-        },
-        {
-          "item": "DA_Artifact_WitsEnd",
-          "unit": "DA_18_Kayle"
-        },
-        {
-          "item": "DA_Artifact_NavoriFlickerblade",
-          "unit": "DA_18_Kayle"
-        },
-        {
-          "item": "DA_Artifact_SeekersArmguard",
-          "unit": "DA_18_Kayle"
-        },
-        {
-          "item": "DA_Artifact_ForbiddenIdol",
-          "unit": "DA_18_Sejuani"
         }
       ]
     },
@@ -1227,6 +1000,124 @@
       ],
       "frontlineAlternatives": [],
       "keyItems": []
+    },
+    {
+      "slug": "eclipse-kayle",
+      "name": "Eclipse Kayle",
+      "tier": "B",
+      "style": "reroll-2",
+      "summary": "A 2-Cost Reroll comp carried by Kayle, with Sejuani tanking.",
+      "playWhen": [
+        "You find early copies of Kayle and can slow roll at level 6",
+        "You have components for Guinsoo's Rageblade"
+      ],
+      "carries": [
+        "DA_18_Kayle"
+      ],
+      "frontline": [
+        "DA_18_Sejuani",
+        "DA_18_Diana",
+        "DA_Amumu18"
+      ],
+      "endBoard": [
+        "DA_18_Leona",
+        "DA_18_Varus",
+        "DA_18_Shen",
+        "DA_18_Kayle",
+        "DA_18_Sejuani",
+        "DA_18_Diana",
+        "DA_Amumu18",
+        "DA_18_Aphelios"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Kayle",
+          "weight": 3
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_18_Kayle",
+          "weight": 3
+        },
+        {
+          "item": "DA_RedBuff",
+          "unit": "DA_18_Kayle",
+          "weight": 3
+        },
+        {
+          "item": "DA_18_EmblemLunar",
+          "unit": "DA_18_Varus",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Sejuani",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpiritVisage",
+          "unit": "DA_18_Sejuani",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Sejuani",
+          "weight": 2
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Aphelios",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Leona",
+          "DA_18_Varus",
+          "DA_18_Shen",
+          "DA_18_Kayle"
+        ],
+        "note": "Ideally open with Kayle and upgraded frontline."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Ideally open with Kayle and upgraded frontline. After Rageblade, prioritize tank items. Econ up as much as possible. Don't spend gold on leveling."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Bench priority: Kayle 3 > Sejuani 3 > Leona 3 > Shen 3 / Varus 3. Once you finish Kayle 3, begin pushing levels for Lunar units."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Finish your 3* and level for Lunar units to get Eclipse in. Lunar Lux or Solar Lux are both good."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemLunar",
+          "unit": "DA_18_Varus"
+        },
+        {
+          "item": "DA_Artifact_WitsEnd",
+          "unit": "DA_18_Kayle"
+        },
+        {
+          "item": "DA_Artifact_NavoriFlickerblade",
+          "unit": "DA_18_Kayle"
+        },
+        {
+          "item": "DA_Artifact_SeekersArmguard",
+          "unit": "DA_18_Kayle"
+        },
+        {
+          "item": "DA_Artifact_ForbiddenIdol",
+          "unit": "DA_18_Sejuani"
+        }
+      ]
     },
     {
       "slug": "warwick-ravager",
