@@ -11,8 +11,11 @@ const DEFAULT_NOTE: Record<AugmentStrength, string> = {
 
 /**
  * Gives each comp the augment modifiers listed for it in comp-augments.json,
- * then the rules that match it. Returns every problem found; the comps are
- * only usable when there are none.
+ * or TFT Academy's picks if it has no entry yet, then the rules that match it.
+ * Returns every problem found; the comps are only usable when there are none.
+ * Entries for comps that no longer exist (say one left TFT Academy's tier
+ * list) are returned as `unused` rather than as problems, so the daily refresh
+ * does not fail on them.
  */
 export function applyCompAugments(
   comps: Comp[],
@@ -20,20 +23,19 @@ export function applyCompAugments(
   catalog: Catalog,
   /** Comps whose source file set augmentModifiers itself, which the shared file replaces. */
   ownLists: string[] = [],
-): { comps: Comp[]; problems: string[] } {
+): { comps: Comp[]; problems: string[]; unused: string[] } {
   const problems = ownLists.map(
     (slug) => `${slug}: augmentModifiers belong in src/data/comp-augments.json, not the comp file`,
   );
   const slugs = new Set(comps.map((c) => c.slug));
-  for (const slug of Object.keys(file.comps)) {
-    if (!slugs.has(slug)) problems.push(`comp-augments.json: no comp has the slug "${slug}"`);
-  }
+  const unused = Object.keys(file.comps).filter((slug) => !slugs.has(slug));
   for (const { augment } of file.rules) {
     if (!catalog.hasAugment(augment)) problems.push(`comp-augments.json rules: unknown augment "${augment}"`);
   }
 
   const merged = comps.map((comp) => {
-    const entries = file.comps[comp.slug] ?? [];
+    const entries =
+      file.comps[comp.slug] ?? (comp.academyAugments ?? []).map((augment) => ({ augment, strength: "good" as const, note: undefined }));
     const seen = new Set<string>();
     for (const { augment } of entries) {
       if (!catalog.hasAugment(augment)) problems.push(`comp-augments.json ${comp.slug}: unknown augment "${augment}"`);
@@ -50,5 +52,5 @@ export function applyCompAugments(
     }));
     return { ...comp, augmentModifiers };
   });
-  return { comps: merged, problems };
+  return { comps: merged, problems, unused };
 }

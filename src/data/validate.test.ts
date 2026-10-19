@@ -148,12 +148,33 @@ describe("applyCompAugments", () => {
         "renamed-comp": [],
       },
     });
-    const { problems } = applyCompAugments([comp], bad, catalog, [comp.slug]);
+    const { problems, unused } = applyCompAugments([comp], bad, catalog, [comp.slug]);
     expect(problems).toEqual([
       `${comp.slug}: augmentModifiers belong in src/data/comp-augments.json, not the comp file`,
-      'comp-augments.json: no comp has the slug "renamed-comp"',
       `comp-augments.json ${comp.slug}: unknown augment "DA_Nope"`,
       `comp-augments.json ${comp.slug}: "DA_18_BigGrabBag" is listed twice`,
+    ]);
+    // A comp that left the tier list keeps its entry without failing the refresh.
+    expect(unused).toEqual(["renamed-comp"]);
+  });
+
+  it("falls back to TFT Academy's picks for a comp with no entry", () => {
+    const fresh: Comp = { ...comp, slug: "new-comp", academyAugments: ["DA_18_BigGrabBag"] };
+    const { comps: out, problems } = applyCompAugments([fresh], file([]), catalog);
+    expect(problems).toEqual([]);
+    expect(out[0].augmentModifiers).toEqual([
+      {
+        augment: "DA_18_BigGrabBag",
+        bonus: AUGMENT_STRENGTH_BONUS.good,
+        note: `${catalog.augmentName("DA_18_BigGrabBag")} is a good augment for this comp.`,
+        unplayable: false,
+      },
+    ]);
+
+    const curated = { ...fresh, slug: comp.slug };
+    const own = file([{ augment: "DA_SmallGrabBag", strength: "core", note: "Ours." }]);
+    expect(applyCompAugments([curated], own, catalog).comps[0].augmentModifiers.map((m) => m.augment)).toEqual([
+      "DA_SmallGrabBag",
     ]);
   });
 

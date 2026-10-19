@@ -131,6 +131,16 @@
           "item": "DA_Artifact_GoldCollector",
           "unit": "DA_18_Ezreal"
         }
+      ],
+      "academyAugments": [
+        "DA_18_ElderwoodTraitAugment",
+        "DA_BodyguardTraining",
+        "DA_18_LuxAugmentII",
+        "DA_SwordOverflow",
+        "DA_Swordsmith",
+        "DA_Staffsmith",
+        "DA_WandOverflow",
+        "DA_CommerceCore"
       ]
     },
     {
@@ -244,6 +254,16 @@
           "item": "DA_Artifact_SilvermereDawn",
           "unit": "DA_Nidalee18_AP"
         }
+      ],
+      "academyAugments": [
+        "DA_Swordsmith",
+        "DA_CarveAPath",
+        "DA_SwordOverflow",
+        "DA_BlackthornTraitAugment",
+        "DA_BuriedTreasuresIII",
+        "DA_18_FOURcing",
+        "DA_OneBuffTwoBuff",
+        "DA_EpicRolldown"
       ]
     },
     {
@@ -363,6 +383,16 @@
           "item": "DA_Artifact_Dawncore",
           "unit": "DA_18_Yunara"
         }
+      ],
+      "academyAugments": [
+        "DA_18_CaretakersAlly",
+        "DA_SwordOverflow",
+        "DA_HeroicGrabBag",
+        "DA_SoloPlate",
+        "DA_PandorasBench",
+        "DA_PrismaticTicket",
+        "DA_TradeSector",
+        "DA_18_WispRebatePlusPlus"
       ]
     },
     {
@@ -504,6 +534,15 @@
           "item": "DA_Artifact_LudensTempest",
           "unit": "DA_18_Akali_AD"
         }
+      ],
+      "academyAugments": [
+        "DA_PandorasBench",
+        "DA_PrismaticTicket",
+        "DA_NoScoutNoPivot",
+        "DA_EarlyLearnings",
+        "DA_WorththeWait",
+        "DA_LuckyGlovesPlus",
+        "DA_SoloPlate"
       ]
     },
     {
@@ -616,7 +655,17 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": []
+      "keyItems": [],
+      "academyAugments": [
+        "DA_BirthdayReunion",
+        "DA_BirthdayPresent",
+        "DA_UpwardMobility",
+        "DA_LevelUp",
+        "DA_LuxurySubscription",
+        "DA_LateGameSpecialist",
+        "DA_LateGameScaling",
+        "DA_ExplosiveGrowthPlus"
+      ]
     },
     {
       "slug": "zyra-juggernaut",
@@ -738,6 +787,16 @@
           "item": "DA_Item_Artifact_TalismanOfAscension",
           "unit": "DA_18_Zyra"
         }
+      ],
+      "academyAugments": [
+        "DA_BlackthornTraitAugment",
+        "DA_18_BigGrabBag",
+        "DA_CyberneticUplink_Gold",
+        "DA_CommerceCore",
+        "DA_SeraphimsStaff",
+        "DA_SpreadingRoots",
+        "DA_TheTraitTree",
+        "DA_BoxingLessons"
       ]
     },
     {
@@ -887,6 +946,16 @@
           "item": "DA_Artifact_RapidFireCannon",
           "unit": "DA_18_MasterYi_AD"
         }
+      ],
+      "academyAugments": [
+        "DA_LatentForge",
+        "DA_PortableForge",
+        "DA_ForgedInStrength",
+        "DA_LivingForge",
+        "DA_NestingAnvils",
+        "DA_HeroicGrabBag",
+        "DA_LegionOfThrees",
+        "DA_18_BigGrabBag"
       ]
     },
     {
@@ -999,7 +1068,15 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": []
+      "keyItems": [],
+      "academyAugments": [
+        "DA_18_RiftbeastTraitAugment",
+        "DA_Coronation",
+        "DA_LevelUp",
+        "DA_LateGameSpecialist",
+        "DA_Swordsmith",
+        "DA_ExplosiveGrowthPlus"
+      ]
     },
     {
       "slug": "eclipse-kayle",
@@ -1117,6 +1194,16 @@
           "item": "DA_Artifact_ForbiddenIdol",
           "unit": "DA_18_Sejuani"
         }
+      ],
+      "academyAugments": [
+        "DA_18_SolarTraitAugment",
+        "DA_PandorasBench",
+        "DA_PrismaticTicket",
+        "DA_NoScoutNoPivot",
+        "DA_HeroicGrabBagPlus",
+        "DA_MissedConnections",
+        "DA_PortableForge",
+        "DA_CraftedCrafting"
       ]
     },
     {
@@ -1237,6 +1324,16 @@
           "item": "DA_Artifact_Dawncore",
           "unit": "DA_18_Warwick"
         }
+      ],
+      "academyAugments": [
+        "DA_WorththeWaitII",
+        "DA_HeroicGrabBagPlus",
+        "DA_URF",
+        "DA_UrfsGrabBag",
+        "DA_CookingPot",
+        "DA_GroupHugI",
+        "DA_CarveAPath",
+        "DA_SwordOverflow"
       ]
     },
     {
@@ -1356,6 +1453,16 @@
           "item": "DA_Artifact_BlightingJewel",
           "unit": "DA_18_Morgana"
         }
+      ],
+      "academyAugments": [
+        "DA_18_CovenTraitAugment_LootToAP",
+        "DA_18_CovenTraitAugment",
+        "DA_WandOverflow",
+        "DA_SeraphimsStaff",
+        "DA_Staffsmith",
+        "DA_DeadlierCaps",
+        "DA_BoosterPack",
+        "DA_18_OnesTwosThree"
       ]
     },
     {
@@ -1466,6 +1573,16 @@
           "item": "DA_18_EmblemJuggernaut",
           "unit": "DA_18_Kennen"
         }
+      ],
+      "academyAugments": [
+        "DA_BlackthornTraitAugment",
+        "DA_18_BigGrabBag",
+        "DA_CyberneticUplink_Gold",
+        "DA_CommerceCore",
+        "DA_SpreadingRoots",
+        "DA_TheTraitTree",
+        "DA_CarveAPath",
+        "DA_BoxingLessons"
       ]
     },
     {
@@ -1561,7 +1678,17 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": []
+      "keyItems": [],
+      "academyAugments": [
+        "DA_WorththeWaitII",
+        "DA_18_CaretakersAlly",
+        "DA_DeadlierCaps",
+        "DA_18_SprykinAugment",
+        "DA_SoloPlate",
+        "DA_TradeSector",
+        "DA_PandorasBench",
+        "DA_NoScoutNoPivot"
+      ]
     },
     {
       "slug": "invoker-nidalee",
@@ -1678,6 +1805,16 @@
           "item": "DA_Artifact_StatikkShiv",
           "unit": "DA_Nidalee18_AP"
         }
+      ],
+      "academyAugments": [
+        "DA_WandOverflow",
+        "DA_SpeedyDoubleKill",
+        "DA_Staffsmith",
+        "DA_18_BigGrabBag",
+        "DA_18_PrimalAugmentPlus_Nidalee",
+        "DA_CaretakersFavor",
+        "DA_BuriedTreasuresIII",
+        "DA_TimeSkip"
       ]
     },
     {
@@ -1813,6 +1950,16 @@
           "item": "DA_Artifact_TitanicHydra",
           "unit": "DA_18_Rengar"
         }
+      ],
+      "academyAugments": [
+        "DA_ChampDelivery",
+        "DA_SpeedyDoubleKill",
+        "DA_HeroicGrabBagPlus",
+        "DA_TradeSector",
+        "DA_BoosterPack",
+        "DA_ExclusiveCustomization",
+        "DA_LatentForge",
+        "DA_LegionOfThrees"
       ]
     },
     {
@@ -1926,6 +2073,16 @@
           "item": "DA_18_EmblemSlayer",
           "unit": "DA_18_Elise"
         }
+      ],
+      "academyAugments": [
+        "DA_18_CovenTraitAugment_LootToAP",
+        "DA_18_CovenTraitAugment",
+        "DA_WorththeWaitII",
+        "DA_CookingPot",
+        "DA_HeroicGrabBagPlus",
+        "DA_SoloPlate",
+        "DA_Staffsmith",
+        "DA_Expedition"
       ]
     },
     {
@@ -2054,6 +2211,16 @@
           "item": "DA_18_EmblemLunar",
           "unit": "DA_18_Ahri"
         }
+      ],
+      "academyAugments": [
+        "DA_JeweledLotus_I",
+        "DA_JeweledLotus_II",
+        "DA_GlassCannon_Silver",
+        "DA_18_FOURcing",
+        "DA_Staffsmith",
+        "DA_CyberneticUplink_Gold",
+        "DA_BronzeForLifeI",
+        "DA_BronzeForLifeII"
       ]
     },
     {
@@ -2192,6 +2359,16 @@
           "item": "DA_18_EmblemInferno",
           "unit": "DA_18_Ashe"
         }
+      ],
+      "academyAugments": [
+        "DA_18_BigGrabBag",
+        "DA_CyberneticUplink_Gold",
+        "DA_CommerceCore",
+        "DA_SpreadingRoots",
+        "DA_TheTraitTree",
+        "DA_BoxingLessons",
+        "DA_LateGameScaling",
+        "DA_LateGameSpecialist"
       ]
     },
     {
@@ -2302,6 +2479,15 @@
           "item": "DA_18_EmblemSlayer",
           "unit": "DA_18_KhaZix"
         }
+      ],
+      "academyAugments": [
+        "DA_TraitLadder",
+        "DA_Coronation",
+        "DA_MagicRoll",
+        "DA_UrfsGrabBag",
+        "DA_URF",
+        "DA_SpreadingRootsPlus",
+        "DA_18_BranchingOutPlus"
       ]
     },
     {
@@ -2392,7 +2578,17 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": []
+      "keyItems": [],
+      "academyAugments": [
+        "DA_18_SolarTraitAugment",
+        "DA_PandorasBench",
+        "DA_PrismaticTicket",
+        "DA_NoScoutNoPivot",
+        "DA_HeroicGrabBagPlus",
+        "DA_MissedConnections",
+        "DA_PortableForge",
+        "DA_CraftedCrafting"
+      ]
     },
     {
       "slug": "moo-nara",
@@ -2502,6 +2698,16 @@
           "item": "DA_Artifact_Dawncore",
           "unit": "DA_18_Yunara"
         }
+      ],
+      "academyAugments": [
+        "DA_WorththeWaitII",
+        "DA_Swordsmith",
+        "DA_GlassCannon_Silver",
+        "DA_SwordOverflow",
+        "DA_SoloPlate",
+        "DA_URF",
+        "DA_UrfsGrabBag",
+        "DA_SpreadingRoots"
       ]
     },
     {
@@ -2587,6 +2793,16 @@
           "item": "DA_Artifact_LudensTempest",
           "unit": "DA_18_Veigar"
         }
+      ],
+      "academyAugments": [
+        "DA_LivingForge",
+        "DA_ForgedInStrength",
+        "DA_PortableForge",
+        "DA_LatentForge",
+        "DA_18_FloraFatalisAugment",
+        "DA_MissedConnections",
+        "DA_PandorasBench",
+        "DA_DeadlierCaps"
       ]
     },
     {
@@ -2702,6 +2918,16 @@
           "item": "DA_18_EmblemFae",
           "unit": "DA_18_Rengar"
         }
+      ],
+      "academyAugments": [
+        "DA_SpreadingRoots",
+        "DA_SpreadingRootsPlus",
+        "DA_18_BranchingOut",
+        "DA_18_BranchingOutPlus",
+        "DA_TheTraitTree",
+        "DA_HeroicGrabBagPlusPlus",
+        "DA_LegionOfThrees",
+        "DA_18_BigGrabBag"
       ]
     },
     {
@@ -2813,6 +3039,16 @@
           "item": "DA_Artifact_NavoriFlickerblade",
           "unit": "DA_18_Tristana"
         }
+      ],
+      "academyAugments": [
+        "DA_URF",
+        "DA_UrfsGrabBag",
+        "DA_18_BranchingOut",
+        "DA_18_BranchingOutPlus",
+        "DA_SpreadingRoots",
+        "DA_SpreadingRootsPlus",
+        "DA_HeroicGrabBagPlusPlus",
+        "DA_Swordsmith"
       ]
     },
     {
@@ -2924,7 +3160,17 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": []
+      "keyItems": [],
+      "academyAugments": [
+        "DA_18_RivalsAugment",
+        "DA_HeroicGrabBagPlus",
+        "DA_HeroicGrabBagPlusPlus",
+        "DA_Swordsmith",
+        "DA_18_BigGrabBag",
+        "DA_GoldenGamblePlus",
+        "DA_SmallGrabBag",
+        "DA_SalvageBinPlus"
+      ]
     }
   ],
   "curatedKeyItems": {

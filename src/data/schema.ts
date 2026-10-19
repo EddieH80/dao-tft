@@ -66,6 +66,11 @@ export const CompSchema = z.object({
       }),
     )
     .default([]),
+  /**
+   * TFT Academy's recommended augments, written by scripts/fetch-tftacademy.ts.
+   * Used as "good" picks until the comp gets its own entry in comp-augments.json.
+   */
+  academyAugments: z.array(Id).max(MAX_COMP_AUGMENTS).optional(),
   frontlineAlternatives: z.array(Id),
   /** Artifacts and emblems the comp is built around; holding one pushes the player toward it. */
   keyItems: z.array(z.object({ item: Id, unit: Id })).default([]),

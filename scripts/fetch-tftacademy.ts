@@ -6,15 +6,18 @@
  * skipped (see COVERED), but their artifacts and emblems are kept in
  * `curatedKeyItems` and merged into the hand-written comp.
  *
- * Augment picks are not written here: they live in the hand-edited
- * src/data/comp-augments.json. This script lists the augments TFT Academy
- * recommends that the file does not have yet, so they can be added by hand.
+ * Augment picks live in the hand-edited src/data/comp-augments.json. Each
+ * converted comp also gets TFT Academy's picks in `academyAugments`, which the
+ * app uses until the comp has its own entry there, so a comp new to the tier
+ * list works right away. This script lists the augments TFT Academy recommends
+ * that the file does not have yet, and the entries for comps that have left
+ * the tier list, so the file can be tidied by hand.
  *
  * Usage: npm run fetch-comps
  */
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import type { Comp, CompAugments, Snapshot } from "../src/data/schema";
+import { MAX_COMP_AUGMENTS, type Comp, type CompAugments, type Snapshot } from "../src/data/schema";
 import { writeData } from "./write-data";
 
 const PAGE = "https://tftacademy.com/tierlist/comps";
@@ -194,7 +197,15 @@ function convert(guide: Guide, snapshot: Snapshot): ConvertedComp {
     stages: guide.tips.filter((t) => t.tip.trim()).map((t) => ({ stage: t.stage, tip: t.tip.trim() })),
     frontlineAlternatives: [],
     keyItems: keyItems(guide, snapshot),
+    academyAugments: academyAugments(guide, snapshot),
   };
+}
+
+/** The augments the guide recommends that the snapshot knows, in its order. */
+function academyAugments(guide: Guide, snapshot: Snapshot): string[] {
+  const known = new Set(snapshot.augments.map((a) => a.id));
+  const ids = guide.augments.filter((a) => !a.disabled && known.has(a.apiName)).map((a) => a.apiName);
+  return [...new Set(ids)].slice(0, MAX_COMP_AUGMENTS);
 }
 
 async function main() {
@@ -240,12 +251,22 @@ function reportMissingAugments(live: Guide[], snapshot: Snapshot, patch: string)
     const slug = COVERED[guide.title.trim()] ?? slugify(guide.title);
     const have = new Set((listed[slug] ?? []).map((e) => e.augment));
     const missing = guide.augments.filter((a) => !a.disabled && names.has(a.apiName) && !have.has(a.apiName));
-    if (!listed[slug]) lines.push(`  ${slug}: not in the file yet`);
+    if (!listed[slug]) lines.push(`  ${slug}: not in the file yet, so it uses TFT Academy's picks`);
     if (missing.length) lines.push(`  ${slug}: ${missing.map((a) => `${a.apiName} (${names.get(a.apiName)})`).join(", ")}`);
   }
-  if (!lines.length) return console.log(`comp-augments.json has every augment TFT Academy recommends for ${patch}.`);
-  console.log(`TFT Academy (${patch}) recommends augments comp-augments.json does not list. Add them by hand:`);
-  console.log(lines.join("\n"));
+  if (!lines.length) console.log(`comp-augments.json has every augment TFT Academy recommends for ${patch}.`);
+  else {
+    console.log(`TFT Academy (${patch}) recommends augments comp-augments.json does not list. Add them by hand:`);
+    console.log(lines.join("\n"));
+  }
+
+  const handWritten = readdirSync(resolve(__dirname, "../src/data/comps")).map((f) => f.replace(/\.json$/, ""));
+  const current = new Set([...handWritten, ...live.map((g) => slugify(g.title))]);
+  const unused = Object.keys(listed).filter((slug) => !current.has(slug));
+  if (unused.length) {
+    console.log("comp-augments.json lists comps that are no longer on the tier list. Delete them, or keep them in case they return:");
+    console.log(unused.map((slug) => `  ${slug}`).join("\n"));
+  }
 }
 
 main().catch((e) => {
