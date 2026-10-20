@@ -56,6 +56,7 @@ export const emptyState = (components: ComponentBag = {}): GameState => ({
   components,
   items: [],
   board: [],
+  stars: {},
   augments: [],
   scout: { contested: {} },
   level: 8,

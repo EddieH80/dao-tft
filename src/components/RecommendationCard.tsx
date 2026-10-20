@@ -2,6 +2,7 @@ import Link from "next/link";
 import { catalog } from "@/data";
 import { augmentStrength, type AugmentStrength } from "@/data/schema";
 import type { HitTarget, Recommendation } from "@/engine/types";
+import { REROLL_MISS } from "@/engine/router";
 import { carrySwaps, openFrontline } from "@/engine/scout";
 import { Icon } from "./Icon";
 import { FitBadge, TagPill, TierPill } from "./ui";
@@ -17,6 +18,13 @@ interface Props {
 }
 
 const HITS_SHOWN = 3;
+
+/** A bonus in fit grades, as the card says it: "half a fit grade", "one fit grade", "two fit grades". */
+function grades(bonus: number): string {
+  const n = Math.round((bonus / REROLL_MISS) * 2) / 2;
+  if (n === 0.5) return "half a fit grade";
+  return `${n === 1 ? "one" : n === 2 ? "two" : n} fit grade${n === 1 ? "" : "s"}`;
+}
 
 /** Augments worth calling out on a card; the comp page lists the merely good ones too. */
 const CALLOUT: Partial<Record<AugmentStrength, { label: string; style: string }>> = {
@@ -178,6 +186,7 @@ export function RecommendationCard({ rec, rank, ranking, contested, hits, taken 
         rec.augmentNotes.length > 0 ||
         rec.scoutPenalty > 0 ||
         rec.rerollPenalty > 0 ||
+        rec.starredCarry !== null ||
         rec.orphanItems.length > 0 ||
         rec.economy?.verdict === "stretch" ||
         rec.boardMatches.length > 0) && (
@@ -190,6 +199,12 @@ export function RecommendationCard({ rec, rank, ranking, contested, hits, taken 
           {rec.boardMatches.length > 0 && (
             <li className="text-good">
               + Your board already plays {rec.boardMatches.map((u) => catalog.unit(u).name).join(", ")}.
+            </li>
+          )}
+          {rec.starredCarry && (
+            <li className="text-good">
+              + Your {catalog.unit(rec.starredCarry.unit).name} is already {rec.starredCarry.stars}-star, so this reroll
+              comp is ranked {grades(rec.starBonus)} higher.
             </li>
           )}
           {rec.augmentNotes.map((n) => (

@@ -66,6 +66,7 @@ function StagePanel({ selection }: { selection: number }) {
   const components = useGame((s) => s.components);
   const items = useGame((s) => s.items);
   const board = useGame((s) => s.board);
+  const stars = useGame((s) => s.stars);
   const augments = useGame((s) => s.augments);
   const level = useGame((s) => s.level);
   const gold = useGame((s) => s.gold);
@@ -114,9 +115,9 @@ function StagePanel({ selection }: { selection: number }) {
   // How this pick moved the ranking, compared with the picks before it.
   const outcome = useMemo(() => {
     if (!picked) return null;
-    const before = { components, items, board, augments: augments.slice(0, selection), scout, level, gold, hp, stage };
+    const before = { components, items, board, stars, augments: augments.slice(0, selection), scout, level, gold, hp, stage };
     return engine.adviseAugments(before, [picked])[0];
-  }, [picked, selection, components, items, board, augments, scout, level, gold, hp, stage]);
+  }, [picked, selection, components, items, board, stars, augments, scout, level, gold, hp, stage]);
 
   return (
     <div className={`min-w-0 rounded-lg border p-3 ${picked ? "border-gold/60" : "border-line"} ${locked ? "opacity-50" : ""}`}>
