@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NavLinks } from "@/components/NavLinks";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -21,14 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Link href="/" className="text-lg font-semibold tracking-wide text-gold">
               道 Dao TFT
             </Link>
-            <div className="flex gap-5 text-sm text-muted">
-              <Link href="/" className="hover:text-gold-bright">
-                Router
-              </Link>
-              <Link href="/about" className="hover:text-gold-bright">
-                About
-              </Link>
-            </div>
+            <NavLinks />
           </nav>
         </header>
         <div className="flex-1">{children}</div>

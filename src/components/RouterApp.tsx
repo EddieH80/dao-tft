@@ -1,57 +1,31 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
-import { engine } from "@/data";
 import { bagSize } from "@/engine/catalog";
-import { useGame, useScout } from "@/store/useGame";
+import { useGame } from "@/store/useGame";
 import { AugmentPanel } from "./AugmentPanel";
 import { BoardPicker } from "./BoardPicker";
 import { ComponentPicker } from "./ComponentPicker";
 import { HeldItemsPicker } from "./HeldItemsPicker";
-import { LiveSummary } from "./LiveSummary";
-import { QuickBar } from "./QuickBar";
 import { Branch, Connector, FlowLabel, SideArrow } from "./flow";
 import { RecommendationCard } from "./RecommendationCard";
 import { ScoutPanel } from "./ScoutPanel";
+import { useRanking } from "./useRanking";
 
 const BRANCHES = 3;
 const EXTRA = 2;
 
 export function RouterApp() {
-  const components = useGame((s) => s.components);
-  const items = useGame((s) => s.items);
-  const board = useGame((s) => s.board);
-  const augments = useGame((s) => s.augments);
-  const level = useGame((s) => s.level);
-  const gold = useGame((s) => s.gold);
-  const hp = useGame((s) => s.hp);
-  const stage = useGame((s) => s.stage);
-  const goldEstimated = useGame((s) => s.goldEstimated);
-  const scout = useScout();
+  const { state, ranking, hits } = useRanking(BRANCHES + EXTRA);
+  const { components, items, board, augments, scout, stage, gold } = state;
   const boardSkipped = useGame((s) => s.boardSkipped);
   const augmentSkipped = useGame((s) => s.augmentSkipped);
 
-  // The saved game loads after the first render, so the static HTML matches it.
-  useEffect(() => {
-    void useGame.persist.rehydrate();
-  }, []);
-
   // Each step appears once the one before it has an answer.
-  const showBoard = bagSize(components) > 0 || items.length > 0;
+  // A game started from the quick bar may have no components yet, so anything entered opens the board step.
+  const showBoard =
+    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
   const showAugment = showBoard && (board.length > 0 || boardSkipped);
   const showResults = showAugment && (augments.length > 0 || augmentSkipped);
-  // The quick bar can set any part of the game in any order, so the summary shows as soon as there is one.
-  const started = showBoard || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
-
-  const state = useMemo(
-    () => ({ components, items, board, augments, scout, level, gold, hp, stage }),
-    [components, items, board, augments, scout, level, gold, hp, stage],
-  );
-  const ranking = useMemo(() => engine.rank(state), [state]);
-  const hits = useMemo(
-    () => new Map(ranking.slice(0, BRANCHES + EXTRA).map((r) => [r.comp.slug, engine.hitNext(r.comp, state)])),
-    [ranking, state],
-  );
 
   const extra = ranking.slice(BRANCHES, BRANCHES + EXTRA);
 
@@ -67,19 +41,7 @@ export function RouterApp() {
   );
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-8">
-      <QuickBar />
-      {started && (
-        <LiveSummary
-          ranking={ranking}
-          hits={hits}
-          stage={stage}
-          level={level}
-          gold={gold}
-          goldEstimated={goldEstimated}
-          hp={hp}
-        />
-      )}
+    <main className="mx-auto max-w-7xl px-4 py-8">
 
       {!showBoard && (
         <div className="mx-auto mb-6 max-w-2xl text-center">
