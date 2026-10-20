@@ -14,6 +14,7 @@ const start: QuickState = {
   components: {},
   items: [],
   board: [],
+  stars: {},
   augments: [],
   level: 4,
   gold: null,
@@ -120,5 +121,32 @@ describe("next round", () => {
   it("pays nothing on the carousel or without a known gold", () => {
     expect(advanceRound({ ...start, stage: "3-3", gold: 34 }, economyModel)).toMatchObject({ stage: "3-4", gold: 34 });
     expect(advanceRound({ ...start, stage: "3-2" }, economyModel).gold).toBeNull();
+  });
+
+  it("sets a unit's star level with *2 or *3, adding or upgrading it", () => {
+    const added = run("kha zix*2 ahri");
+    expect(added.ok).toBe(true);
+    expect(added.state.board).toEqual(["DA_18_KhaZix", "DA_18_Ahri"]);
+    expect(added.state.stars).toEqual({ DA_18_KhaZix: 2 });
+
+    const upgraded = run("khazix*3", added.state);
+    expect(upgraded.ok).toBe(true);
+    expect(upgraded.state.stars).toEqual({ DA_18_KhaZix: 3 });
+    expect(run("khazix*1", upgraded.state).state.stars).toEqual({});
+    expect(run("khazix*3", upgraded.state).ok).toBe(false);
+  });
+
+  it("forgets a unit's star level when it leaves the board", () => {
+    const state = { board: ["DA_18_KhaZix", "DA_18_Ahri"], stars: { DA_18_KhaZix: 3 as const, DA_18_Ahri: 2 as const } };
+    expect(run("-khazix", state).state.stars).toEqual({ DA_18_Ahri: 2 });
+    expect(run("l2", { ...state, board: ["DA_18_Ahri", "DA_18_RekSai", "DA_18_KhaZix"] }).state.stars).toEqual({
+      DA_18_Ahri: 2,
+    });
+  });
+
+  it("rejects a star level on anything but a unit being added", () => {
+    expect(run("bf*2").ok).toBe(false);
+    expect(run("52*2").ok).toBe(false);
+    expect(run("-khazix*2", { board: ["DA_18_KhaZix"] }).ok).toBe(false);
   });
 });

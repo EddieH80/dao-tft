@@ -21,6 +21,7 @@ const HELP: [string, string][] = [
   ["h64", "HP"],
   ["4-2", "round"],
   ["ie jinx", "add"],
+  ["jinx*2", "star level"],
   ["-bf", "remove"],
   ["+ie", "add without using components"],
   ["u", "undo"],

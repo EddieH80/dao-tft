@@ -15,7 +15,9 @@ import type {
   GameState,
   HitTarget,
   Recommendation,
+  StarLevel,
   TargetEntry,
+  UnitId,
 } from "./types";
 
 export const TIER_WEIGHT: Record<Tier, number> = { S: 1, A: 0.85, B: 0.7, C: 0.5 };
@@ -45,6 +47,19 @@ export function boardWeight(level: number): number {
 const FIT_BAND_GAP = 0.2;
 /** How far a reroll comp without its carries falls: one fit grade. */
 export const REROLL_MISS = FIT_BAND_GAP;
+/**
+ * Added to a reroll comp by its best-starred carry. A 3-star carry means the
+ * reroll is already paid for, so it lifts the comp a full fit grade; a 2-star
+ * one, which a player who is not rerolling also often has, half a grade.
+ */
+export const STAR_BONUS: Record<StarLevel, number> = { 1: 0, 2: FIT_BAND_GAP / 2, 3: FIT_BAND_GAP };
+/** A 3-star 3-cost carry takes far more rolling than a 1- or 2-cost one, so it lifts the comp two fit grades. */
+export const THREE_COST_THREE_STAR_BONUS = 2 * FIT_BAND_GAP;
+
+/** What a reroll carry at this star level adds to its comp. */
+export function starBonus(stars: StarLevel, cost: number): number {
+  return stars === 3 && cost === 3 ? THREE_COST_THREE_STAR_BONUS : STAR_BONUS[stars];
+}
 /** Taken off for each held item no unit in the comp would use well: one and a half fit grades. */
 export const ORPHAN_ITEM_PENALTY = 1.5 * FIT_BAND_GAP;
 /** A taken augment or the player's economy rules this comp out; it is graded D and listed last. */
@@ -190,7 +205,10 @@ export class TftEngine {
     const penalty = scoutPenalty(comp, state.scout);
     const { fit: boardFit, matches } = this.boardFit(comp, state.board);
     const boardBonus = boardWeight(state.level) * boardFit;
-    const base = coverage * TIER_WEIGHT[comp.tier] + bonus + held.bonus + boardBonus - penalty - orphanPenalty;
+    const starredCarry = this.starredCarry(comp, state.board, state.stars);
+    const starred = starredCarry?.bonus ?? 0;
+    const base =
+      coverage * TIER_WEIGHT[comp.tier] + bonus + held.bonus + boardBonus + starred - penalty - orphanPenalty;
     const carried = this.missesRerollCarries(comp, state.board) ? demoteOneFit(base) : base;
     const rerollPenalty = base - carried;
     // A style the player's economy can only just reach drops a grade; one it cannot reach is ruled out.
@@ -212,6 +230,8 @@ export class TftEngine {
       boardMatches: matches,
       boardBonus,
       rerollPenalty,
+      starBonus: starred,
+      starredCarry: starredCarry && { unit: starredCarry.unit, stars: starredCarry.stars },
       orphanItems,
       orphanPenalty,
       unplayable,
@@ -226,6 +246,23 @@ export class TftEngine {
    */
   private missesRerollCarries(comp: Comp, board: string[]): boolean {
     return isReroll(comp) && board.length > 0 && !comp.carries.some((c) => board.includes(c));
+  }
+
+  /** The reroll comp's board carry whose star level adds the most, when it adds anything. */
+  private starredCarry(
+    comp: Comp,
+    board: UnitId[],
+    stars: Record<UnitId, StarLevel>,
+  ): { unit: UnitId; stars: StarLevel; bonus: number } | null {
+    if (!isReroll(comp)) return null;
+    let best: { unit: UnitId; stars: StarLevel; bonus: number } | null = null;
+    for (const unit of comp.carries) {
+      if (!board.includes(unit)) continue;
+      const level = stars[unit] ?? 1;
+      const bonus = starBonus(level, this.catalog.unit(unit).cost);
+      if (bonus > 0 && (!best || bonus > best.bonus)) best = { unit, stars: level, bonus };
+    }
+    return best;
   }
 
   /** Average credit per board unit: 1 if it is in the comp's opener or end board, 0.5 if it shares a trait. */

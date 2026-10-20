@@ -9,6 +9,7 @@ export function useRanking(shown: number) {
   const components = useGame((s) => s.components);
   const items = useGame((s) => s.items);
   const board = useGame((s) => s.board);
+  const stars = useGame((s) => s.stars);
   const augments = useGame((s) => s.augments);
   const level = useGame((s) => s.level);
   const gold = useGame((s) => s.gold);
@@ -22,8 +23,8 @@ export function useRanking(shown: number) {
   }, []);
 
   const state = useMemo(
-    () => ({ components, items, board, augments, scout, level, gold, hp, stage }),
-    [components, items, board, augments, scout, level, gold, hp, stage],
+    () => ({ components, items, board, stars, augments, scout, level, gold, hp, stage }),
+    [components, items, board, stars, augments, scout, level, gold, hp, stage],
   );
   const ranking = useMemo(() => engine.rank(state), [state]);
   const hits = useMemo(

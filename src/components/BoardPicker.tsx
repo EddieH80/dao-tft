@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { catalog, economyModel, engine } from "@/data";
 import { COMP_STYLES } from "@/data/schema";
 import { stageLabels, type Verdict } from "@/engine/economy";
+import { STAR_LEVELS } from "@/engine/types";
 import { LEVELS, useGame } from "@/store/useGame";
 import { FlowNode } from "./flow";
 import { traitStyle, type TraitStyle } from "@/engine/traits";
@@ -19,6 +20,8 @@ export function BoardPicker() {
   const level = useGame((s) => s.level);
   const setLevel = useGame((s) => s.setLevel);
   const toggle = useGame((s) => s.toggleUnit);
+  const stars = useGame((s) => s.stars);
+  const setStars = useGame((s) => s.setStars);
   const full = board.length >= level;
   const skip = useGame((s) => s.skipBoard);
   const gold = useGame((s) => s.gold);
@@ -120,23 +123,49 @@ export function BoardPicker() {
       )}
 
       {board.length > 0 && (
-        <ul className="mb-3 flex flex-wrap gap-2">
-          {board.map((id) => {
-            const u = catalog.unit(id);
-            return (
-              <li key={id}>
-                <button
-                  onClick={() => toggle(id)}
-                  className="flex items-center gap-1.5 rounded-full border border-gold bg-panel-2 py-0.5 pl-0.5 pr-2.5 text-sm hover:border-bad"
-                  title={`Remove ${u.name}`}
+        <>
+          <ul className="mb-1 flex flex-wrap gap-2">
+            {board.map((id) => {
+              const u = catalog.unit(id);
+              const level = stars[id] ?? 1;
+              return (
+                <li
+                  key={id}
+                  className="flex items-center gap-1.5 rounded-full border border-gold bg-panel-2 py-0.5 pl-0.5 pr-1 text-sm"
                 >
                   <Icon src={u.icon} label={u.name} size={24} rounded="full" />
-                  {u.name} ×
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                  {u.name}
+                  <span role="radiogroup" aria-label={`${u.name} star level`} className="flex">
+                    {STAR_LEVELS.map((n) => (
+                      <button
+                        key={n}
+                        role="radio"
+                        aria-checked={level === n}
+                        aria-label={`${n}-star`}
+                        title={`${n}-star`}
+                        onClick={() => setStars(id, n)}
+                        className={`px-px leading-none ${n <= level ? "text-gold-bright" : "text-line hover:text-muted"}`}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </span>
+                  <button
+                    onClick={() => toggle(id)}
+                    className="rounded-full px-1 text-muted hover:text-bad"
+                    aria-label={`Remove ${u.name}`}
+                    title={`Remove ${u.name}`}
+                  >
+                    ×
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mb-3 text-xs text-muted">
+            Click the stars to set a unit&apos;s star level. A 2- or 3-star carry pulls toward its reroll comp.
+          </p>
+        </>
       )}
 
       {traits.length > 0 && (

@@ -1,7 +1,7 @@
 import type { Aliases, EconomyModel } from "@/data/schema";
 import type { Catalog } from "./catalog";
 import { isCarousel, nextStage, roundIncome, stageIndex, stageLabels } from "./economy";
-import type { AugmentId, ComponentBag, ItemId, UnitId } from "./types";
+import type { AugmentId, ComponentBag, ItemId, StarLevel, UnitId } from "./types";
 
 /**
  * The quick bar: one line of text updates the whole game state, so a player
@@ -11,6 +11,7 @@ import type { AugmentId, ComponentBag, ItemId, UnitId } from "./types";
  * - `n` / `next`: next round (stage +1, gold plus income, marked as an estimate).
  * - A name or alias adds a unit, component, item or augment; `-name` removes it.
  *   A crafted item uses up its two components when both are held; `+name` adds it without.
+ * - `jinx*2`: a unit at a star level, added or, if it is on the board, upgraded.
  * - `u` / `undo` on its own undoes the last change.
  */
 
@@ -19,6 +20,7 @@ export interface QuickState {
   components: ComponentBag;
   items: ItemId[];
   board: UnitId[];
+  stars: Record<UnitId, StarLevel>;
   augments: AugmentId[];
   level: number;
   gold: number | null;
@@ -123,7 +125,7 @@ type Action =
   | { kind: "gold" | "level" | "hp"; value: number }
   | { kind: "stage"; value: string }
   | { kind: "next" }
-  | { kind: "add" | "remove"; entry: Entry; keepComponents: boolean }
+  | { kind: "add" | "remove"; entry: Entry; keepComponents: boolean; stars: StarLevel | null }
   | { kind: "error"; text: string };
 
 /** Reads one command word, or returns null if the word is not a command. */
@@ -137,9 +139,23 @@ function command(word: string): Action | null {
   return null;
 }
 
+/** Star levels in board order, with only the units still on the board. */
+export function starsOn(board: UnitId[], stars: Record<UnitId, StarLevel>): Record<UnitId, StarLevel> {
+  return Object.fromEntries(board.filter((u) => (stars[u] ?? 1) > 1).map((u) => [u, stars[u]]));
+}
+
 /** Splits a line into actions, matching the longest run of words that names something. */
 function parse(input: string, lexicon: QuickLexicon): Action[] {
-  const words = input.trim().split(/\s+/).filter(Boolean);
+  // A "*2" or "*3" ends a unit's name and gives its star level.
+  const tokens = input
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => {
+      const m = w.match(/^(.+)\*([123])$/);
+      return m ? { word: m[1], stars: Number(m[2]) as StarLevel } : { word: w, stars: null };
+    });
+  const words = tokens.map((t) => t.word);
   const actions: Action[] = [];
   let i = 0;
   while (i < words.length) {
@@ -148,12 +164,15 @@ function parse(input: string, lexicon: QuickLexicon): Action[] {
     const first = raw.slice(sign.length);
     const cmd = sign ? null : command(first.toLowerCase());
     if (cmd) {
-      actions.push(cmd);
+      actions.push(tokens[i].stars ? { kind: "error", text: `Only units have a star level ("${raw}*")` } : cmd);
       i++;
       continue;
     }
 
-    const spans = Array.from({ length: Math.min(MAX_WORDS, words.length - i) }, (_, n) => n + 1).reverse();
+    // A name can run up to, but not past, a word with a star level.
+    const starAt = tokens.findIndex((t, k) => k >= i && t.stars !== null);
+    const reach = Math.min(MAX_WORDS, words.length - i, starAt < 0 ? Infinity : starAt - i + 1);
+    const spans = Array.from({ length: reach }, (_, n) => n + 1).reverse();
     const keyOf = (n: number) => normalize([first, ...words.slice(i + 1, i + n)].join(""));
     const text = (n: number) => [first, ...words.slice(i + 1, i + n)].join(" ");
     const name = (e: Entry) => e.name;
@@ -165,7 +184,12 @@ function parse(input: string, lexicon: QuickLexicon): Action[] {
         if (!found.length) continue;
         actions.push(
           found.length === 1
-            ? { kind: sign === "-" ? "remove" : "add", entry: found[0], keepComponents: sign === "+" }
+            ? {
+                kind: sign === "-" ? "remove" : "add",
+                entry: found[0],
+                keepComponents: sign === "+",
+                stars: tokens[i + n - 1].stars,
+              }
             : {
                 kind: "error",
                 text: `"${text(n)}" could be ${found.slice(0, 3).map(name).join(", ")}${found.length > 3 ? "…" : ""}`,
@@ -230,7 +254,8 @@ export function runQuick(input: string, state: QuickState, ctx: QuickContext): Q
           break;
         }
         const dropped = s.board.slice(a.value);
-        s = { ...s, level: a.value, board: s.board.slice(0, a.value) };
+        const board = s.board.slice(0, a.value);
+        s = { ...s, level: a.value, board, stars: starsOn(board, s.stars) };
         ok(`Level ${a.value}` + (dropped.length ? ` (drops ${dropped.map((u) => catalog.unit(u).name).join(", ")})` : ""));
         break;
       }
@@ -247,7 +272,7 @@ export function runQuick(input: string, state: QuickState, ctx: QuickContext): Q
         break;
       case "add":
       case "remove": {
-        const step = change(s, a.kind, a.entry, a.keepComponents, ctx);
+        const step = change(s, a.kind, a.entry, a.keepComponents, a.stars, ctx);
         if (typeof step === "string") fail(step);
         else {
           s = step.state;
@@ -266,10 +291,13 @@ function change(
   kind: "add" | "remove",
   e: Entry,
   keepComponents: boolean,
+  stars: StarLevel | null,
   ctx: QuickContext,
 ): { state: QuickState; text: string } | string {
   const { catalog } = ctx;
   const add = kind === "add";
+  if (stars !== null && e.type !== "unit") return `Only units have a star level (${e.name})`;
+  if (stars !== null && !add) return `Remove ${e.name} without a star level`;
   switch (e.type) {
     case "component": {
       const have = s.components[e.id] ?? 0;
@@ -298,11 +326,20 @@ function change(
     case "unit": {
       if (!add) {
         if (!s.board.includes(e.id)) return `${e.name} is not on your board`;
-        return { state: { ...s, board: s.board.filter((u) => u !== e.id) }, text: `− ${e.name}` };
+        const board = s.board.filter((u) => u !== e.id);
+        return { state: { ...s, board, stars: starsOn(board, s.stars) }, text: `− ${e.name}` };
       }
-      if (s.board.includes(e.id)) return `${e.name} is already on your board`;
+      const label = stars ? `${e.name} ${stars}★` : e.name;
+      const withStars = { ...s.stars, [e.id]: stars ?? 1 };
+      if (s.board.includes(e.id)) {
+        // Naming a board unit with a star level upgrades it.
+        if (stars === null) return `${e.name} is already on your board`;
+        if ((s.stars[e.id] ?? 1) === stars) return `${e.name} is already ${stars}★`;
+        return { state: { ...s, stars: starsOn(s.board, withStars) }, text: label };
+      }
       if (s.board.length >= s.level) return `Board is full at level ${s.level}`;
-      return { state: { ...s, board: [...s.board, e.id] }, text: `+ ${e.name}` };
+      const board = [...s.board, e.id];
+      return { state: { ...s, board, stars: starsOn(board, withStars) }, text: `+ ${label}` };
     }
     case "augment": {
       const at = s.augments.indexOf(e.id);

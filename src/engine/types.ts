@@ -6,6 +6,10 @@ export type UnitId = string;
 export type ItemId = string;
 export type AugmentId = string;
 
+/** A unit's star level; 1 is a single copy. */
+export type StarLevel = 1 | 2 | 3;
+export const STAR_LEVELS: StarLevel[] = [1, 2, 3];
+
 /** Component id -> how many the player holds. */
 export type ComponentBag = Record<ComponentId, number>;
 
@@ -20,6 +24,8 @@ export interface GameState {
   items: ItemId[];
   /** Units on the player's board right now; updated as the game goes on. */
   board: UnitId[];
+  /** Board unit -> its star level when above 1; a unit missing here is 1-star. */
+  stars: Record<UnitId, StarLevel>;
   augments: AugmentId[];
   scout: ScoutState;
   /** Player level; the board counts for more as it rises. */
@@ -81,6 +87,10 @@ export interface Recommendation {
   boardBonus: number;
   /** Taken off a reroll comp when the board has none of its carries. */
   rerollPenalty: number;
+  /** Added to a reroll comp whose carry is already 2- or 3-star on the board. */
+  starBonus: number;
+  /** The carry that earned `starBonus`, and its star level. */
+  starredCarry: { unit: UnitId; stars: StarLevel } | null;
   /** Held items no unit in this comp would use well, one entry per copy. */
   orphanItems: ItemId[];
   orphanPenalty: number;

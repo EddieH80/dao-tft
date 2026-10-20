@@ -42,6 +42,7 @@ The quick bar on the [Quick](/quick) page (the header switches between it and th
 | Enter on an empty bar, or `n` | next round: the round moves on and gold gets a round's income, shown as `~` until you type the real figure |
 | `38`, `l7`, `h64`, `4-2` | gold, level, HP, round |
 | `jinx`, `bow`, `ie`, `unrivaled` | add a unit, component, item or augment by name, prefix or shorthand |
+| `jinx*2`, `kha zix*3` | a unit at a star level: added, or upgraded if it is already on the board (`*1` resets it) |
 | `-bf` | remove it |
 | `+ie` | add an item without using up components (an item crafted from held components uses them up) |
 | `u`, or Ctrl/Cmd+Z on an empty bar | undo |
@@ -74,7 +75,7 @@ score = (value / best possible value for n components) × tier weight
 
 **Your economy decides which styles are realistic.** Given the player's stage, gold, level and HP, [`src/engine/economy.ts`](src/engine/economy.ts) plays the game forward round by round: income plus interest, 2 free XP a round, and a typical loss on most player rounds. It stops when the player can buy up to the style's roll level and still has its roll-down gold. A style reached only after its deadline, or after the projected HP runs out, is *unrealistic*: graded D and listed last. One reached after its usual spike, or at more than half the player's HP, or a reroll the player has out-levelled by two, is a *stretch* and drops one fit grade. Level 8 with 30 gold and 20 HP on 4-2 rules out Fast 9; level 5 with 60 gold on 3-5 leaves only 1- and 2-cost rerolls realistic. More than ten rounds out the projection only rules a style out, so every style stays open at 2-1. With no stage or gold given, nothing changes.
 
-**Reroll comps need their carries.** A reroll comp whose carries are all missing from a non-empty board drops exactly one fit grade, however well the items suit it. An empty board is not penalised, since it says nothing yet.
+**Reroll comps need their carries.** A reroll comp whose carries are all missing from a non-empty board drops exactly one fit grade, however well the items suit it. An empty board is not penalised, since it says nothing yet. A reroll comp whose carry is already starred up rises instead: half a fit grade for a 2-star carry, which a player who is not rerolling often has too, and a full grade for a 3-star one, since the reroll is already paid for. A 3-star 3-cost carry takes far more rolling to reach, so it adds two grades. With several carries on the board, the one that adds the most counts. Stars on the rest of the board, or in a non-reroll comp, change nothing. Set a unit's stars on its board chip, or with `*2` / `*3` in the quick bar.
 
 **Held items need a holder.** Each completed item, artifact or emblem the player holds that no unit in a comp would use well costs that comp 0.3, one and a half fit grades. An item has a holder if the comp builds it, a guide or tactics.tools puts it on one of the comp's units, the comp runs the emblem's trait, or one of its units builds it in any guide. Failing that, the item's role in [`src/engine/items.ts`](src/engine/items.ts) decides: tank items fit any frontline, AD and AP items fit carries already building that damage type, and hybrid items fit anyone. So Deathblade sinks an AP comp, while Sunfire Cape sinks nothing.
 

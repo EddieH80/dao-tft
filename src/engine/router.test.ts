@@ -4,7 +4,7 @@ import { ITEM, TEST_COMPS, catalog, emptyState, makeComp, testEngine } from "./f
 import { ITEM_ROLE, NO_ITEM_STATS } from "./items";
 import { AUGMENT_CAP } from "./augments";
 import { carrySwaps, openFrontline, scoutFromOpponents, scoutPenalty } from "./scout";
-import { ORPHAN_ITEM_PENALTY, REROLL_MISS, boardWeight, demoteOneFit, fitFor, isRuledOut } from "./router";
+import { ORPHAN_ITEM_PENALTY, REROLL_MISS, STAR_BONUS, boardWeight, starBonus, demoteOneFit, fitFor, isRuledOut } from "./router";
 import type { GameState, Recommendation } from "./types";
 
 describe("rank", () => {
@@ -320,6 +320,56 @@ describe("reroll comps", () => {
     const other = makeComp("other", "A", "u-other", items);
     const ranking = testEngine([sTierReroll, other]).rank({ ...emptyState(bag), board: [KOBUKO] });
     expect(ranking[0].comp.slug).toBe("other");
+  });
+
+  it("rises with a 2- or 3-star carry on the board", () => {
+    const starred = (comp: Comp, stars: GameState["stars"]) =>
+      testEngine([comp]).rank({ ...emptyState(bag), board: [AHRI, KARMA], stars })[0];
+    const flat = starred(reroll, {});
+    expect(flat.starBonus).toBe(0);
+    expect(flat.starredCarry).toBeNull();
+    expect(starred(reroll, { [AHRI]: 2 }).score).toBeCloseTo(flat.score + STAR_BONUS[2]);
+    const three = starred(reroll, { [AHRI]: 3 });
+    expect(three.starBonus).toBeCloseTo(REROLL_MISS);
+    expect(three.starredCarry).toEqual({ unit: AHRI, stars: 3 });
+  });
+
+  it("gives a 3-star 3-cost carry two fit grades", () => {
+    const KHAZIX = "DA_18_KhaZix"; // 3-cost
+    const r3 = makeComp("r3", "A", KHAZIX, items, { style: "reroll-3" });
+    const at = (stars: GameState["stars"]) =>
+      testEngine([r3]).rank({ ...emptyState(bag), board: [KHAZIX], stars })[0];
+    expect(at({ [KHAZIX]: 3 }).starBonus).toBeCloseTo(2 * REROLL_MISS);
+    expect(at({ [KHAZIX]: 3 }).score).toBeCloseTo(at({}).score + 2 * REROLL_MISS);
+    expect(at({ [KHAZIX]: 2 }).starBonus).toBeCloseTo(STAR_BONUS[2]);
+    // Only 3-costs: a 3-star 1-, 2- or 4-cost carry stays at one grade.
+    for (const cost of [1, 2, 4]) expect(starBonus(3, cost)).toBeCloseTo(REROLL_MISS);
+  });
+
+  it("picks the carry whose stars add the most", () => {
+    const KHAZIX = "DA_18_KhaZix";
+    const pair = makeComp("pair", "A", AHRI, items, { style: "reroll-3", carries: [AHRI, KHAZIX] });
+    const rec = testEngine([pair]).rank({
+      ...emptyState(bag),
+      board: [AHRI, KHAZIX],
+      stars: { [AHRI]: 3, [KHAZIX]: 3 },
+    })[0];
+    expect(rec.starredCarry).toEqual({ unit: KHAZIX, stars: 3 });
+  });
+
+  it("counts stars only on a reroll comp's carries", () => {
+    const rank3 = (comp: Comp, stars: GameState["stars"]) =>
+      testEngine([comp]).rank({ ...emptyState(bag), board: [AHRI, KARMA], stars })[0];
+    expect(rank3(reroll, { [KARMA]: 3 }).starBonus).toBe(0);
+    expect(rank3({ ...reroll, style: "fast-8" }, { [AHRI]: 3 }).starBonus).toBe(0);
+  });
+
+  it("lets a 3-star carry lift a reroll comp over a higher tier with the same items", () => {
+    const other = makeComp("other", "A", "u-other", items);
+    const bTier = { ...reroll, tier: "B" as const };
+    const state = { ...emptyState(bag), board: [AHRI], level: 5 };
+    expect(testEngine([bTier, other]).rank(state)[0].comp.slug).toBe("other");
+    expect(testEngine([bTier, other]).rank({ ...state, stars: { [AHRI]: 3 } })[0].comp.slug).toBe("reroll");
   });
 });
 

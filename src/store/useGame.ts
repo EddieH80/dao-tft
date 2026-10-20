@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { compBySlug, economyModel } from "@/data";
-import { advanceRound, type QuickState } from "@/engine/quick";
+import { advanceRound, starsOn, type QuickState } from "@/engine/quick";
 import { scoutFromOpponents } from "@/engine/scout";
-import type { AugmentId, ComponentId, GameState, ItemId, ScoutState, UnitId } from "@/engine/types";
+import type { AugmentId, ComponentId, GameState, ItemId, ScoutState, StarLevel, UnitId } from "@/engine/types";
 
 export const OPPONENTS = 7;
 export const LEVELS = [2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -36,6 +36,8 @@ interface GameStore extends Game {
   addItem: (id: ItemId) => void;
   removeItem: (id: ItemId) => void;
   toggleUnit: (id: UnitId) => void;
+  /** Star level of a unit already on the board. */
+  setStars: (id: UnitId, stars: StarLevel) => void;
   skipBoard: () => void;
   skipAugment: () => void;
   /**
@@ -56,6 +58,7 @@ const initial: Game = {
   components: {},
   items: [],
   board: [],
+  stars: {},
   level: 4,
   gold: null,
   goldEstimated: false,
@@ -74,6 +77,7 @@ export const quickStateOf = (s: Game): QuickState => ({
   components: s.components,
   items: s.items,
   board: s.board,
+  stars: s.stars,
   augments: s.augments,
   level: s.level,
   gold: s.gold,
@@ -119,15 +123,29 @@ export const useGame = create<GameStore>()(
             const i = s.items.lastIndexOf(id);
             return i < 0 ? s : { items: s.items.filter((_, j) => j !== i) };
           }),
-        setLevel: (level) => change((s) => (s.level === level ? s : { level, board: s.board.slice(0, level) })),
+        setLevel: (level) =>
+          change((s) => {
+            if (s.level === level) return s;
+            const board = s.board.slice(0, level);
+            return { level, board, stars: starsOn(board, s.stars) };
+          }),
         setGold: (gold) => change((s) => (s.gold === gold ? s : { gold, goldEstimated: false }), "gold"),
         setHp: (hp) => change((s) => (s.hp === hp ? s : { hp }), "hp"),
         setStage: (stage) => change((s) => (s.stage === stage ? s : { stage })),
         toggleUnit: (id) =>
           change((s) => {
-            if (s.board.includes(id)) return { board: s.board.filter((u) => u !== id) };
+            if (s.board.includes(id)) {
+              const board = s.board.filter((u) => u !== id);
+              return { board, stars: starsOn(board, s.stars) };
+            }
             return s.board.length < s.level ? { board: [...s.board, id] } : s;
           }),
+        setStars: (id, stars) =>
+          change((s) =>
+            !s.board.includes(id) || (s.stars[id] ?? 1) === stars
+              ? s
+              : { stars: starsOn(s.board, { ...s.stars, [id]: stars }) },
+          ),
         skipBoard: () => change((s) => (s.boardSkipped ? s : { boardSkipped: true })),
         skipAugment: () => change((s) => (s.augmentSkipped ? s : { augmentSkipped: true })),
         pickAugment: (selection, id) =>
