@@ -85,21 +85,7 @@ export function BoardPicker() {
       </div>
 
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-        <label className="flex items-center gap-2">
-          <span className="text-muted">Stage</span>
-          <select
-            value={stage ?? ""}
-            onChange={(e) => setStage(e.target.value || null)}
-            className="rounded-md border border-line bg-ink px-2 py-1 text-sm"
-          >
-            <option value="">—</option>
-            {STAGES.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </label>
+        <StageField value={stage} onChange={setStage} />
         <NumberField label="Gold" value={gold} onChange={setGold} max={200} estimated={goldEstimated} />
         <NumberField label="HP" value={hp} onChange={setHp} max={100} />
       </div>
@@ -117,7 +103,10 @@ export function BoardPicker() {
           })}
         </p>
       ) : (
-        <p className="mb-3 text-xs text-muted">Add your stage and gold to rule out comp styles you cannot reach.</p>
+        <p className="mb-3 text-xs text-muted">
+          Add your {[stage === null && "stage", gold === null && "gold"].filter(Boolean).join(" and ")} to see which
+          comp styles (reroll, fast 8, fast 9…) you can reach.
+        </p>
       )}
 
       {board.length > 0 && (
@@ -227,7 +216,56 @@ export function BoardPicker() {
   );
 }
 
-const STAGES = stageLabels(economyModel);
+/** Every round from 2-1 to 7-7. */
+const STAGES = new Set(stageLabels(economyModel));
+const FIRST_STAGE = "2-1";
+const LAST_STAGE = [...STAGES].at(-1)!;
+
+/**
+ * A round typed as "3-2". Only a real round from 2-1 to the last stage is
+ * saved; anything else stays in the box, marked, until it is fixed or cleared.
+ */
+function StageField({ value, onChange }: { value: string | null; onChange: (stage: string | null) => void }) {
+  const [draft, setDraft] = useState(value ?? "");
+  // The stage also changes from elsewhere ("next round", the quick bar); show it when it does.
+  const [shown, setShown] = useState(value);
+  if (value !== shown) {
+    setShown(value);
+    setDraft(value ?? "");
+  }
+  const text = draft.trim();
+  const invalid = text !== "" && !STAGES.has(text);
+
+  return (
+    <label className="flex items-center gap-2">
+      <span className="text-muted">Stage</span>
+      <input
+        value={draft}
+        onChange={(e) => {
+          const next = e.target.value;
+          setDraft(next);
+          const t = next.trim();
+          if (t === "") onChange(null);
+          else if (STAGES.has(t)) onChange(t);
+        }}
+        onBlur={() => !invalid && setDraft(value ?? "")}
+        placeholder="3-2"
+        maxLength={3}
+        autoComplete="off"
+        aria-invalid={invalid}
+        aria-describedby={invalid ? "stage-error" : undefined}
+        className={`w-14 rounded-md border bg-ink px-2 py-1 text-sm placeholder:text-muted ${
+          invalid ? "border-bad" : "border-line"
+        }`}
+      />
+      {invalid && (
+        <span id="stage-error" className="text-xs text-bad">
+          A round like 3-2, from {FIRST_STAGE} to {LAST_STAGE}
+        </span>
+      )}
+    </label>
+  );
+}
 
 const VERDICTS: { verdict: Verdict; label: string; style: string }[] = [
   { verdict: "realistic", label: "Realistic:", style: "text-good" },
