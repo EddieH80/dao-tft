@@ -14,6 +14,7 @@ const SHOWN = 3;
 const VERDICT: Record<string, { label: string; style: string }> = {
   stretch: { label: "Stretch", style: "text-warn" },
   unrealistic: { label: "Not realistic", style: "text-bad" },
+  levelled: { label: "Levelled past", style: "text-bad" },
 };
 
 /** The answer at a glance, for a player alt-tabbing out of a game: the top comps, one line each. */
@@ -26,7 +27,15 @@ export function LiveSummary({ ranking, hits }: Props) {
           const carry = catalog.unit(rec.comp.carries[0]);
           const slam = rec.allocation.built.find((b) => !b.held);
           const hit = hits.get(rec.comp.slug)?.[0];
-          const verdict = rec.unplayable.length ? VERDICT.unrealistic : rec.economy && VERDICT[rec.economy.verdict];
+          const verdict = rec.unplayable.length
+            ? VERDICT.unrealistic
+            : rec.economy?.verdict === "unrealistic"
+              ? VERDICT.unrealistic
+              : rec.stretched
+                ? VERDICT.stretch
+                : rec.levelPenalty > 0
+                  ? VERDICT.levelled
+                  : null;
           return (
             <li key={rec.comp.slug} className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
               <span className="w-3 text-muted">{i + 1}</span>
