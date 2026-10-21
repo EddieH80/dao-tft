@@ -7,11 +7,6 @@ import { FitBadge } from "./ui";
 interface Props {
   ranking: Recommendation[];
   hits: Map<string, HitTarget[]>;
-  stage: string | null;
-  level: number;
-  gold: number | null;
-  goldEstimated: boolean;
-  hp: number | null;
 }
 
 const SHOWN = 3;
@@ -22,20 +17,10 @@ const VERDICT: Record<string, { label: string; style: string }> = {
 };
 
 /** The answer at a glance, for a player alt-tabbing out of a game: the top comps, one line each. */
-export function LiveSummary({ ranking, hits, stage, level, gold, goldEstimated, hp }: Props) {
-  const facts = [
-    stage,
-    `Level ${level}`,
-    gold !== null && `${goldEstimated ? "~" : ""}${gold} gold`,
-    hp !== null && `${hp} HP`,
-  ].filter(Boolean);
-
+export function LiveSummary({ ranking, hits }: Props) {
   return (
     <section className="mx-auto mb-6 max-w-5xl rounded-lg border border-line bg-panel p-3" aria-label="Top comps">
-      <p className="mb-2 text-xs text-muted">
-        {facts.join(" · ")}
-        {goldEstimated && <span> · gold is estimated, type it to correct</span>}
-      </p>
+      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gold">Top comps</h2>
       <ol className="space-y-1.5">
         {ranking.slice(0, SHOWN).map((rec, i) => {
           const carry = catalog.unit(rec.comp.carries[0]);

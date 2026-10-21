@@ -1,7 +1,7 @@
 "use client";
 
 import { bagSize } from "@/engine/catalog";
-import { useGame } from "@/store/useGame";
+import { GameStatePanel } from "./GameStatePanel";
 import { LiveSummary } from "./LiveSummary";
 import { QuickBar } from "./QuickBar";
 import { useRanking } from "./useRanking";
@@ -11,8 +11,7 @@ const SHOWN = 3;
 /** The quick bar and the top comps, for a player alt-tabbing out of a game. */
 export function QuickApp() {
   const { state, ranking, hits } = useRanking(SHOWN);
-  const goldEstimated = useGame((s) => s.goldEstimated);
-  const { components, items, board, augments, stage, level, gold, hp } = state;
+  const { components, items, board, augments, stage, gold } = state;
 
   // The quick bar can set any part of the game in any order, so the summary shows as soon as there is one.
   const started =
@@ -23,15 +22,10 @@ export function QuickApp() {
       <h1 className="sr-only">Quick bar</h1>
       <QuickBar />
       {started ? (
-        <LiveSummary
-          ranking={ranking}
-          hits={hits}
-          stage={stage}
-          level={level}
-          gold={gold}
-          goldEstimated={goldEstimated}
-          hp={hp}
-        />
+        <>
+          <GameStatePanel />
+          <LiveSummary ranking={ranking} hits={hits} />
+        </>
       ) : (
         <p className="mx-auto max-w-5xl text-center text-sm text-muted">
           Type what you hold, like <code className="text-gold">bf glove</code>, or press Enter to start at 2-1.
