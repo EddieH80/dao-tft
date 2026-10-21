@@ -73,7 +73,7 @@ score = (value / best possible value for n components) × tier weight
 
 **Items lead, the early board follows.** A held artifact or emblem also takes one of its wearer's item slots: the unit TFT Academy puts it on, or the comp carry tactics.tools rates highest with it. It fills whichever of that unit's items the components could least afford, so the comp's fit rises as if that item were built. On top of that, held artifacts and emblems that a comp does not already build pull toward it ([`src/engine/items.ts`](src/engine/items.ts)): +0.2 if TFT Academy builds the item in that comp, plus the placement gain tactics.tools measures for the item on the comp's carry (×0.6) or another end-board unit (×0.3), or +0.08 for an emblem whose trait the comp already runs. An item's best reason counts in full and agreeing reasons add half; one item adds at most 0.4 and all of them 0.45. The board adds at most 0.05 at levels 3-6, 0.1 at 7 and 0.15 from 8, because an early board is cheap to replace and items are not.
 
-**Comps have a style.** Each comp is `reroll-1`, `reroll-2`, `reroll-3`, `fast-8`, `fast-9` or `lose-streak` (set by hand in its comp file, or from the guide's style by `npm run fetch-comps`, which stops on a style it does not know).
+**Comps have a style.** Each comp is `reroll-1`, `reroll-2`, `reroll-3`, `fast-8` or `fast-9` (set by hand in its comp file, or from the guide's style by `npm run fetch-comps`, which stops on a style it does not know). TFT Academy's Lose Streak comps count as `fast-8`, since they still roll at level 8.
 
 **Your economy decides which styles are realistic.** Given the player's stage, gold, level and HP, [`src/engine/economy.ts`](src/engine/economy.ts) plays the game forward round by round: income plus interest, 2 free XP a round, and a typical loss on most player rounds. It stops when the player can buy up to the style's roll level and still has its roll-down gold. A style reached only after its deadline, or after the projected HP runs out, is *unrealistic*: graded D and listed last. One reached after its usual spike, or at more than half the player's HP, or a reroll the player has out-levelled by two, is a *stretch* and drops one fit grade. Level 8 with 30 gold and 20 HP on 4-2 rules out Fast 9; level 5 with 60 gold on 3-5 leaves only 1- and 2-cost rerolls realistic. More than ten rounds out the projection only rules a style out, so every style stays open at 2-1. With no stage or gold given, nothing changes.
 
@@ -134,7 +134,7 @@ This is an MVP built in a week, so it is deliberately narrow.
 - `rules` apply one augment to every comp whose style is in `when.styles`, so a broad effect is written once. A comp that lists the same augment keeps its own entry:
 
   ```json
-  {"augment": "DA_NoScoutNoPivot", "when": {"styles": ["fast-8", "fast-9", "lose-streak"]}, "strength": "unplayable", "note": "Units that fight can't be benched or sold, ..."}
+  {"augment": "DA_NoScoutNoPivot", "when": {"styles": ["fast-8", "fast-9"]}, "strength": "unplayable", "note": "Units that fight can't be benched or sold, ..."}
   ```
 - A comp lists at most 10 augments of its own. Update `patch` and `checkedAt` when you review the file.
 - A patch that adds a crafted item fails a test until the item gets a role in `ITEM_ROLE` (`src/engine/items.ts`).

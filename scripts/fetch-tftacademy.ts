@@ -108,7 +108,8 @@ const STYLES: Record<string, Comp["style"]> = {
   "3-Cost Reroll": "reroll-3",
   "4-Cost Fast 8": "fast-8",
   "Fast 9": "fast-9",
-  "Lose Streak": "lose-streak",
+  // Losing early is how the comp saves gold, not a plan of its own: it still rolls at level 8.
+  "Lose Streak": "fast-8",
 };
 
 /** A new style must be mapped by hand rather than guessed, since it decides which economies can play the comp. */

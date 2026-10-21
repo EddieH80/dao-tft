@@ -8,7 +8,7 @@
   ],
   "note": "Hand-edited; npm run fetch-comps never writes this file, it only lists TFT Academy picks missing from it. strength: core +0.3 (the comp is built around it), strong +0.2 (a trait or carry augment the comp runs), good +0.1 (a solid pick), avoid -0.1, unplayable (rules the comp out). note is optional and shown on the card. rules apply one augment to every comp whose style is in when.styles (e.g. every level 8-9 style); a comp's own entry for the same augment wins.",
   "rules": [
-    {"augment": "DA_NoScoutNoPivot", "when": {"styles": ["fast-8", "fast-9", "lose-streak"]}, "strength": "unplayable", "note": "Units that fight can't be benched or sold, so you can't swap your early board for this comp's level 8-9 units."}
+    {"augment": "DA_NoScoutNoPivot", "when": {"styles": ["fast-8", "fast-9"]}, "strength": "unplayable", "note": "Units that fight can't be benched or sold, so you can't swap your early board for this comp's level 8-9 units."}
   ],
   "comps": {
     "aphelios-flex": [
