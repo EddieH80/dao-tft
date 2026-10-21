@@ -35,8 +35,23 @@ export interface QuickContext {
   catalog: Catalog;
   lexicon: QuickLexicon;
   model: EconomyModel;
-  /** The augment rounds in order, like ["2-1", "3-2", "4-2"]. */
-  augmentRounds: string[];
+  /** The augment selections in order ("2-1", "3-2", "4-2"), each with the augment ids it can offer. */
+  augmentRounds: AugmentRound[];
+}
+
+export interface AugmentRound {
+  stage: string;
+  augments: ReadonlySet<AugmentId>;
+}
+
+/** Why the next augment selection cannot take `id`, or null if it can. */
+export function augmentProblem(s: Pick<QuickState, "augments">, id: AugmentId, ctx: QuickContext): string | null {
+  const name = ctx.catalog.augmentName(id);
+  if (s.augments.includes(id)) return `${name} is already taken`;
+  const round = ctx.augmentRounds[s.augments.length];
+  if (!round) return `All ${ctx.augmentRounds.length} augments are picked`;
+  if (!round.augments.has(id)) return `${name} is not offered at ${round.stage}`;
+  return null;
 }
 
 /** One chip in the preview: what a word will do, or why it can't. */
@@ -122,20 +137,27 @@ export class QuickLexicon {
   }
 
   /** Names a partly typed key could finish as, shortest first, without repeats. */
-  completions(key: string, limit: number): { name: string; type: EntryType }[] {
+  completions(key: string): CompletionOption[] {
     if (key.length < MIN_PREFIX || this.exact(key).length) return [];
     const found = this.entries
       .filter((e) => e.key.startsWith(key) && e.key !== key)
       .sort((a, b) => a.key.length - b.key.length || a.name.localeCompare(b.name));
-    const byName = new Map(found.map((e) => [e.name, e.type]));
-    return [...byName].slice(0, limit).map(([name, type]) => ({ name, type }));
+    const byName = new Map<string, CompletionOption>();
+    for (const { name, type, id } of found) if (!byName.has(name)) byName.set(name, { name, type, id });
+    return [...byName.values()];
   }
+}
+
+export interface CompletionOption {
+  name: string;
+  type: EntryType;
+  id: string;
 }
 
 export interface QuickCompletion {
   /** Where in the line the partly typed name starts; Tab replaces from here to the end. */
   start: number;
-  options: { name: string; type: EntryType }[];
+  options: CompletionOption[];
   /** A star level typed after the partial name, kept after the completed one. */
   suffix: string;
 }
@@ -145,8 +167,15 @@ export interface QuickCompletion {
  * trailing words that starts a name wins, so "tear of" offers Tear Of The
  * Goddess. A star level typed after the name ("kha2") stays on the end and
  * limits the options to units. Nothing is offered after a space or a full name.
+ * `accept` drops options the line could not take, like an augment the next
+ * selection does not offer.
  */
-export function quickCompletions(input: string, lexicon: QuickLexicon, limit = 3): QuickCompletion | null {
+export function quickCompletions(
+  input: string,
+  lexicon: QuickLexicon,
+  limit = 3,
+  accept: (option: CompletionOption) => boolean = () => true,
+): QuickCompletion | null {
   if (!input || /\s$/.test(input)) return null;
   const last = input.slice(input.search(/\S+$/));
   const { stars } = splitStars(last);
@@ -159,18 +188,18 @@ export function quickCompletions(input: string, lexicon: QuickLexicon, limit = 3
     // A leading "-" or "+" is the remove / keep-components sign, not part of the name.
     const sign = raw.length > 1 && (raw[0] === "-" || raw[0] === "+") ? 1 : 0;
     const typed = line.slice(span[0].index + sign);
-    const options = lexicon
-      .completions(normalize(typed), suffix ? Infinity : limit)
-      .filter((o) => !suffix || o.type === "unit")
-      .slice(0, limit);
-    if (options.length) return { start: span[0].index + sign, options, suffix };
+    const named = lexicon.completions(normalize(typed)).filter((o) => !suffix || o.type === "unit");
+    if (!named.length) continue;
+    // The longest run that starts a name decides, even when the line cannot take any of them.
+    const options = named.filter(accept).slice(0, limit);
+    return options.length ? { start: span[0].index + sign, options, suffix } : null;
   }
   return null;
 }
 
-/** The line with its partly typed name replaced by `name`, ready for the next word. */
+/** The line with its partly typed name replaced by `name`. */
 export function applyCompletion(input: string, completion: QuickCompletion, name: string): string {
-  return `${input.slice(0, completion.start)}${name}${completion.suffix} `;
+  return `${input.slice(0, completion.start)}${name}${completion.suffix}`;
 }
 
 type Action =
@@ -407,11 +436,11 @@ function change(
         // Later picks depended on this one, as in the augment panel.
         return { state: { ...s, augments: s.augments.slice(0, at) }, text: `− ${e.name}` };
       }
-      if (at >= 0) return `${e.name} is already taken`;
-      if (s.augments.length >= ctx.augmentRounds.length) return `All ${ctx.augmentRounds.length} augments are picked`;
+      const problem = augmentProblem(s, e.id, ctx);
+      if (problem) return problem;
       return {
         state: { ...s, augments: [...s.augments, e.id] },
-        text: `+ ${e.name} (${ctx.augmentRounds[s.augments.length]} augment)`,
+        text: `+ ${e.name} (${ctx.augmentRounds[s.augments.length].stage} augment)`,
       };
     }
   }

@@ -4,14 +4,22 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { aliases, augmentStages, catalog, economyModel } from "@/data";
 import { isCarousel, stageIndex } from "@/engine/economy";
-import { QuickLexicon, applyCompletion, quickCompletions, runQuick, type QuickContext } from "@/engine/quick";
+import {
+  QuickLexicon,
+  applyCompletion,
+  augmentProblem,
+  quickCompletions,
+  runQuick,
+  type CompletionOption,
+  type QuickContext,
+} from "@/engine/quick";
 import { quickStateOf, useGame } from "@/store/useGame";
 
 const ctx: QuickContext = {
   catalog,
   lexicon: new QuickLexicon(catalog, aliases),
   model: economyModel,
-  augmentRounds: augmentStages.map((s) => s.stage),
+  augmentRounds: augmentStages.map((s) => ({ stage: s.stage, augments: new Set(s.augments.map((a) => a.id)) })),
 };
 
 const HELP: [string, string][] = [
@@ -44,7 +52,11 @@ export function QuickBar() {
     useShallow((s) => ({ apply: s.apply, nextRound: s.nextRound, undo: s.undo, reset: s.reset })),
   );
   const result = useMemo(() => (text.trim() && !asking ? runQuick(text, state, ctx) : null), [text, asking, state]);
-  const completion = useMemo(() => quickCompletions(text, ctx.lexicon), [text]);
+  // Augments the next selection cannot take are not suggested.
+  const completion = useMemo(() => {
+    const accept = (o: CompletionOption) => o.type !== "augment" || !augmentProblem(state, o.id, ctx);
+    return quickCompletions(text, ctx.lexicon, 3, accept);
+  }, [text, state]);
 
   // Alt-tabbing back into the browser lands in the bar.
   useEffect(() => {
@@ -174,7 +186,7 @@ export function QuickBar() {
 
 /** What this round usually asks for, or where to find the commands when there is nothing to say. */
 function RoundHint({ stage, picked }: { stage: string | null; picked: number }) {
-  const augmentAt = stage ? ctx.augmentRounds.indexOf(stage) : -1;
+  const augmentAt = stage ? ctx.augmentRounds.findIndex((r) => r.stage === stage) : -1;
   if (augmentAt >= picked) {
     return <span className="text-gold">Augment round: type the augment you take.</span>;
   }
