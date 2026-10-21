@@ -11,8 +11,9 @@ import type { AugmentId, ComponentBag, ItemId, StarLevel, UnitId } from "./types
  * - `n` / `next`: next round (stage +1, gold plus income, marked as an estimate).
  * - A name or alias adds a unit, component, item or augment; `-name` removes it.
  *   A crafted item uses up its two components when both are held; `+name` adds it without.
- * - `jinx*2`: a unit at a star level, added or, if it is on the board, upgraded.
+ * - `jinx2`: a unit at a star level (1-3), added or, if it is on the board, upgraded.
  * - `u` / `undo` on its own undoes the last change.
+ * - Tab completes the name being typed (`quickCompletions`).
  */
 
 /** The parts of the game state the quick bar reads and writes. */
@@ -119,6 +120,57 @@ export class QuickLexicon {
     }
     return found;
   }
+
+  /** Names a partly typed key could finish as, shortest first, without repeats. */
+  completions(key: string, limit: number): { name: string; type: EntryType }[] {
+    if (key.length < MIN_PREFIX || this.exact(key).length) return [];
+    const found = this.entries
+      .filter((e) => e.key.startsWith(key) && e.key !== key)
+      .sort((a, b) => a.key.length - b.key.length || a.name.localeCompare(b.name));
+    const byName = new Map(found.map((e) => [e.name, e.type]));
+    return [...byName].slice(0, limit).map(([name, type]) => ({ name, type }));
+  }
+}
+
+export interface QuickCompletion {
+  /** Where in the line the partly typed name starts; Tab replaces from here to the end. */
+  start: number;
+  options: { name: string; type: EntryType }[];
+  /** A star level typed after the partial name, kept after the completed one. */
+  suffix: string;
+}
+
+/**
+ * Names the last words of the line could finish as. The longest run of
+ * trailing words that starts a name wins, so "tear of" offers Tear Of The
+ * Goddess. A star level typed after the name ("kha2") stays on the end and
+ * limits the options to units. Nothing is offered after a space or a full name.
+ */
+export function quickCompletions(input: string, lexicon: QuickLexicon, limit = 3): QuickCompletion | null {
+  if (!input || /\s$/.test(input)) return null;
+  const last = input.slice(input.search(/\S+$/));
+  const { stars } = splitStars(last);
+  const suffix = stars === null ? "" : String(stars);
+  const line = input.slice(0, input.length - suffix.length);
+  const words = [...line.matchAll(/\S+/g)];
+  for (let n = Math.min(MAX_WORDS, words.length); n >= 1; n--) {
+    const span = words.slice(-n);
+    const raw = span[0][0];
+    // A leading "-" or "+" is the remove / keep-components sign, not part of the name.
+    const sign = raw.length > 1 && (raw[0] === "-" || raw[0] === "+") ? 1 : 0;
+    const typed = line.slice(span[0].index + sign);
+    const options = lexicon
+      .completions(normalize(typed), suffix ? Infinity : limit)
+      .filter((o) => !suffix || o.type === "unit")
+      .slice(0, limit);
+    if (options.length) return { start: span[0].index + sign, options, suffix };
+  }
+  return null;
+}
+
+/** The line with its partly typed name replaced by `name`, ready for the next word. */
+export function applyCompletion(input: string, completion: QuickCompletion, name: string): string {
+  return `${input.slice(0, completion.start)}${name}${completion.suffix} `;
 }
 
 type Action =
@@ -144,17 +196,24 @@ export function starsOn(board: UnitId[], stars: Record<UnitId, StarLevel>): Reco
   return Object.fromEntries(board.filter((u) => (stars[u] ?? 1) > 1).map((u) => [u, stars[u]]));
 }
 
+/**
+ * A 1, 2 or 3 straight after a name's last letter is a star level: "jinx2",
+ * "kha zix3". Commands keep their digits, so "l2" is still level 2.
+ */
+function splitStars(word: string): { word: string; stars: StarLevel | null } {
+  const sign = word.length > 1 && (word[0] === "-" || word[0] === "+") ? 1 : 0;
+  const m = word.match(/^(.*[^\d])([123])$/);
+  if (!m || command(word.slice(sign).toLowerCase())) return { word, stars: null };
+  return { word: m[1], stars: Number(m[2]) as StarLevel };
+}
+
 /** Splits a line into actions, matching the longest run of words that names something. */
 function parse(input: string, lexicon: QuickLexicon): Action[] {
-  // A "*2" or "*3" ends a unit's name and gives its star level.
   const tokens = input
     .trim()
     .split(/\s+/)
     .filter(Boolean)
-    .map((w) => {
-      const m = w.match(/^(.+)\*([123])$/);
-      return m ? { word: m[1], stars: Number(m[2]) as StarLevel } : { word: w, stars: null };
-    });
+    .map((w) => ({ ...splitStars(w), typed: w }));
   const words = tokens.map((t) => t.word);
   const actions: Action[] = [];
   let i = 0;
@@ -164,7 +223,7 @@ function parse(input: string, lexicon: QuickLexicon): Action[] {
     const first = raw.slice(sign.length);
     const cmd = sign ? null : command(first.toLowerCase());
     if (cmd) {
-      actions.push(tokens[i].stars ? { kind: "error", text: `Only units have a star level ("${raw}*")` } : cmd);
+      actions.push(cmd);
       i++;
       continue;
     }
@@ -202,7 +261,7 @@ function parse(input: string, lexicon: QuickLexicon): Action[] {
       if (matched) break;
     }
     if (!matched) {
-      actions.push({ kind: "error", text: `Unknown "${raw}"` });
+      actions.push({ kind: "error", text: `Unknown "${tokens[i].typed}"` });
       i++;
     }
   }

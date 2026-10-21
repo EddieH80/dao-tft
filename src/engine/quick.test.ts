@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import aliasesJson from "@/data/aliases.json";
 import { AliasesSchema } from "@/data/schema";
 import { catalog, economyModel } from "./fixtures";
-import { QuickLexicon, advanceRound, runQuick, type QuickState } from "./quick";
+import { QuickLexicon, advanceRound, applyCompletion, normalize, quickCompletions, runQuick, type QuickState } from "./quick";
 
 const ctx = {
   catalog,
@@ -123,17 +123,17 @@ describe("next round", () => {
     expect(advanceRound({ ...start, stage: "3-2" }, economyModel).gold).toBeNull();
   });
 
-  it("sets a unit's star level with *2 or *3, adding or upgrading it", () => {
-    const added = run("kha zix*2 ahri");
+  it("sets a unit's star level with a trailing 1, 2 or 3, adding or upgrading it", () => {
+    const added = run("kha zix2 ahri");
     expect(added.ok).toBe(true);
     expect(added.state.board).toEqual(["DA_18_KhaZix", "DA_18_Ahri"]);
     expect(added.state.stars).toEqual({ DA_18_KhaZix: 2 });
 
-    const upgraded = run("khazix*3", added.state);
+    const upgraded = run("khazix3", added.state);
     expect(upgraded.ok).toBe(true);
     expect(upgraded.state.stars).toEqual({ DA_18_KhaZix: 3 });
-    expect(run("khazix*1", upgraded.state).state.stars).toEqual({});
-    expect(run("khazix*3", upgraded.state).ok).toBe(false);
+    expect(run("khazix1", upgraded.state).state.stars).toEqual({});
+    expect(run("khazix3", upgraded.state).ok).toBe(false);
   });
 
   it("forgets a unit's star level when it leaves the board", () => {
@@ -145,8 +145,57 @@ describe("next round", () => {
   });
 
   it("rejects a star level on anything but a unit being added", () => {
-    expect(run("bf*2").ok).toBe(false);
-    expect(run("52*2").ok).toBe(false);
-    expect(run("-khazix*2", { board: ["DA_18_KhaZix"] }).ok).toBe(false);
+    expect(run("bf2").ok).toBe(false);
+    expect(run("-khazix2", { board: ["DA_18_KhaZix"] }).ok).toBe(false);
+    expect(run("khazix4").ok).toBe(false);
+  });
+
+  it("leaves the digits of commands alone", () => {
+    expect(run("l2 h3 g2 3-2").state).toMatchObject({ level: 2, hp: 3, gold: 2, stage: "3-2" });
+    expect(run("rek2").state).toMatchObject({ board: ["DA_18_RekSai"], stars: { DA_18_RekSai: 2 } });
+  });
+});
+
+describe("tab completion", () => {
+  const complete = (input: string) => {
+    const c = quickCompletions(input, ctx.lexicon);
+    return c && applyCompletion(input, c, c.options[0].name);
+  };
+
+  it("finishes the last word with the first suggestion", () => {
+    expect(complete("52 kha")).toBe("52 Kha'Zix ");
+    expect(complete("bf rek")).toBe("bf Rek'Sai ");
+  });
+
+  it("finishes a name spread over several words", () => {
+    expect(complete("tear of")).toBe("Tear Of The Goddess ");
+  });
+
+  it("keeps a remove or keep-components sign", () => {
+    expect(complete("-rek")).toBe("-Rek'Sai ");
+    expect(complete("+infinity")).toBe("+Infinity Edge ");
+  });
+
+  it("offers shorter names first, without repeats", () => {
+    const options = quickCompletions("heroic", ctx.lexicon, 5)!.options.map((o) => o.name);
+    expect(new Set(options).size).toBe(options.length);
+    const lengths = options.map((o) => normalize(o).length);
+    expect(lengths).toEqual([...lengths].sort((a, b) => a - b));
+  });
+
+  it("keeps a star level typed after the partial name, and offers only units for it", () => {
+    expect(complete("kha2")).toBe("Kha'Zix2 ");
+    expect(complete("52 rek3")).toBe("52 Rek'Sai3 ");
+    const options = quickCompletions("ra2", ctx.lexicon, Infinity)?.options ?? [];
+    expect(options.every((o) => o.type === "unit")).toBe(true);
+  });
+
+  it("offers nothing after a space, a full name, or a single letter", () => {
+    expect(quickCompletions("kha ", ctx.lexicon)).toBeNull();
+    expect(quickCompletions("khazix2", ctx.lexicon)).toBeNull();
+    expect(quickCompletions("ahri", ctx.lexicon)).toBeNull();
+    expect(quickCompletions("ie", ctx.lexicon)).toBeNull();
+    expect(quickCompletions("k", ctx.lexicon)).toBeNull();
+    expect(quickCompletions("", ctx.lexicon)).toBeNull();
   });
 });

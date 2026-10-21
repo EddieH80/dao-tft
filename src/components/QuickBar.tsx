@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { aliases, augmentStages, catalog, economyModel } from "@/data";
 import { isCarousel, stageIndex } from "@/engine/economy";
-import { QuickLexicon, runQuick, type QuickContext } from "@/engine/quick";
+import { QuickLexicon, applyCompletion, quickCompletions, runQuick, type QuickContext } from "@/engine/quick";
 import { quickStateOf, useGame } from "@/store/useGame";
 
 const ctx: QuickContext = {
@@ -21,7 +21,8 @@ const HELP: [string, string][] = [
   ["h64", "HP"],
   ["4-2", "round"],
   ["ie jinx", "add"],
-  ["jinx*2", "star level"],
+  ["Tab", "complete a name"],
+  ["jinx2", "star level"],
   ["-bf", "remove"],
   ["+ie", "add without using components"],
   ["u", "undo"],
@@ -33,13 +34,17 @@ const isTyping = (t: EventTarget | null) =>
 /** One line for every update, so a round between fights takes a few keystrokes. */
 export function QuickBar() {
   const [text, setText] = useState("");
+  /** The command list is pinned open with `?` + Enter or the ? button. */
+  const [help, setHelp] = useState(false);
+  const asking = text.trim() === "?";
   const input = useRef<HTMLInputElement>(null);
   const state = useGame(useShallow(quickStateOf));
   const canUndo = useGame((s) => s.history.length > 0);
   const { apply, nextRound, undo, reset } = useGame(
     useShallow((s) => ({ apply: s.apply, nextRound: s.nextRound, undo: s.undo, reset: s.reset })),
   );
-  const result = useMemo(() => (text.trim() ? runQuick(text, state, ctx) : null), [text, state]);
+  const result = useMemo(() => (text.trim() && !asking ? runQuick(text, state, ctx) : null), [text, asking, state]);
+  const completion = useMemo(() => quickCompletions(text, ctx.lexicon), [text]);
 
   // Alt-tabbing back into the browser lands in the bar.
   useEffect(() => {
@@ -63,7 +68,8 @@ export function QuickBar() {
   }, []);
 
   const submit = () => {
-    if (!result) nextRound();
+    if (asking) setHelp((h) => !h);
+    else if (!result) nextRound();
     else if (result.undo) undo();
     else if (result.ok) apply(result.state);
     else return;
@@ -71,7 +77,11 @@ export function QuickBar() {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    const atEnd = e.currentTarget.selectionStart === text.length;
+    if (e.key === "Tab" && !e.shiftKey && completion && atEnd) {
+      e.preventDefault();
+      setText(applyCompletion(text, completion, completion.options[0].name));
+    } else if (e.key === "Enter") {
       e.preventDefault();
       submit();
     } else if (e.key === "Escape") {
@@ -98,7 +108,7 @@ export function QuickBar() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="Enter = next round · 38 l7 h64 · ie jinx · -bf · u = undo"
+            placeholder="Type a command, or ? for help"
             autoComplete="off"
             spellCheck={false}
             className="min-w-0 flex-1 rounded-md border border-line bg-panel px-3 py-2 font-mono text-sm placeholder:text-muted focus:border-gold"
@@ -112,9 +122,32 @@ export function QuickBar() {
           >
             Undo
           </button>
+          <button
+            type="button"
+            onClick={() => setHelp((h) => !h)}
+            aria-expanded={help}
+            aria-controls="quick-help"
+            className={`shrink-0 rounded-md border px-2.5 py-2 text-xs ${
+              help ? "border-gold text-gold-bright" : "border-line text-muted hover:text-gold-bright"
+            }`}
+            title={help ? "Hide commands" : "Show commands"}
+          >
+            ?
+          </button>
         </div>
 
         <div className="mt-2 flex min-h-6 flex-wrap items-center gap-1.5 text-xs">
+          {completion && (
+            <span className="mr-1 flex items-center gap-1.5" aria-live="polite">
+              <kbd className="rounded border border-gold px-1 font-mono text-[10px] text-gold">Tab</kbd>
+              {completion.options.map((o, i) => (
+                <span key={o.name} className={i === 0 ? "font-semibold text-gold-bright" : "text-muted"}>
+                  {o.name}
+                  {i < completion.options.length - 1 && <span className="font-normal text-muted"> ·</span>}
+                </span>
+              ))}
+            </span>
+          )}
           {result ? (
             <>
               {result.steps.map((s, i) => (
@@ -127,16 +160,19 @@ export function QuickBar() {
               ))}
               <span className="text-muted">{result.ok ? "Enter to apply" : "Fix the red words to apply"}</span>
             </>
+          ) : asking ? (
+            <span className="text-muted">Enter to {help ? "hide" : "keep"} the commands</span>
           ) : (
             <RoundHint stage={state.stage} picked={state.augments.length} />
           )}
         </div>
+        {(help || asking) && <Commands />}
       </div>
     </div>
   );
 }
 
-/** What this round usually asks for, or the grammar when there is nothing to say. */
+/** What this round usually asks for, or where to find the commands when there is nothing to say. */
 function RoundHint({ stage, picked }: { stage: string | null; picked: number }) {
   const augmentAt = stage ? ctx.augmentRounds.indexOf(stage) : -1;
   if (augmentAt >= picked) {
@@ -147,14 +183,24 @@ function RoundHint({ stage, picked }: { stage: string | null; picked: number }) 
   }
   return (
     <span className="text-muted">
+      Type <kbd className="font-mono">?</kbd> for commands
+    </span>
+  );
+}
+
+/** The bar's grammar, framed as help so it is not mistaken for the game state. */
+function Commands() {
+  return (
+    <div id="quick-help" className="mt-2 rounded-md border border-dashed border-line px-3 py-2 text-xs text-muted">
+      <p className="mb-1 text-[10px] font-semibold uppercase tracking-wider">Commands</p>
       {HELP.map(([keys, what]) => (
-        <span key={keys} className="mr-3 whitespace-nowrap">
-          <kbd className="font-mono text-gold-bright">{keys}</kbd> {what}
+        <span key={keys} className="mr-3 inline-block whitespace-nowrap">
+          <kbd className="font-mono text-gold">{keys}</kbd> {what}
         </span>
       ))}
-      <span className="whitespace-nowrap">
-        <kbd className="font-mono text-gold-bright">Shift+N</kbd> new game
+      <span className="inline-block whitespace-nowrap">
+        <kbd className="font-mono text-gold">Shift+N</kbd> new game
       </span>
-    </span>
+    </div>
   );
 }
