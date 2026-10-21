@@ -1,14 +1,31 @@
 import { describe, expect, it } from "vitest";
 import aliasesJson from "@/data/aliases.json";
-import { AliasesSchema } from "@/data/schema";
+import augments21 from "@/data/augments-2-1.json";
+import augments32 from "@/data/augments-3-2.json";
+import augments42 from "@/data/augments-4-2.json";
+import { AliasesSchema, StageAugmentsSchema } from "@/data/schema";
 import { catalog, economyModel } from "./fixtures";
-import { QuickLexicon, advanceRound, applyCompletion, normalize, quickCompletions, runQuick, type QuickState } from "./quick";
+import {
+  QuickLexicon,
+  advanceRound,
+  applyCompletion,
+  augmentProblem,
+  normalize,
+  quickCompletions,
+  runQuick,
+  type QuickContext,
+  type QuickState,
+} from "./quick";
 
-const ctx = {
+const pool = (stage: string, json: unknown) => ({
+  stage,
+  augments: new Set(StageAugmentsSchema.parse(json).augments.map((a) => a.id)),
+});
+const ctx: QuickContext = {
   catalog,
   lexicon: new QuickLexicon(catalog, AliasesSchema.parse(aliasesJson)),
   model: economyModel,
-  augmentRounds: ["2-1", "3-2", "4-2"],
+  augmentRounds: [pool("2-1", augments21), pool("3-2", augments32), pool("4-2", augments42)],
 };
 const start: QuickState = {
   components: {},
@@ -87,6 +104,16 @@ describe("quick bar", () => {
     expect(run("-caretakers ally", { augments: r.state.augments }).state.augments).toEqual([]);
   });
 
+  it("only takes an augment the next selection can offer", () => {
+    // No Scout No Pivot is a 2-1 augment only.
+    expect(run("no scout no pivot").state.augments).toEqual(["DA_NoScoutNoPivot"]);
+    const late = run("no scout no pivot", { augments: ["DA_18_CaretakersAlly"] });
+    expect(late.ok).toBe(false);
+    expect(late.steps[0].text).toBe("NO SCOUT NO PIVOT is not offered at 3-2");
+    expect(augmentProblem({ augments: ["DA_18_CaretakersAlly"] }, "DA_NoScoutNoPivot", ctx)).toMatch(/3-2/);
+    expect(augmentProblem({ augments: [] }, "DA_NoScoutNoPivot", ctx)).toBeNull();
+  });
+
   it("picks the base augment over its upgrades, and flags real ambiguity", () => {
     expect(run("heroic grab").state.augments).toEqual(["DA_HeroicGrabBag"]);
     const vague = run("beast within");
@@ -163,17 +190,17 @@ describe("tab completion", () => {
   };
 
   it("finishes the last word with the first suggestion", () => {
-    expect(complete("52 kha")).toBe("52 Kha'Zix ");
-    expect(complete("bf rek")).toBe("bf Rek'Sai ");
+    expect(complete("52 kha")).toBe("52 Kha'Zix");
+    expect(complete("bf rek")).toBe("bf Rek'Sai");
   });
 
   it("finishes a name spread over several words", () => {
-    expect(complete("tear of")).toBe("Tear Of The Goddess ");
+    expect(complete("tear of")).toBe("Tear Of The Goddess");
   });
 
   it("keeps a remove or keep-components sign", () => {
-    expect(complete("-rek")).toBe("-Rek'Sai ");
-    expect(complete("+infinity")).toBe("+Infinity Edge ");
+    expect(complete("-rek")).toBe("-Rek'Sai");
+    expect(complete("+infinity")).toBe("+Infinity Edge");
   });
 
   it("offers shorter names first, without repeats", () => {
@@ -184,10 +211,21 @@ describe("tab completion", () => {
   });
 
   it("keeps a star level typed after the partial name, and offers only units for it", () => {
-    expect(complete("kha2")).toBe("Kha'Zix2 ");
-    expect(complete("52 rek3")).toBe("52 Rek'Sai3 ");
+    expect(complete("kha2")).toBe("Kha'Zix2");
+    expect(complete("52 rek3")).toBe("52 Rek'Sai3");
     const options = quickCompletions("ra2", ctx.lexicon, Infinity)?.options ?? [];
     expect(options.every((o) => o.type === "unit")).toBe(true);
+  });
+
+  it("drops options the line cannot take", () => {
+    const taken = { augments: ["DA_18_CaretakersAlly"] };
+    const accept = (o: { type: string; id: string }) => o.type !== "augment" || !augmentProblem(taken, o.id, ctx);
+    const names = (input: string, ok?: typeof accept) =>
+      (quickCompletions(input, ctx.lexicon, Infinity, ok)?.options ?? []).map((o) => o.name);
+    expect(names("no scout")).toContain("NO SCOUT NO PIVOT");
+    expect(names("no scout", accept)).not.toContain("NO SCOUT NO PIVOT");
+    // Not "Scuttlecrab" for the last word alone.
+    expect(quickCompletions("no sc", ctx.lexicon, 3, accept)).toBeNull();
   });
 
   it("offers nothing after a space, a full name, or a single letter", () => {

@@ -41,7 +41,7 @@ The quick bar on the [Quick](/quick) page (the header switches between it and th
 |---|---|
 | Enter on an empty bar, or `n` | next round: the round moves on and gold gets a round's income, shown as `~` until you type the real figure |
 | `38`, `l7`, `h64`, `4-2` | gold, level, HP, round |
-| `jinx`, `bow`, `ie`, `unrivaled` | add a unit, component, item or augment by name, prefix or shorthand |
+| `jinx`, `bow`, `ie`, `unrivaled` | add a unit, component, item or augment by name, prefix or shorthand. An augment fills the next selection (2-1, 3-2, 4-2) and only if that round offers it |
 | `jinx2`, `kha zix3` | a unit at a star level: a 1, 2 or 3 right after its name adds it at that level, or changes the level if it is already on the board (`jinx1` resets it) |
 | Tab | complete the name being typed with the first suggestion shown under the bar (`kha` → Kha'Zix, `tear of` → Tear Of The Goddess) |
 | `-bf` | remove it |
