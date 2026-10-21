@@ -13,6 +13,8 @@ const Id = z.string().min(1);
 export const COMP_STYLES = ["reroll-1", "reroll-2", "reroll-3", "fast-8", "fast-9", "lose-streak"] as const;
 export type CompStyle = (typeof COMP_STYLES)[number];
 export const isReroll = (comp: { style: CompStyle }) => comp.style.startsWith("reroll");
+/** The cost of unit a reroll comp three-stars, or null for a comp that does not reroll. */
+export const rerollCost = (comp: { style: CompStyle }) => Number(comp.style.match(/^reroll-(\d)$/)?.[1]) || null;
 
 /** Most augments one comp may list (PRD open question 2 started at 5; one shared file makes 10 maintainable). */
 export const MAX_COMP_AUGMENTS = 10;

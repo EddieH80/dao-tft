@@ -4,7 +4,7 @@ import { ITEM, TEST_COMPS, catalog, emptyState, makeComp, testEngine } from "./f
 import { ITEM_ROLE, NO_ITEM_STATS } from "./items";
 import { AUGMENT_CAP } from "./augments";
 import { carrySwaps, openFrontline, scoutFromOpponents, scoutPenalty } from "./scout";
-import { ORPHAN_ITEM_PENALTY, REROLL_MISS, STAR_BONUS, boardWeight, starBonus, demoteOneFit, fitFor, isRuledOut } from "./router";
+import { ORPHAN_ITEM_PENALTY, REROLL_MISS, REROLL_WINDOW, STAR_BONUS, boardWeight, starBonus, demoteOneFit, fitFor, isRuledOut } from "./router";
 import type { GameState, Recommendation } from "./types";
 
 describe("rank", () => {
@@ -606,5 +606,70 @@ describe("economy", () => {
     const unknown = engine.rank(state)[0];
     expect(known.economy?.verdict).toBe("stretch");
     expect([unknown.fit, known.fit]).toEqual(["S", "A"]);
+  });
+});
+
+describe("levelling past a reroll", () => {
+  const KARMA = "DA_Karma18"; // 1-cost
+  const CAITLYN = "DA_18_Caitlyn"; // 2-cost
+  const KHAZIX = "DA_18_KhaZix"; // 3-cost
+  const KOBUKO = "DA_18_Kobuko";
+  const items: [string, number][] = [[ITEM.archangels, 3]];
+  const bag = { NeedlesslyLargeRod: 1, TearOfTheGoddess: 1 };
+  const reroll = (cost: 1 | 2 | 3, carry: string) =>
+    makeComp(`r${cost}`, "S", carry, items, { style: `reroll-${cost}` as const });
+  const at = (comp: Comp, state: Partial<GameState>) =>
+    testEngine([comp]).rank({ ...emptyState(bag), board: comp.carries.slice(), ...state })[0];
+
+  it("drops a 1-cost reroll two grades at level 6 from 3-2 without a 3-star carry", () => {
+    const r1 = reroll(1, KARMA);
+    const before = at(r1, { level: 6, stage: "3-1" });
+    const after = at(r1, { level: 6, stage: "3-2" });
+    expect(before.levelPenalty).toBe(0);
+    expect(after.levelPenalty).toBeGreaterThan(0);
+    expect(after.fit).toBe("B");
+    expect(before.fit).toBe("S");
+    expect(at(r1, { level: 5, stage: "3-2" }).levelPenalty).toBe(0);
+  });
+
+  it("keeps applying in later rounds", () => {
+    const r1 = reroll(1, KARMA);
+    expect(at(r1, { level: 6, stage: "4-1" }).levelPenalty).toBeGreaterThan(0);
+    expect(at(reroll(3, KHAZIX), { level: 9, stage: "5-1" }).levelPenalty).toBeGreaterThan(0);
+  });
+
+  it("uses each cost's own level and round", () => {
+    expect(REROLL_WINDOW).toEqual({ 1: { level: 6, stage: "3-2" }, 2: { level: 7, stage: "3-5" }, 3: { level: 8, stage: "4-1" } });
+    const r2 = reroll(2, CAITLYN);
+    expect(at(r2, { level: 7, stage: "3-5" }).levelPenalty).toBeGreaterThan(0);
+    expect(at(r2, { level: 6, stage: "3-5" }).levelPenalty).toBe(0);
+    expect(at(r2, { level: 7, stage: "3-3" }).levelPenalty).toBe(0);
+    const r3 = reroll(3, KHAZIX);
+    expect(at(r3, { level: 8, stage: "4-1" }).levelPenalty).toBeGreaterThan(0);
+    expect(at(r3, { level: 8, stage: "3-5" }).levelPenalty).toBe(0);
+  });
+
+  it("spares a comp whose own carry is already 3-star", () => {
+    const r1 = reroll(1, KARMA);
+    expect(at(r1, { level: 6, stage: "3-2", stars: { [KARMA]: 3 } }).levelPenalty).toBe(0);
+    expect(at(r1, { level: 6, stage: "3-2", stars: { [KARMA]: 2 } }).levelPenalty).toBeGreaterThan(0);
+    // A 3-star unit the comp does not play does not save it.
+    const other = at(r1, { level: 6, stage: "3-2", board: [KARMA, KOBUKO], stars: { [KOBUKO]: 3 } });
+    expect(other.levelPenalty).toBeGreaterThan(0);
+  });
+
+  it("leaves non-reroll comps, and an unknown round, alone", () => {
+    expect(at({ ...reroll(1, KARMA), style: "fast-8" }, { level: 8, stage: "4-1" }).levelPenalty).toBe(0);
+    expect(at(reroll(1, KARMA), { level: 8, stage: null }).levelPenalty).toBe(0);
+  });
+
+  it("does not also count out-levelling as a stretch economy", () => {
+    // Level 7 is two past a 1-cost reroll's roll level, which the economy calls a stretch on its own.
+    const rec = at(reroll(1, KARMA), { level: 7, stage: "3-2", gold: 50, hp: 80 });
+    expect(rec.economy?.overlevelled).toBe(true);
+    expect(rec.stretched).toBe(false);
+    expect(rec.fit).toBe("B");
+    // Before 3-2 the stretch still counts.
+    expect(at(reroll(1, KARMA), { level: 7, stage: "3-1", gold: 50, hp: 80 }).stretched).toBe(true);
   });
 });

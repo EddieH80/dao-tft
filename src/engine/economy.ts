@@ -13,6 +13,8 @@ export interface Economy {
 export interface StyleOutlook {
   verdict: Verdict;
   note: string;
+  /** The stretch is only that the player has out-levelled a reroll's shop odds. */
+  overlevelled?: boolean;
 }
 
 /** How long to keep projecting a style the player is already levelled for, waiting on roll gold. */
@@ -133,6 +135,7 @@ export function styleOutlook(style: CompStyle, economy: Economy, model: EconomyM
     return {
       verdict: "stretch",
       note: `At level ${economy.level} your shop rarely shows ${cheapCost}-costs, so three-starring them is slow.`,
+      overlevelled: true,
     };
   }
   if (!levelled && round > deadlineAt) {

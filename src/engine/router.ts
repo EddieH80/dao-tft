@@ -1,8 +1,8 @@
-import { COMP_STYLES, isReroll, type Comp, type CompStyle, type EconomyModel, type ItemStats, type Tier } from "@/data/schema";
+import { COMP_STYLES, isReroll, rerollCost, type Comp, type CompStyle, type EconomyModel, type ItemStats, type Tier } from "@/data/schema";
 import { allocate, claimHeld, optimisticBound } from "./allocate";
 import { augmentEffect, tagRecommendations } from "./augments";
 import { Catalog, bagSize, withComponent } from "./catalog";
-import { styleOutlook, type Economy, type StyleOutlook } from "./economy";
+import { stageIndex, styleOutlook, type Economy, type StyleOutlook } from "./economy";
 import { NO_ITEM_STATS, hasGoodHolder, heldItemEffect, slotFillers } from "./items";
 import { scoutPenalty } from "./scout";
 import type {
@@ -60,6 +60,16 @@ export const THREE_COST_THREE_STAR_BONUS = 2 * FIT_BAND_GAP;
 export function starBonus(stars: StarLevel, cost: number): number {
   return stars === 3 && cost === 3 ? THREE_COST_THREE_STAR_BONUS : STAR_BONUS[stars];
 }
+/**
+ * By these levels and rounds a reroll comp has usually three-starred its
+ * carries. A player at or past both without a 3-star carry of that cost has
+ * left the reroll behind, so the comp falls two fit grades.
+ */
+export const REROLL_WINDOW: Record<number, { level: number; stage: string }> = {
+  1: { level: 6, stage: "3-2" },
+  2: { level: 7, stage: "3-5" },
+  3: { level: 8, stage: "4-1" },
+};
 /** Taken off for each held item no unit in the comp would use well: one and a half fit grades. */
 export const ORPHAN_ITEM_PENALTY = 1.5 * FIT_BAND_GAP;
 /** A taken augment or the player's economy rules this comp out; it is graded D and listed last. */
@@ -211,8 +221,13 @@ export class TftEngine {
       coverage * TIER_WEIGHT[comp.tier] + bonus + held.bonus + boardBonus + starred - penalty - orphanPenalty;
     const carried = this.missesRerollCarries(comp, state.board) ? demoteOneFit(base) : base;
     const rerollPenalty = base - carried;
+    const late = this.pastRerollWindow(comp, state);
     // A style the player's economy can only just reach drops a grade; one it cannot reach is ruled out.
-    const playable = economy?.verdict === "stretch" ? demoteOneFit(carried) : carried;
+    // Out-levelling a reroll is what the level penalty already charges for, so it is not counted twice.
+    const stretched = economy?.verdict === "stretch" && !(late && economy.overlevelled);
+    const stretch = stretched ? demoteOneFit(carried) : carried;
+    const playable = late ? demoteOneFit(demoteOneFit(stretch)) : stretch;
+    const levelPenalty = stretch - playable;
     const ruledOut = unplayable.length > 0 || economy?.verdict === "unrealistic";
     const score = ruledOut ? playable - UNPLAYABLE_DROP : playable;
     return {
@@ -230,6 +245,8 @@ export class TftEngine {
       boardMatches: matches,
       boardBonus,
       rerollPenalty,
+      levelPenalty,
+      stretched,
       starBonus: starred,
       starredCarry: starredCarry && { unit: starredCarry.unit, stars: starredCarry.stars },
       orphanItems,
@@ -246,6 +263,17 @@ export class TftEngine {
    */
   private missesRerollCarries(comp: Comp, board: string[]): boolean {
     return isReroll(comp) && board.length > 0 && !comp.carries.some((c) => board.includes(c));
+  }
+
+  /** Whether the player is past the level and round by which this reroll comp has a 3-star carry, and has none. */
+  private pastRerollWindow(comp: Comp, state: GameState): boolean {
+    const cost = rerollCost(comp);
+    const window = cost ? REROLL_WINDOW[cost] : undefined;
+    if (!window || !this.economy || state.stage === null || state.level < window.level) return false;
+    if (stageIndex(state.stage, this.economy) < stageIndex(window.stage, this.economy)) return false;
+    return !comp.carries.some(
+      (c) => state.board.includes(c) && state.stars[c] === 3 && this.catalog.unit(c).cost === cost,
+    );
   }
 
   /** The reroll comp's board carry whose star level adds the most, when it adds anything. */

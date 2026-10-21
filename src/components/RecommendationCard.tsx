@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { catalog } from "@/data";
-import { augmentStrength, type AugmentStrength } from "@/data/schema";
+import { augmentStrength, rerollCost, type AugmentStrength } from "@/data/schema";
 import type { HitTarget, Recommendation } from "@/engine/types";
-import { REROLL_MISS } from "@/engine/router";
+import { REROLL_MISS, REROLL_WINDOW } from "@/engine/router";
 import { carrySwaps, openFrontline } from "@/engine/scout";
 import { Icon } from "./Icon";
 import { FitBadge, TagPill, TierPill } from "./ui";
@@ -188,7 +188,8 @@ export function RecommendationCard({ rec, rank, ranking, contested, hits, taken 
         rec.rerollPenalty > 0 ||
         rec.starredCarry !== null ||
         rec.orphanItems.length > 0 ||
-        rec.economy?.verdict === "stretch" ||
+        rec.stretched ||
+        rec.levelPenalty > 0 ||
         rec.boardMatches.length > 0) && (
         <ul className="mt-3 space-y-1 border-t border-line pt-3 text-sm">
           {rec.itemNotes.map((n) => (
@@ -217,9 +218,10 @@ export function RecommendationCard({ rec, rank, ranking, contested, hits, taken 
               − No unit in this comp uses your {catalog.holdable(id)?.name ?? id} well, so it is ranked lower.
             </li>
           ))}
-          {rec.economy?.verdict === "stretch" && (
+          {rec.stretched && rec.economy && (
             <li className="text-warn">− A stretch for your economy, so it is ranked one fit grade lower. {rec.economy.note}</li>
           )}
+          {rec.levelPenalty > 0 && <LevelPenaltyNote rec={rec} />}
           {rec.rerollPenalty > 0 && (
             <li className="text-bad">
               − Your board has no {comp.carries.map((u) => catalog.unit(u).name).join(" or ")}. Reroll comps need
@@ -251,5 +253,18 @@ export function RecommendationCard({ rec, rank, ranking, contested, hits, taken 
         </ul>
       )}
     </article>
+  );
+}
+
+/** Why a reroll comp the player has levelled past is ranked two grades lower. */
+function LevelPenaltyNote({ rec }: { rec: Recommendation }) {
+  const cost = rerollCost(rec.comp)!;
+  const { level, stage } = REROLL_WINDOW[cost];
+  const carries = rec.comp.carries.filter((c) => catalog.unit(c).cost === cost).map((c) => catalog.unit(c).name);
+  return (
+    <li className="text-bad">
+      − Level {level}+ from {stage} on without a 3-star {carries.length ? carries.join(" or ") : `${cost}-cost carry`}: {cost}-cost
+      rerolls are usually three-starred by now, so it is ranked {grades(rec.levelPenalty)} lower.
+    </li>
   );
 }

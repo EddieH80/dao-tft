@@ -87,6 +87,10 @@ export interface Recommendation {
   boardBonus: number;
   /** Taken off a reroll comp when the board has none of its carries. */
   rerollPenalty: number;
+  /** Taken off a reroll comp the player has levelled past without three-starring a carry. */
+  levelPenalty: number;
+  /** Whether a stretch economy took this comp down a grade (the level penalty can stand in for it). */
+  stretched: boolean;
   /** Added to a reroll comp whose carry is already 2- or 3-star on the board. */
   starBonus: number;
   /** The carry that earned `starBonus`, and its star level. */
