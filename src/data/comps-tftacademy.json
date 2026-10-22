@@ -1340,7 +1340,7 @@
       "slug": "invoker-morgana",
       "name": "Invoker Morgana",
       "tier": "C",
-      "style": "lose-streak",
+      "style": "fast-8",
       "summary": "A Lose Streak comp carried by Morgana and Brambleback, with Sentinel tanking.",
       "playWhen": [
         "Your board and items point toward Morgana",

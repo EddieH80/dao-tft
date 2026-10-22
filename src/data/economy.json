@@ -19,7 +19,6 @@
     "reroll-2": {"label": "2-cost reroll", "rollLevel": 6, "rollGold": 30, "ideal": "3-2", "deadline": "4-1"},
     "reroll-3": {"label": "3-cost reroll", "rollLevel": 7, "rollGold": 40, "ideal": "3-5", "deadline": "4-2"},
     "fast-8": {"label": "Fast 8", "rollLevel": 8, "rollGold": 30, "ideal": "4-2", "deadline": "4-5"},
-    "fast-9": {"label": "Fast 9", "rollLevel": 9, "rollGold": 30, "ideal": "5-2", "deadline": "5-5"},
-    "lose-streak": {"label": "Lose streak", "rollLevel": 8, "rollGold": 40, "ideal": "4-1", "deadline": "4-5"}
+    "fast-9": {"label": "Fast 9", "rollLevel": 9, "rollGold": 30, "ideal": "5-2", "deadline": "5-5"}
   }
 }

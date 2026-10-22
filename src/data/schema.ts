@@ -8,9 +8,9 @@ const Id = z.string().min(1);
 
 /**
  * How a comp is played: reroll a 1-, 2- or 3-cost carry at a low level, level
- * fast to 8 or 9 for 4- and 5-costs, or lose streak into a level 8 roll.
+ * fast to 8 or 9 for 4- and 5-costs.
  */
-export const COMP_STYLES = ["reroll-1", "reroll-2", "reroll-3", "fast-8", "fast-9", "lose-streak"] as const;
+export const COMP_STYLES = ["reroll-1", "reroll-2", "reroll-3", "fast-8", "fast-9"] as const;
 export type CompStyle = (typeof COMP_STYLES)[number];
 export const isReroll = (comp: { style: CompStyle }) => comp.style.startsWith("reroll");
 /** The cost of unit a reroll comp three-stars, or null for a comp that does not reroll. */
