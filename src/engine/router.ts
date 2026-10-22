@@ -2,7 +2,7 @@ import { COMP_STYLES, isReroll, rerollCost, type Comp, type CompStyle, type Econ
 import { allocate, claimHeld, optimisticBound } from "./allocate";
 import { augmentEffect, tagRecommendations } from "./augments";
 import { Catalog, bagSize, withComponent } from "./catalog";
-import { stageIndex, styleOutlook, type Economy, type StyleOutlook } from "./economy";
+import { REROLL_WINDOW, pastRerollWindow, styleOutlook, type Economy, type StyleOutlook } from "./economy";
 import { NO_ITEM_STATS, hasGoodHolder, heldItemEffect, slotFillers } from "./items";
 import { scoutPenalty } from "./scout";
 import type {
@@ -61,15 +61,10 @@ export function starBonus(stars: StarLevel, cost: number): number {
   return stars === 3 && cost === 3 ? THREE_COST_THREE_STAR_BONUS : STAR_BONUS[stars];
 }
 /**
- * By these levels and rounds a reroll comp has usually three-starred its
- * carries. A player at or past both without a 3-star carry of that cost has
+ * A player past a reroll's window without a 3-star carry of that cost has
  * left the reroll behind, so the comp falls two fit grades.
  */
-export const REROLL_WINDOW: Record<number, { level: number; stage: string }> = {
-  1: { level: 6, stage: "3-2" },
-  2: { level: 7, stage: "3-5" },
-  3: { level: 8, stage: "4-1" },
-};
+export { REROLL_WINDOW } from "./economy";
 /** Taken off for each held item no unit in the comp would use well: one and a half fit grades. */
 export const ORPHAN_ITEM_PENALTY = 1.5 * FIT_BAND_GAP;
 /** A taken augment or the player's economy rules this comp out; it is graded D and listed last. */
@@ -170,8 +165,37 @@ export class TftEngine {
     });
   }
 
-  /** What the player's economy says about each comp style; empty while it is unknown. */
-  styleOutlooks(economy: Economy): Map<CompStyle, StyleOutlook> {
+  /**
+   * What the player's economy says about each comp style, as the player reads
+   * it; empty while it is unknown. A reroll the player has levelled past is not
+   * realistic unless they already have a 3-star unit of its cost.
+   */
+  styleOutlooks(
+    economy: Economy,
+    board: UnitId[] = [],
+    stars: Record<UnitId, StarLevel> = {},
+  ): Map<CompStyle, StyleOutlook> {
+    const outlooks = this.economyOutlooks(economy);
+    for (const [style, outlook] of outlooks) {
+      const cost = rerollCost({ style });
+      if (!cost || !pastRerollWindow(cost, economy, this.economy!)) continue;
+      if (board.some((u) => stars[u] === 3 && this.catalog.unit(u).cost === cost)) continue;
+      const { level, stage } = REROLL_WINDOW[cost];
+      outlooks.set(style, {
+        ...outlook,
+        verdict: "unrealistic",
+        note: `Level ${level}+ from ${stage} on without a 3-star ${cost}-cost: ${cost}-cost rerolls are usually three-starred by now.`,
+        levelledPast: true,
+      });
+    }
+    return outlooks;
+  }
+
+  /**
+   * The economy alone, for ranking. Levelling past a reroll is charged per comp
+   * instead, since only that comp's own 3-star carry spares it.
+   */
+  private economyOutlooks(economy: Economy): Map<CompStyle, StyleOutlook> {
     const outlooks = new Map<CompStyle, StyleOutlook>();
     if (!this.economy) return outlooks;
     for (const style of COMP_STYLES) {
@@ -182,7 +206,7 @@ export class TftEngine {
   }
 
   private rankWith(state: GameState, augments: AugmentId[]): Recommendation[] {
-    const outlooks = this.styleOutlooks(state);
+    const outlooks = this.economyOutlooks(state);
     return this.comps
       .map((comp) => this.evaluate(comp, state, augments, outlooks.get(comp.style) ?? null))
       .sort(
@@ -268,9 +292,7 @@ export class TftEngine {
   /** Whether the player is past the level and round by which this reroll comp has a 3-star carry, and has none. */
   private pastRerollWindow(comp: Comp, state: GameState): boolean {
     const cost = rerollCost(comp);
-    const window = cost ? REROLL_WINDOW[cost] : undefined;
-    if (!window || !this.economy || state.stage === null || state.level < window.level) return false;
-    if (stageIndex(state.stage, this.economy) < stageIndex(window.stage, this.economy)) return false;
+    if (!cost || !this.economy || !pastRerollWindow(cost, state, this.economy)) return false;
     return !comp.carries.some(
       (c) => state.board.includes(c) && state.stars[c] === 3 && this.catalog.unit(c).cost === cost,
     );
