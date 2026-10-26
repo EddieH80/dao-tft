@@ -15,6 +15,22 @@ export interface StyleOutlook {
   note: string;
   /** The stretch is only that the player has out-levelled a reroll's shop odds. */
   overlevelled?: boolean;
+  /** The player is past the reroll's window without a 3-star unit of its cost. */
+  levelledPast?: boolean;
+}
+
+/** By these levels and rounds a reroll has usually three-starred its carries. */
+export const REROLL_WINDOW: Record<number, { level: number; stage: string }> = {
+  1: { level: 6, stage: "3-2" },
+  2: { level: 7, stage: "3-5" },
+  3: { level: 8, stage: "4-1" },
+};
+
+/** Whether the player is at or past both the level and the round of a `cost`-cost reroll's window. */
+export function pastRerollWindow(cost: number, economy: Economy, model: EconomyModel): boolean {
+  const window = REROLL_WINDOW[cost];
+  if (!window || economy.stage === null || economy.level < window.level) return false;
+  return stageIndex(economy.stage, model) >= stageIndex(window.stage, model);
 }
 
 /** How long to keep projecting a style the player is already levelled for, waiting on roll gold. */

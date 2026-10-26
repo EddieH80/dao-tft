@@ -31,7 +31,10 @@ export function BoardPicker() {
   const setGold = useGame((s) => s.setGold);
   const setHp = useGame((s) => s.setHp);
   const setStage = useGame((s) => s.setStage);
-  const outlooks = useMemo(() => engine.styleOutlooks({ level, gold, hp, stage }), [level, gold, hp, stage]);
+  const outlooks = useMemo(
+    () => engine.styleOutlooks({ level, gold, hp, stage }, board, stars),
+    [level, gold, hp, stage, board, stars],
+  );
 
   const options = useMemo(() => {
     const q = filter.trim().toLowerCase();

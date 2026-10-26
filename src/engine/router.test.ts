@@ -672,4 +672,33 @@ describe("levelling past a reroll", () => {
     // Before 3-2 the stretch still counts.
     expect(at(reroll(1, KARMA), { level: 7, stage: "3-1", gold: 50, hp: 80 }).stretched).toBe(true);
   });
+
+  describe("on the economy line", () => {
+    const economy = { gold: 50, hp: 80 };
+    const verdict = (style: string, level: number, stage: string, board: string[] = [], stars = {}) =>
+      testEngine([]).styleOutlooks({ ...economy, level, stage }, board, stars).get(style as Comp["style"]);
+
+    it("rules out each reroll from its own level and round", () => {
+      expect(verdict("reroll-1", 6, "3-2")).toMatchObject({ verdict: "unrealistic", levelledPast: true });
+      expect(verdict("reroll-1", 6, "3-1")?.levelledPast).toBeUndefined();
+      expect(verdict("reroll-1", 5, "3-2")?.levelledPast).toBeUndefined();
+      expect(verdict("reroll-2", 7, "3-5")?.verdict).toBe("unrealistic");
+      expect(verdict("reroll-2", 7, "3-3")?.levelledPast).toBeUndefined();
+      expect(verdict("reroll-3", 8, "4-1")?.verdict).toBe("unrealistic");
+      expect(verdict("reroll-3", 8, "3-5")?.levelledPast).toBeUndefined();
+      expect(verdict("reroll-1", 6, "3-2")!.note).toMatch(/3-star 1-cost/);
+    });
+
+    it("keeps a reroll open with a 3-star unit of its cost", () => {
+      expect(verdict("reroll-1", 6, "3-2", [KARMA], { [KARMA]: 3 })?.levelledPast).toBeUndefined();
+      expect(verdict("reroll-1", 6, "3-2", [KARMA], { [KARMA]: 2 })?.levelledPast).toBe(true);
+      expect(verdict("reroll-1", 6, "3-2", [CAITLYN], { [CAITLYN]: 3 })?.levelledPast).toBe(true);
+    });
+
+    it("still only drops the comp two grades instead of ruling it out", () => {
+      const rec = at(reroll(1, KARMA), { level: 6, stage: "3-2", ...economy });
+      expect(rec.economy?.verdict).not.toBe("unrealistic");
+      expect(rec.levelPenalty).toBeGreaterThan(0);
+    });
+  });
 });
