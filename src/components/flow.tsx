@@ -45,6 +45,31 @@ export function Connector() {
   );
 }
 
+/**
+ * A connector whose arrowhead lands `shift` right of centre on wide screens,
+ * for a next node that sits off-centre beside a side column. Straight when the layout stacks.
+ */
+export function ElbowConnector({ shift }: { shift: string }) {
+  return (
+    <>
+      <div className="lg:hidden">
+        <Connector />
+      </div>
+      <div aria-hidden className="animate-pop relative hidden h-10 lg:block">
+        <div className={`absolute left-1/2 top-0 h-1/2 w-px ${LINE}`} />
+        <div className={`absolute left-1/2 top-1/2 h-px ${LINE}`} style={{ width: shift }} />
+        <div
+          className="absolute top-1/2 flex h-1/2 -translate-x-1/2 flex-col items-center"
+          style={{ left: `calc(50% + ${shift} + 0.5px)` }}
+        >
+          <div className={`w-px flex-1 ${LINE}`} />
+          <div className="h-0 w-0 border-x-[5px] border-t-[7px] border-x-transparent border-t-gold/70" />
+        </div>
+      </div>
+    </>
+  );
+}
+
 /** Points right at the next node on wide screens, down when the layout stacks. */
 export function SideArrow() {
   return (
