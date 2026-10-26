@@ -6,13 +6,17 @@ import { AugmentPanel } from "./AugmentPanel";
 import { BoardPicker } from "./BoardPicker";
 import { ComponentPicker } from "./ComponentPicker";
 import { HeldItemsPicker } from "./HeldItemsPicker";
-import { Branch, Connector, FlowLabel, SideArrow } from "./flow";
+import { Branch, Connector, ElbowConnector, FlowLabel, SideArrow } from "./flow";
 import { RecommendationCard } from "./RecommendationCard";
 import { ScoutPanel } from "./ScoutPanel";
 import { useRanking } from "./useRanking";
 
 const BRANCHES = 3;
 const EXTRA = 2;
+
+// On wide screens the opponents take a left column (lg:w-72 panel, w-10 side arrow, gap-4),
+// so the compositions column is centred half that far right of the page centre.
+const RESULTS_SHIFT = "calc((18rem + 2.5rem + 1rem) / 2)";
 
 export function RouterApp() {
   const { state, ranking, hits } = useRanking(BRANCHES + EXTRA);
@@ -75,7 +79,7 @@ export function RouterApp() {
       {showResults && (
         <>
           <h1 className="sr-only">Your options</h1>
-          <Connector />
+          <ElbowConnector shift={RESULTS_SHIFT} />
 
           {/* Opponents feed into the recommendations: contested comps rank lower. */}
           <div className="grid items-start gap-4 lg:grid-cols-[auto_minmax(0,1fr)]">
