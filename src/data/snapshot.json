@@ -1,7 +1,7 @@
 {
   "set": 18,
   "source": "https://raw.communitydragon.org/latest/cdragon/tft/en_us.json",
-  "fetchedAt": "2026-10-11",
+  "fetchedAt": "2026-10-25",
   "components": [
     {
       "id": "NegatronCloak",
@@ -2089,6 +2089,11 @@
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/missing-t3.png"
     },
     {
+      "id": "DA_ConstructACompanion",
+      "name": "Construct a Companion",
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/constructacompanion_iii.png"
+    },
+    {
       "id": "DA_18_FloraFatalisAugment",
       "name": "Consuming Flora",
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/missing-t2.png"
@@ -2147,11 +2152,6 @@
       "id": "DA_DeadlierCaps",
       "name": "Deadlier Caps",
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/deadliercaps_ii.png"
-    },
-    {
-      "id": "DA_DoubleTrouble",
-      "name": "Double Trouble",
-      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/double-trouble-ii.png"
     },
     {
       "id": "DA_Dummify",
@@ -2257,6 +2257,11 @@
       "id": "DA_FocusedFire",
       "name": "Focused Fire",
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/marksman_i.png"
+    },
+    {
+      "id": "DA_ForgeAFriend",
+      "name": "Forge A Friend",
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/constructacompanion_iii.png"
     },
     {
       "id": "DA_ForgedInStrength",
@@ -2629,9 +2634,19 @@
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/pandora1.png"
     },
     {
-      "id": "DA_PandorasItemsII",
+      "id": "DA_PandorasItemsIIMinus",
       "name": "Pandora's Items II",
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/pandora2.png"
+    },
+    {
+      "id": "DA_PandorasItemsIIPlus",
+      "name": "Pandora's Items II+",
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/missing-t2.png"
+    },
+    {
+      "id": "DA_PandorasItemsIIPlusPlus",
+      "name": "Pandora's Items II++",
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/missing-t2.png"
     },
     {
       "id": "DA_PandorasItemsIII",
