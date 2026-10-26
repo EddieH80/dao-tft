@@ -91,4 +91,7 @@ export const itemStats = ItemStatsSchema.parse(itemStatsJson);
 export const economyModel = EconomyModelSchema.parse(economyJson);
 export const engine = new TftEngine(catalog, comps, itemStats, economyModel);
 
+/** The patch the comps, and so the recommendations, are for: TFT Academy's tier list, refreshed daily. */
+export const patch = compsTftAcademy.patch;
+
 export const compBySlug = (slug: string) => comps.find((c) => c.slug === slug);
