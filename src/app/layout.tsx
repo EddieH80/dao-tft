@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NavLinks } from "@/components/NavLinks";
+import { patch } from "@/data";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -18,10 +19,19 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <header className="border-b border-line bg-panel/80">
-          <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-            <Link href="/" className="text-lg font-semibold tracking-wide text-gold">
-              道 Dao TFT
-            </Link>
+          <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+            <div className="flex items-center gap-3">
+              <Link href="/" className="whitespace-nowrap text-lg font-semibold tracking-wide text-gold">
+                道 Dao TFT
+              </Link>
+              <span
+                className="whitespace-nowrap rounded-full border border-line px-2 py-0.5 text-xs text-muted"
+                title={`Recommendations use TFT Academy's comps for patch ${patch}`}
+              >
+                <span className="hidden sm:inline">Patch </span>
+                {patch}
+              </span>
+            </div>
             <NavLinks />
           </nav>
         </header>
