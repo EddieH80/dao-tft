@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NavLinks } from "@/components/NavLinks";
+import { StartOver } from "@/components/StartOver";
 import { patch } from "@/data";
 import "./globals.css";
 
@@ -18,21 +19,25 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <header className="border-b border-line bg-panel/80">
-          <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+        <header className="sticky top-0 z-30 border-b border-line bg-panel/90 backdrop-blur">
+          {/* Equal side columns keep the patch centred whatever the logo and links measure. */}
+          <nav className="mx-auto grid h-14 max-w-6xl grid-cols-[1fr_auto_1fr] items-center gap-3 px-4">
             <div className="flex items-center gap-3">
               <Link href="/" className="whitespace-nowrap text-lg font-semibold tracking-wide text-gold">
                 道 Dao TFT
               </Link>
-              <span
-                className="whitespace-nowrap rounded-full border border-line px-2 py-0.5 text-xs text-muted"
-                title={`Recommendations use TFT Academy's comps for patch ${patch}`}
-              >
-                <span className="hidden sm:inline">Patch </span>
-                {patch}
-              </span>
+              <StartOver />
             </div>
-            <NavLinks />
+            <span
+              className="whitespace-nowrap text-xs text-muted"
+              title={`Recommendations use TFT Academy's comps for patch ${patch}`}
+            >
+              <span className="hidden sm:inline">Patch </span>
+              {patch}
+            </span>
+            <div className="flex justify-end">
+              <NavLinks />
+            </div>
           </nav>
         </header>
         <div className="flex-1">{children}</div>
