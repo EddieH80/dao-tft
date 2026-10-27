@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.5b",
-  "fetchedAt": "2026-10-26",
+  "fetchedAt": "2026-10-27",
   "comps": [
     {
       "slug": "tempo-riftbeast",
@@ -660,20 +660,20 @@
         "DA_18_Sivir"
       ],
       "frontline": [
-        "DA_Amumu18",
         "DA_18_Shen",
         "DA_Vi18",
-        "DA_18_Lillia"
+        "DA_18_Lillia",
+        "DA_Amumu18"
       ],
       "endBoard": [
+        "DA_18_Shen",
+        "DA_18_Tristana",
+        "DA_Vi18",
+        "DA_18_Lillia",
         "DA_Amumu18",
         "DA_18_Sivir",
-        "DA_18_Shen",
-        "DA_Vi18",
-        "DA_18_Ashe",
         "DA_18_Ivern",
-        "DA_18_Tristana",
-        "DA_18_Lillia"
+        "DA_18_Ashe"
       ],
       "targetItems": [
         {
@@ -690,6 +690,11 @@
           "item": "DA_SpearOfShojin",
           "unit": "DA_18_Sivir",
           "weight": 3
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_18_Lillia",
+          "weight": 2
         },
         {
           "item": "DA_WarmogsArmor",
@@ -717,11 +722,6 @@
           "weight": 2
         },
         {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_18_Lillia",
-          "weight": 2
-        },
-        {
           "item": "DA_18_EmblemFae",
           "unit": "DA_18_Sivir",
           "weight": 1
@@ -729,10 +729,10 @@
       ],
       "opener": {
         "units": [
-          "DA_18_Akali_AD",
           "DA_18_Camille",
-          "DA_18_Shen",
-          "DA_18_Leona"
+          "DA_18_Leona",
+          "DA_18_Akali_AD",
+          "DA_18_Shen"
         ],
         "note": "Play around a strong AD opener prioritizing Sivir items."
       },
@@ -754,10 +754,6 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
-          "item": "DA_Artifact_GoldCollector",
-          "unit": "DA_18_Sivir"
-        },
-        {
           "item": "DA_18_EmblemFae",
           "unit": "DA_18_Sivir"
         }
@@ -765,12 +761,12 @@
       "academyAugments": [
         "DA_18_BigGrabBag",
         "DA_18_PrimalAugmentPlus_Nidalee",
-        "DA_CaretakersFavor",
         "DA_Swordsmith",
         "DA_18_PrimalAugmentPlus_Sivir",
         "DA_CarveAPath",
-        "DA_18_FOURcing",
-        "DA_DeadlierBlades"
+        "DA_DeadlierBlades",
+        "DA_TheTraitTree",
+        "DA_SpreadingRoots"
       ]
     },
     {
