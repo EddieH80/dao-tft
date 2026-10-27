@@ -108,7 +108,7 @@ export function QuickBar() {
   };
 
   return (
-    <div className="sticky top-0 z-20 -mx-4 mb-4 border-b border-line bg-ink/95 px-4 py-3 backdrop-blur">
+    <div className="sticky top-14 z-20 -mx-4 mb-4 border-b border-line bg-ink/95 px-4 py-3 backdrop-blur">
       <div className="mx-auto max-w-5xl">
         <div className="flex items-center gap-3">
           <label htmlFor="quick" className="shrink-0 text-xs font-semibold uppercase tracking-wider text-gold">

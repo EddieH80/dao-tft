@@ -34,7 +34,6 @@ export function ComponentPicker() {
   const components = useGame((s) => s.components);
   const add = useGame((s) => s.addComponent);
   const remove = useGame((s) => s.removeComponent);
-  const reset = useGame((s) => s.reset);
   const total = bagSize(components);
 
   return (
@@ -80,15 +79,12 @@ export function ComponentPicker() {
           );
         })}
       </ul>
-      <div className="mt-3 flex items-center justify-between text-xs text-muted">
+      <div className="mt-3 text-xs text-muted">
         <button
           onClick={() => EXAMPLE.forEach(add)}
           className={total ? "invisible" : "hover:text-gold-bright"}
         >
           Try Bow + Tear + Rod
-        </button>
-        <button onClick={reset} className="hover:text-gold-bright">
-          Reset all
         </button>
       </div>
     </FlowNode>
