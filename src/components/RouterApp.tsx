@@ -5,8 +5,9 @@ import { useGame } from "@/store/useGame";
 import { AugmentPanel } from "./AugmentPanel";
 import { BoardPicker } from "./BoardPicker";
 import { ComponentPicker } from "./ComponentPicker";
+import { EconomyPicker } from "./EconomyPicker";
 import { HeldItemsPicker } from "./HeldItemsPicker";
-import { Branch, Connector, ElbowConnector, FlowLabel, SideArrow } from "./flow";
+import { Branch, ElbowConnector, FlowLabel, Merge, SideArrow } from "./flow";
 import { RecommendationCard } from "./RecommendationCard";
 import { ScoutPanel } from "./ScoutPanel";
 import { useRanking } from "./useRanking";
@@ -54,24 +55,19 @@ export function RouterApp() {
         </p>
       </div>
 
-      <div className="mx-auto grid max-w-5xl items-start gap-4 lg:grid-cols-2">
+      <Merge into={showBoard}>
         <ComponentPicker />
         <HeldItemsPicker />
-      </div>
+      </Merge>
 
       {showBoard && (
-        <>
-          <Connector />
+        <Merge into={showAugment}>
+          <EconomyPicker />
           <BoardPicker />
-        </>
+        </Merge>
       )}
 
-      {showAugment && (
-        <>
-          <Connector />
-          <AugmentPanel />
-        </>
-      )}
+      {showAugment && <AugmentPanel />}
 
       {showResults && (
         <>

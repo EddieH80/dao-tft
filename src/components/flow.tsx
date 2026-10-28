@@ -120,6 +120,42 @@ export function Branch({ children }: { children: ReactNode }) {
   );
 }
 
+/**
+ * Side-by-side nodes whose lines drop from the middle of each, join, and arrow into
+ * the next node at page centre. Lines only draw once `into` is set, i.e. the next node
+ * is showing. When the layout stacks, a single straight connector follows the last node.
+ */
+export function Merge({ into, children }: { into: boolean; children: ReactNode }) {
+  const items = Children.toArray(children);
+  const n = items.length;
+  const gap = 1; // rem, matches gap-4
+  const inset = `calc((100% - ${(n - 1) * gap}rem) / ${2 * n})`;
+  return (
+    <div className="mx-auto max-w-5xl">
+      <div
+        className="grid gap-4 lg:grid-cols-[repeat(var(--n),minmax(0,1fr))]"
+        style={{ "--n": n } as CSSProperties}
+      >
+        {/* Columns stretch to the tallest node, so each drop line reaches the same bar. */}
+        {items.map((child, i) => (
+          <div key={i} className="flex min-w-0 flex-col">
+            {child}
+            {into && <div aria-hidden className={`animate-pop mx-auto hidden min-h-5 w-px flex-1 lg:block ${LINE}`} />}
+          </div>
+        ))}
+      </div>
+      {into && (
+        <>
+          <div aria-hidden className="animate-pop relative hidden h-px lg:block">
+            <span className={`absolute inset-y-0 ${LINE}`} style={{ left: inset, right: inset }} />
+          </div>
+          <Connector />
+        </>
+      )}
+    </div>
+  );
+}
+
 /** Small label sitting on the flow between two sections. */
 export function FlowLabel({ children }: { children: ReactNode }) {
   return (
