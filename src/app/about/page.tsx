@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Panel } from "@/components/ui";
 import { comps, snapshot } from "@/data";
 
-export const metadata: Metadata = { title: "About — Dao TFT" };
+export const metadata: Metadata = { title: "Dao TFT - About" };
 
 export default function About() {
   return (

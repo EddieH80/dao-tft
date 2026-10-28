@@ -67,14 +67,6 @@ export function ComponentPicker() {
                 )}
               </button>
               <span className="text-[11px] leading-none text-muted">{SHORT_NAME[id] ?? name}</span>
-              <button
-                onClick={() => remove(id)}
-                disabled={!count}
-                aria-label={`Remove ${name}`}
-                className="text-xs text-muted enabled:hover:text-bad disabled:opacity-30"
-              >
-                −
-              </button>
             </li>
           );
         })}

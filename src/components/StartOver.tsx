@@ -3,14 +3,17 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { bagSize } from "@/engine/catalog";
-import { useGame } from "@/store/useGame";
+import { initial, useGame } from "@/store/useGame";
 
 /** How long the undo offer stays up after starting over. */
 const UNDO_MS = 8000;
 
+/** Pages that play the shared game: Guided and Quick. */
+const GAME_PAGES = ["/", "/quick"];
+
 const BUTTON = "whitespace-nowrap rounded-md border border-line px-2.5 py-1 text-xs text-muted hover:border-muted hover:text-gold-bright";
 
-/** Clears the guided game from the header, with a short window to undo it. Does nothing until something is entered. */
+/** Clears the game from the header, with a short window to undo it. Does nothing until something is entered. */
 export function StartOver() {
   const path = usePathname();
   const reset = useGame((s) => s.reset);
@@ -24,6 +27,8 @@ export function StartOver() {
       s.augments.length > 0 ||
       s.stage !== null ||
       s.gold !== null ||
+      s.hp !== null ||
+      s.level !== initial.level ||
       s.opponents.some(Boolean),
   );
   // Undo history length right after starting over; any later change withdraws the undo offer.
@@ -37,7 +42,7 @@ export function StartOver() {
     return () => clearTimeout(t);
   }, [justReset]);
 
-  if (path !== "/") return null;
+  if (!GAME_PAGES.includes(path)) return null;
 
   if (justReset)
     return (

@@ -54,7 +54,7 @@ interface GameStore extends Game {
   reset: () => void;
 }
 
-const initial: Game = {
+export const initial: Game = {
   components: {},
   items: [],
   board: [],
