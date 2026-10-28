@@ -81,16 +81,19 @@ export function EconomyPicker() {
   );
 }
 
-/** Every round from 2-1 to 7-7. */
-const STAGES = new Set(stageLabels(economyModel));
+/** Every round from 2-1 to 7-7, in order. */
+const STAGE_LIST = stageLabels(economyModel);
+const STAGES = new Set(STAGE_LIST);
 const FIRST_STAGE = "2-1";
-const LAST_STAGE = [...STAGES].at(-1)!;
+const LAST_STAGE = STAGE_LIST.at(-1)!;
 
 /**
- * A round typed as "3-2". Only a real round from 2-1 to the last stage is
- * saved; anything else stays in the box, marked, until it is fixed or cleared.
+ * A round typed as "3-2", or stepped a round at a time with − and +. Only a real round
+ * from 2-1 to the last stage is saved; anything else stays in the box, marked, until it
+ * is fixed or cleared.
  */
 function StageField({ value, onChange }: { value: string | null; onChange: (stage: string | null) => void }) {
+  const id = useId();
   const [draft, setDraft] = useState(value ?? "");
   // The stage also changes from elsewhere ("next round", the quick bar); show it when it does.
   const [shown, setShown] = useState(value);
@@ -100,35 +103,63 @@ function StageField({ value, onChange }: { value: string | null; onChange: (stag
   }
   const text = draft.trim();
   const invalid = text !== "" && !STAGES.has(text);
+  // Steps from the saved round; with none yet, + starts at the first round.
+  const at = value === null ? -1 : STAGE_LIST.indexOf(value);
+  const step = (by: number) => {
+    if (at === -1 && by < 0) return;
+    const next = STAGE_LIST[Math.max(0, Math.min(STAGE_LIST.length - 1, at + by))];
+    setDraft(next);
+    onChange(next);
+  };
 
   return (
-    <label className="flex items-center gap-2">
-      <span className="text-muted">Stage</span>
-      <input
-        value={draft}
-        onChange={(e) => {
-          const next = e.target.value;
-          setDraft(next);
-          const t = next.trim();
-          if (t === "") onChange(null);
-          else if (STAGES.has(t)) onChange(t);
-        }}
-        onBlur={() => !invalid && setDraft(value ?? "")}
-        placeholder="3-2"
-        maxLength={3}
-        autoComplete="off"
-        aria-invalid={invalid}
-        aria-describedby={invalid ? "stage-error" : undefined}
-        className={`w-14 rounded-md border bg-ink px-2 py-1 text-sm placeholder:text-muted ${
+    <div className="flex items-center gap-2">
+      <label htmlFor={id} className="text-muted">
+        Stage
+      </label>
+      <div
+        className={`flex items-stretch overflow-hidden rounded-md border bg-ink focus-within:border-gold ${
           invalid ? "border-bad" : "border-line"
         }`}
-      />
+      >
+        <Stepper label="Previous round" onClick={() => step(-1)} disabled={at <= 0}>
+          −
+        </Stepper>
+        <input
+          id={id}
+          value={draft}
+          onChange={(e) => {
+            const next = e.target.value;
+            setDraft(next);
+            const t = next.trim();
+            if (t === "") onChange(null);
+            else if (STAGES.has(t)) onChange(t);
+          }}
+          onKeyDown={(e) => {
+            // Like the number fields, the arrow keys stand in for the − and + buttons.
+            const by = e.key === "ArrowUp" ? 1 : e.key === "ArrowDown" ? -1 : 0;
+            if (!by) return;
+            e.preventDefault();
+            step(by);
+          }}
+          onBlur={() => !invalid && setDraft(value ?? "")}
+          placeholder="3-2"
+          maxLength={3}
+          autoComplete="off"
+          aria-invalid={invalid}
+          aria-describedby={invalid ? "stage-error" : undefined}
+          className="w-10 bg-transparent py-1 text-center text-sm outline-none placeholder:text-muted"
+        />
+        <Stepper label="Next round" onClick={() => step(1)} disabled={at === STAGE_LIST.length - 1}>
+          +
+        </Stepper>
+      </div>
       {invalid && (
         <span id="stage-error" className="text-xs text-bad">
           A round like 3-2, from {FIRST_STAGE} to {LAST_STAGE}
         </span>
       )}
-    </label>
+    </div>
   );
 }
 
