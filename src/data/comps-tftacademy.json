@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.5c",
-  "fetchedAt": "2026-10-29",
+  "fetchedAt": "2026-10-30",
   "comps": [
     {
       "slug": "ap-fast-9",
@@ -522,21 +522,21 @@
         "DA_Nidalee18_AP"
       ],
       "frontline": [
-        "DA_Amumu18",
+        "DA_18_Rakan",
+        "DA_18_Shen",
         "DA_18_Lillia",
         "DA_Sentinel18",
-        "DA_18_Rakan",
-        "DA_18_Shen"
+        "DA_Amumu18"
       ],
       "endBoard": [
-        "DA_Amumu18",
-        "DA_18_Sivir",
+        "DA_18_Rakan",
+        "DA_18_Shen",
         "DA_KogMaw18_AD",
         "DA_18_Lillia",
         "DA_Sentinel18",
-        "DA_18_Rakan",
-        "DA_18_Shen",
-        "DA_Nidalee18_AP"
+        "DA_Amumu18",
+        "DA_Nidalee18_AP",
+        "DA_18_Sivir"
       ],
       "targetItems": [
         {
@@ -583,12 +583,27 @@
           "item": "DA_EdgeOfNight",
           "unit": "DA_Nidalee18_AP",
           "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemHunter",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 1
+        },
+        {
+          "item": "DA_BlueBuff",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 1
+        },
+        {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir",
+          "weight": 1
         }
       ],
       "opener": {
         "units": [
-          "DA_Cinderling18",
           "DA_18_Yorick",
+          "DA_Cinderling18",
           "DA_Gromp18_AP",
           "DA_Scuttlecrab18"
         ],
@@ -610,7 +625,20 @@
         }
       ],
       "frontlineAlternatives": [],
-      "keyItems": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemHunter",
+          "unit": "DA_Nidalee18_AP"
+        },
+        {
+          "item": "DA_Artifact_SilvermereDawn",
+          "unit": "DA_Nidalee18_AP"
+        },
+        {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir"
+        }
+      ],
       "academyAugments": [
         "DA_18_PrimalAugment_Sivir",
         "DA_Swordsmith",
@@ -1532,9 +1560,116 @@
       ]
     },
     {
+      "slug": "mamawood",
+      "name": "Mamawood",
+      "tier": "C",
+      "style": "reroll-3",
+      "summary": "A 3-Cost Reroll comp carried by Mama Beak, with Krug tanking.",
+      "playWhen": [
+        "You find early copies of Mama Beak and can slow roll at level 7",
+        "You have components for Guinsoo's Rageblade"
+      ],
+      "carries": [
+        "DA_CrimsonRaptor18"
+      ],
+      "frontline": [
+        "DA_18_Alistar",
+        "DA_Krug18",
+        "DA_18_Hecarim",
+        "DA_Sentinel18"
+      ],
+      "endBoard": [
+        "DA_18_Xayah",
+        "DA_18_Alistar",
+        "DA_Krug18",
+        "DA_18_Hecarim",
+        "DA_CrimsonRaptor18",
+        "DA_Sentinel18",
+        "DA_18_Zyra"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_CrimsonRaptor18",
+          "weight": 3
+        },
+        {
+          "item": "DA_HextechGunblade",
+          "unit": "DA_CrimsonRaptor18",
+          "weight": 3
+        },
+        {
+          "item": "DA_TitansResolve",
+          "unit": "DA_CrimsonRaptor18",
+          "weight": 3
+        },
+        {
+          "item": "DA_SunfireCape",
+          "unit": "DA_Krug18",
+          "weight": 2
+        },
+        {
+          "item": "DA_Evenshroud",
+          "unit": "DA_Krug18",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Ornn",
+          "DA_18_Varus",
+          "DA_18_Xayah",
+          "DA_18_Shen"
+        ],
+        "note": "Play strongest board around upgraded Rapidfire and Elderwood."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Play strongest board around upgraded Rapidfire and Elderwood. Can also play Inferno to get upgraded shop slots."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Focus on econ and finishing your items. If rich, you can level at 3-5 and roll for upgrades for the rest of the stage. Otherwise, go to 7 at 4-1."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Roll until you upgrade Mama Beak 2 and your main tank. Then econ up and slow roll for 3*. Add 3 summoner or 5 cost on 8."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [],
+      "academyAugments": [
+        "DA_SpeedyDoubleKill",
+        "DA_HeroicGrabBagPlusPlus",
+        "DA_GoldenGamble",
+        "DA_ShimmerscaleEssence",
+        "DA_ChampDeliveryPlus",
+        "DA_Expedition",
+        "DA_GlassCannon_Silver",
+        "DA_RadiantRelic"
+      ]
+    },
+    {
       "slug": "eclipse-kayle",
       "name": "Eclipse Kayle",
-      "tier": "B",
+      "tier": "C",
       "style": "reroll-2",
       "summary": "A 2-Cost Reroll comp carried by Kayle, with Sejuani tanking.",
       "playWhen": [
@@ -1660,233 +1795,6 @@
       ]
     },
     {
-      "slug": "mamawood",
-      "name": "Mamawood",
-      "tier": "C",
-      "style": "reroll-3",
-      "summary": "A 3-Cost Reroll comp carried by Mama Beak, with Krug tanking.",
-      "playWhen": [
-        "You find early copies of Mama Beak and can slow roll at level 7",
-        "You have components for Guinsoo's Rageblade"
-      ],
-      "carries": [
-        "DA_CrimsonRaptor18"
-      ],
-      "frontline": [
-        "DA_18_Alistar",
-        "DA_Krug18",
-        "DA_18_Hecarim",
-        "DA_Sentinel18"
-      ],
-      "endBoard": [
-        "DA_18_Xayah",
-        "DA_18_Alistar",
-        "DA_Krug18",
-        "DA_18_Hecarim",
-        "DA_CrimsonRaptor18",
-        "DA_Sentinel18",
-        "DA_18_Zyra"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_GuinsoosRageblade",
-          "unit": "DA_CrimsonRaptor18",
-          "weight": 3
-        },
-        {
-          "item": "DA_HextechGunblade",
-          "unit": "DA_CrimsonRaptor18",
-          "weight": 3
-        },
-        {
-          "item": "DA_TitansResolve",
-          "unit": "DA_CrimsonRaptor18",
-          "weight": 3
-        },
-        {
-          "item": "DA_SunfireCape",
-          "unit": "DA_Krug18",
-          "weight": 2
-        },
-        {
-          "item": "DA_Evenshroud",
-          "unit": "DA_Krug18",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Ornn",
-          "DA_18_Varus",
-          "DA_18_Xayah",
-          "DA_18_Shen"
-        ],
-        "note": "Play strongest board around upgraded Rapidfire and Elderwood."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Play strongest board around upgraded Rapidfire and Elderwood. Can also play Inferno to get upgraded shop slots."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Focus on econ and finishing your items. If rich, you can level at 3-5 and roll for upgrades for the rest of the stage. Otherwise, go to 7 at 4-1."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Roll until you upgrade Mama Beak 2 and your main tank. Then econ up and slow roll for 3*. Add 3 summoner or 5 cost on 8."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [],
-      "academyAugments": [
-        "DA_SpeedyDoubleKill",
-        "DA_HeroicGrabBagPlusPlus",
-        "DA_GoldenGamble",
-        "DA_ShimmerscaleEssence",
-        "DA_ChampDeliveryPlus",
-        "DA_Expedition",
-        "DA_GlassCannon_Silver",
-        "DA_RadiantRelic"
-      ]
-    },
-    {
-      "slug": "fae-tristana",
-      "name": "Fae Tristana",
-      "tier": "C",
-      "style": "reroll-3",
-      "summary": "A 3-Cost Reroll comp carried by Tristana and Sivir, with Rammus tanking.",
-      "playWhen": [
-        "You find early copies of Tristana and can slow roll at level 7",
-        "You have components for Guinsoo's Rageblade"
-      ],
-      "carries": [
-        "DA_18_Tristana",
-        "DA_18_Sivir"
-      ],
-      "frontline": [
-        "DA_Vi18",
-        "DA_18_Rammus"
-      ],
-      "endBoard": [
-        "DA_18_Kobuko",
-        "DA_18_Rakan",
-        "DA_Vi18",
-        "DA_18_Rammus",
-        "DA_18_Tristana",
-        "DA_18_Lillia",
-        "DA_18_Sivir"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_GuinsoosRageblade",
-          "unit": "DA_18_Tristana",
-          "weight": 3
-        },
-        {
-          "item": "DA_HextechGunblade",
-          "unit": "DA_18_Tristana",
-          "weight": 3
-        },
-        {
-          "item": "DA_GiantSlayer",
-          "unit": "DA_18_Tristana",
-          "weight": 3
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Rammus",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpiritVisage",
-          "unit": "DA_18_Rammus",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Rammus",
-          "weight": 2
-        },
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        },
-        {
-          "item": "DA_RedBuff",
-          "unit": "DA_18_Sivir",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Rakan",
-          "DA_18_Varus",
-          "DA_18_Xayah",
-          "DA_18_Hecarim"
-        ],
-        "note": "Play for win streak with upgraded Rageblade holder."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Play for win streak with upgraded Rageblade holder. Start stacking Fae since getting to 7 ASAP is crucial for success."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Itemize and play Tristana as soon as you find her. Sprykin is more important than Hunter. If you spike very early Primal from ahead, you can consider items."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Level to 7 and roll above 50g for 3* Tristana and Rammus. Use your 4 Fae cash outs to push levels. Give Sivir leftover AD items."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Sivir"
-        },
-        {
-          "item": "DA_Artifact_NavoriFlickerblade",
-          "unit": "DA_18_Tristana"
-        }
-      ],
-      "academyAugments": [
-        "DA_URF",
-        "DA_UrfsGrabBag",
-        "DA_18_BranchingOut",
-        "DA_18_BranchingOutPlus",
-        "DA_SpreadingRoots",
-        "DA_SpreadingRootsPlus",
-        "DA_HeroicGrabBagPlusPlus",
-        "DA_Swordsmith"
-      ]
-    },
-    {
       "slug": "embiggen-xayah",
       "name": "Embiggen Xayah",
       "tier": "C",
@@ -2009,6 +1917,126 @@
         "DA_URF",
         "DA_UrfsGrabBag",
         "DA_ConstructACompanion"
+      ]
+    },
+    {
+      "slug": "fae-tristana",
+      "name": "Fae Tristana",
+      "tier": "C",
+      "style": "reroll-3",
+      "summary": "A 3-Cost Reroll comp carried by Tristana and Sivir, with Rammus tanking.",
+      "playWhen": [
+        "You find early copies of Tristana and can slow roll at level 7",
+        "You have components for Guinsoo's Rageblade"
+      ],
+      "carries": [
+        "DA_18_Tristana",
+        "DA_18_Sivir"
+      ],
+      "frontline": [
+        "DA_Vi18",
+        "DA_18_Rammus"
+      ],
+      "endBoard": [
+        "DA_18_Kobuko",
+        "DA_18_Rakan",
+        "DA_Vi18",
+        "DA_18_Rammus",
+        "DA_18_Tristana",
+        "DA_18_Lillia",
+        "DA_18_Sivir"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Tristana",
+          "weight": 3
+        },
+        {
+          "item": "DA_HextechGunblade",
+          "unit": "DA_18_Tristana",
+          "weight": 3
+        },
+        {
+          "item": "DA_GiantSlayer",
+          "unit": "DA_18_Tristana",
+          "weight": 3
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpiritVisage",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        },
+        {
+          "item": "DA_RedBuff",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Rakan",
+          "DA_18_Varus",
+          "DA_18_Xayah",
+          "DA_18_Hecarim"
+        ],
+        "note": "Play for win streak with upgraded Rageblade holder."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Play for win streak with upgraded Rageblade holder. Start stacking Fae since getting to 7 ASAP is crucial for success."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Itemize and play Tristana as soon as you find her. Sprykin is more important than Hunter. If you spike very early Primal from ahead, you can consider items."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level to 7 and roll above 50g for 3* Tristana and Rammus. Use your 4 Fae cash outs to push levels. Give Sivir leftover AD items."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir"
+        },
+        {
+          "item": "DA_Artifact_NavoriFlickerblade",
+          "unit": "DA_18_Tristana"
+        }
+      ],
+      "academyAugments": [
+        "DA_URF",
+        "DA_UrfsGrabBag",
+        "DA_18_BranchingOut",
+        "DA_18_BranchingOutPlus",
+        "DA_SpreadingRoots",
+        "DA_SpreadingRootsPlus",
+        "DA_HeroicGrabBagPlusPlus",
+        "DA_Swordsmith"
       ]
     },
     {
@@ -2404,23 +2432,23 @@
         "DA_18_Ezreal"
       ],
       "frontline": [
-        "DA_18_Diana",
+        "DA_18_Ornn",
         "DA_18_Alistar",
+        "DA_18_Diana",
         "DA_18_Hecarim",
         "DA_18_Lillia",
-        "DA_18_GnarSmall",
-        "DA_18_Ornn"
+        "DA_18_GnarSmall"
       ],
       "endBoard": [
-        "DA_18_Diana",
+        "DA_18_Ornn",
         "DA_18_Xayah",
         "DA_18_Alistar",
+        "DA_18_Diana",
         "DA_18_Hecarim",
         "DA_18_Lillia",
         "DA_18_Aphelios",
-        "DA_18_GnarSmall",
-        "DA_18_Ornn",
-        "DA_18_Ezreal"
+        "DA_18_Ezreal",
+        "DA_18_GnarSmall"
       ],
       "targetItems": [
         {
@@ -2459,11 +2487,6 @@
           "weight": 2
         },
         {
-          "item": "DA_ThiefsGloves",
-          "unit": "DA_18_GnarSmall",
-          "weight": 2
-        },
-        {
           "item": "DA_SpearOfShojin",
           "unit": "DA_18_Ezreal",
           "weight": 2
@@ -2479,16 +2502,26 @@
           "weight": 2
         },
         {
-          "item": "DA_InfinityEdge",
+          "item": "DA_ThiefsGloves",
+          "unit": "DA_18_GnarSmall",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemExecutioner",
           "unit": "DA_18_Aphelios",
+          "weight": 1
+        },
+        {
+          "item": "DA_18_EmblemRapidfire",
+          "unit": "DA_18_Ezreal",
           "weight": 1
         }
       ],
       "opener": {
         "units": [
-          "DA_18_Varus",
           "DA_18_Ornn",
           "DA_18_Xayah",
+          "DA_18_Varus",
           "DA_18_Shen"
         ],
         "note": "Open with a strong win streak AD tempo around Rapidfires."
@@ -2515,8 +2548,20 @@
           "unit": "DA_18_Aphelios"
         },
         {
-          "item": "DA_Artifact_GoldCollector",
+          "item": "DA_18_EmblemExecutioner",
           "unit": "DA_18_Aphelios"
+        },
+        {
+          "item": "DA_Artifact_GamblersBlade",
+          "unit": "DA_18_Aphelios"
+        },
+        {
+          "item": "DA_18_EmblemRapidfire",
+          "unit": "DA_18_Ezreal"
+        },
+        {
+          "item": "DA_Artifact_GoldCollector",
+          "unit": "DA_18_Ezreal"
         }
       ],
       "academyAugments": [
@@ -3359,6 +3404,32 @@
       {
         "item": "DA_18_EmblemExecutioner",
         "unit": "DA_18_Zyra"
+      }
+    ],
+    "khazix-reroll": [
+      {
+        "item": "DA_Artifact_LichBane",
+        "unit": "DA_18_KhaZix"
+      },
+      {
+        "item": "DA_Artifact_WitsEnd",
+        "unit": "DA_18_KhaZix"
+      },
+      {
+        "item": "DA_Artifact_SeekersArmguard",
+        "unit": "DA_18_KhaZix"
+      },
+      {
+        "item": "DA_Artifact_LudensTempest",
+        "unit": "DA_18_KhaZix"
+      },
+      {
+        "item": "DA_Artifact_Dawncore",
+        "unit": "DA_18_KhaZix"
+      },
+      {
+        "item": "DA_Artifact_ZhonyasParadox",
+        "unit": "DA_18_KhaZix"
       }
     ],
     "veigar-reroll": [
