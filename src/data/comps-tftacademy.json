@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.5c",
-  "fetchedAt": "2026-10-30",
+  "fetchedAt": "2026-11-01",
   "comps": [
     {
       "slug": "ap-fast-9",
@@ -585,6 +585,11 @@
           "weight": 2
         },
         {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir",
+          "weight": 1
+        },
+        {
           "item": "DA_18_EmblemHunter",
           "unit": "DA_Nidalee18_AP",
           "weight": 1
@@ -592,11 +597,6 @@
         {
           "item": "DA_BlueBuff",
           "unit": "DA_Nidalee18_AP",
-          "weight": 1
-        },
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Sivir",
           "weight": 1
         }
       ],
@@ -627,16 +627,16 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Sivir"
+        },
+        {
           "item": "DA_18_EmblemHunter",
           "unit": "DA_Nidalee18_AP"
         },
         {
           "item": "DA_Artifact_SilvermereDawn",
           "unit": "DA_Nidalee18_AP"
-        },
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Sivir"
         }
       ],
       "academyAugments": [
@@ -644,10 +644,10 @@
         "DA_Swordsmith",
         "DA_SwordOverflow",
         "DA_CarveAPath",
-        "DA_JeweledLotus_II",
         "DA_CyberneticImplants_Gold",
         "DA_BoxingLessons",
-        "DA_DeadlierBlades"
+        "DA_BronzeForLifeII",
+        "DA_BronzeForLifeI"
       ]
     },
     {
@@ -1448,8 +1448,8 @@
       ]
     },
     {
-      "slug": "teemowood",
-      "name": "Teemowood",
+      "slug": "tee-moo",
+      "name": "Tee-moo",
       "tier": "B",
       "style": "reroll-2",
       "summary": "A 2-Cost Reroll comp carried by Teemo, with Alistar tanking.",
@@ -1462,18 +1462,18 @@
       ],
       "frontline": [
         "DA_18_Alistar",
-        "DA_Sentinel18",
-        "DA_18_Hecarim"
+        "DA_18_Hecarim",
+        "DA_Sentinel18"
       ],
       "endBoard": [
         "DA_18_Kobuko",
         "DA_18_Veigar",
-        "DA_18_Alistar",
         "DA_18_LeBlanc",
+        "DA_18_Alistar",
         "DA_18_Teemo",
+        "DA_18_Hecarim",
         "DA_Sentinel18",
-        "DA_18_Morgana",
-        "DA_18_Hecarim"
+        "DA_18_Morgana"
       ],
       "targetItems": [
         {
@@ -1492,16 +1492,6 @@
           "weight": 3
         },
         {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Alistar",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Alistar",
-          "weight": 2
-        },
-        {
           "item": "DA_SpearOfShojin",
           "unit": "DA_18_LeBlanc",
           "weight": 2
@@ -1509,6 +1499,16 @@
         {
           "item": "DA_RabadonsDeathcap",
           "unit": "DA_18_LeBlanc",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Alistar",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Alistar",
           "weight": 2
         },
         {
@@ -2691,25 +2691,25 @@
         "DA_18_Tristana"
       ],
       "frontline": [
+        "DA_18_Lillia",
+        "DA_Vi18",
+        "DA_18_Kobuko",
+        "DA_18_Rakan",
         "DA_18_Rammus"
       ],
       "endBoard": [
-        "DA_18_Kobuko",
-        "DA_18_Rammus",
         "DA_18_Rengar",
         "DA_18_Tristana",
-        "DA_18_Lillia",
         "DA_18_Sivir",
-        "DA_18_GnarSmall"
+        "DA_18_Lillia",
+        "DA_Vi18",
+        "DA_18_Kobuko",
+        "DA_18_Rakan",
+        "DA_18_Rammus"
       ],
       "targetItems": [
         {
           "item": "DA_EdgeOfNight",
-          "unit": "DA_18_Rengar",
-          "weight": 3
-        },
-        {
-          "item": "DA_GuinsoosRageblade",
           "unit": "DA_18_Rengar",
           "weight": 3
         },
@@ -2719,19 +2719,9 @@
           "weight": 3
         },
         {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Rammus",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpiritVisage",
-          "unit": "DA_18_Rammus",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Rammus",
-          "weight": 2
+          "item": "DA_Quicksilver",
+          "unit": "DA_18_Rengar",
+          "weight": 3
         },
         {
           "item": "DA_GuinsoosRageblade",
@@ -2739,14 +2729,39 @@
           "weight": 2
         },
         {
-          "item": "DA_LastWhisper",
+          "item": "DA_Deathblade",
           "unit": "DA_18_Tristana",
           "weight": 2
         },
         {
-          "item": "DA_Deathblade",
+          "item": "DA_HextechGunblade",
           "unit": "DA_18_Tristana",
           "weight": 2
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Sivir",
+          "weight": 2
+        },
+        {
+          "item": "DA_Crownguard",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_SunfireCape",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Rengar",
+          "weight": 1
         },
         {
           "item": "DA_18_EmblemSprykin",

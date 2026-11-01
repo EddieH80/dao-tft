@@ -1,7 +1,7 @@
 {
   "source": "https://tactics.tools/items",
-  "statsUpdated": "2026-10-31",
-  "fetchedAt": "2026-10-31",
+  "statsUpdated": "2026-11-01",
+  "fetchedAt": "2026-11-01",
   "holders": {
     "DA_18_EmblemJuggernaut": [
       {
@@ -12,7 +12,7 @@
     "DA_18_EmblemRapidfire": [
       {
         "unit": "DA_Brambleback18",
-        "delta": -0.1
+        "delta": -0.09
       }
     ],
     "DA_Artifact_EternalPact": [
@@ -24,7 +24,7 @@
     "DA_18_EmblemBlackthorn": [
       {
         "unit": "DA_18_Yunara",
-        "delta": -0.14
+        "delta": -0.12
       }
     ],
     "DA_18_EmblemElderwood": [
@@ -42,59 +42,67 @@
       },
       {
         "unit": "DA_18_Soraka",
-        "delta": -0.05
+        "delta": -0.06
       }
     ],
     "DA_Artifact_LightshieldCrest": [
       {
         "unit": "DA_18_Ornn",
-        "delta": -0.15
+        "delta": -0.16
       }
     ],
     "DA_Artifact_ForbiddenIdol": [
       {
         "unit": "DA_18_Ornn",
-        "delta": -0.12
+        "delta": -0.13
       }
     ],
     "DA_Artifact_HellfireHatchet": [
       {
         "unit": "DA_18_MasterYi_AD",
-        "delta": -0.42
+        "delta": -0.38
       },
-      {
-        "unit": "DA_18_Camille",
-        "delta": -0.27
-      },
-      {
-        "unit": "DA_18_Warwick",
-        "delta": -0.03
-      }
-    ],
-    "DA_Artifact_TheIndomitable": [
-      {
-        "unit": "DA_18_Ornn",
-        "delta": -0.05
-      }
-    ],
-    "DA_18_EmblemPrimal": [
-      {
-        "unit": "DA_18_Tristana",
-        "delta": -0.02
-      }
-    ],
-    "DA_Artifact_Fishbones": [
       {
         "unit": "DA_18_Camille",
         "delta": -0.29
       },
       {
+        "unit": "DA_18_Warwick",
+        "delta": -0.03
+      },
+      {
+        "unit": "DA_Brambleback18",
+        "delta": 0
+      }
+    ],
+    "DA_Artifact_TheIndomitable": [
+      {
+        "unit": "DA_18_Ornn",
+        "delta": -0.06
+      }
+    ],
+    "DA_18_EmblemPrimal": [
+      {
+        "unit": "DA_18_Tristana",
+        "delta": -0.03
+      },
+      {
+        "unit": "DA_18_Ashe",
+        "delta": 0
+      }
+    ],
+    "DA_Artifact_Fishbones": [
+      {
+        "unit": "DA_18_Camille",
+        "delta": -0.31
+      },
+      {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.26
+        "delta": -0.27
       },
       {
         "unit": "DA_18_MasterYi_AD",
-        "delta": -0.12
+        "delta": -0.11
       },
       {
         "unit": "DA_18_Veigar",
@@ -102,19 +110,19 @@
       },
       {
         "unit": "DA_18_Aphelios",
-        "delta": -0.03
+        "delta": -0.02
       }
     ],
     "DA_Artifact_ZhonyasParadox": [
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.29
+        "delta": -0.28
       }
     ],
     "DA_18_EmblemSpellweaver": [
       {
         "unit": "DA_Lux18_Base",
-        "delta": -0.13
+        "delta": -0.14
       },
       {
         "unit": "DA_18_Morgana",
@@ -124,21 +132,21 @@
     "DA_Artifact_RapidFireCannon": [
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.32
+        "delta": -0.33
       },
       {
         "unit": "DA_18_Camille",
-        "delta": -0.2
+        "delta": -0.23
       },
       {
         "unit": "DA_18_MasterYi_AD",
-        "delta": -0.18
+        "delta": -0.21
       }
     ],
     "DA_18_EmblemSlayer": [
       {
         "unit": "DA_18_Elise",
-        "delta": -0.24
+        "delta": -0.23
       },
       {
         "unit": "DA_Nidalee18_AP",
@@ -152,11 +160,11 @@
       },
       {
         "unit": "DA_Lux18_Base",
-        "delta": -0.09
+        "delta": -0.08
       },
       {
         "unit": "DA_18_Alune",
-        "delta": -0.02
+        "delta": -0.01
       }
     ],
     "DA_18_EmblemInferno": [
@@ -168,55 +176,55 @@
     "DA_Artifact_LudensTempest": [
       {
         "unit": "DA_18_Veigar",
-        "delta": -0.47
+        "delta": -0.45
       },
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.36
+        "delta": -0.35
       },
       {
         "unit": "DA_18_KhaZix",
-        "delta": -0.23
+        "delta": -0.2
       },
       {
         "unit": "DA_18_Ahri",
-        "delta": -0.14
+        "delta": -0.15
       }
     ],
     "DA_Artifact_LichBane": [
       {
         "unit": "DA_18_KhaZix",
-        "delta": -0.24
+        "delta": -0.27
       },
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.23
+        "delta": -0.26
       },
       {
         "unit": "DA_18_Veigar",
-        "delta": -0.14
+        "delta": -0.17
       }
     ],
     "DA_Artifact_NavoriFlickerblade": [
       {
         "unit": "DA_18_MasterYi_AD",
-        "delta": -0.23
+        "delta": -0.25
       },
       {
         "unit": "DA_18_Caitlyn",
-        "delta": -0.23
+        "delta": -0.24
       },
       {
         "unit": "DA_CrimsonRaptor18",
-        "delta": -0.21
-      },
-      {
-        "unit": "DA_18_Kayle",
         "delta": -0.18
       },
       {
+        "unit": "DA_18_Kayle",
+        "delta": -0.17
+      },
+      {
         "unit": "DA_Draven18",
-        "delta": -0.07
+        "delta": -0.08
       }
     ],
     "DA_18_EmblemHunter": [
@@ -226,59 +234,59 @@
       },
       {
         "unit": "DA_Nidalee18_AP",
-        "delta": -0.05
+        "delta": -0.06
       }
     ],
     "DA_Artifact_Mittens": [
       {
         "unit": "DA_18_Camille",
-        "delta": -0.32
-      },
-      {
-        "unit": "DA_18_MasterYi_AD",
-        "delta": -0.14
+        "delta": -0.35
       },
       {
         "unit": "DA_18_Warwick",
-        "delta": -0.13
+        "delta": -0.16
+      },
+      {
+        "unit": "DA_18_MasterYi_AD",
+        "delta": -0.15
       },
       {
         "unit": "DA_18_Rengar",
-        "delta": -0.03
+        "delta": -0.06
       }
     ],
     "DA_Artifact_BlightingJewel": [
       {
         "unit": "DA_18_Cassiopeia",
-        "delta": -0.22
+        "delta": -0.23
       },
       {
         "unit": "DA_18_Morgana",
-        "delta": -0.15
+        "delta": -0.14
       }
     ],
     "DA_Artifact_InfinityForce": [
       {
         "unit": "DA_18_Camille",
-        "delta": -0.19
+        "delta": -0.23
       }
     ],
     "DA_Artifact_Dawncore": [
       {
         "unit": "DA_18_Veigar",
-        "delta": -0.56
+        "delta": -0.54
       },
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.28
+        "delta": -0.3
       },
       {
         "unit": "DA_18_Soraka",
-        "delta": -0.24
+        "delta": -0.21
       },
       {
         "unit": "DA_18_Cassiopeia",
-        "delta": -0.19
+        "delta": -0.17
       },
       {
         "unit": "DA_18_Teemo",
@@ -288,7 +296,7 @@
     "DA_Artifact_StatikkShiv": [
       {
         "unit": "DA_18_Kayle",
-        "delta": -0.12
+        "delta": -0.11
       }
     ],
     "DA_18_EmblemDefender": [
@@ -300,7 +308,7 @@
     "DA_Artifact_SeekersArmguard": [
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.3
+        "delta": -0.31
       },
       {
         "unit": "DA_18_KhaZix",
@@ -310,15 +318,15 @@
     "DA_Artifact_WitsEnd": [
       {
         "unit": "DA_18_MasterYi_AD",
-        "delta": -0.33
+        "delta": -0.32
       },
       {
         "unit": "DA_18_Kayle",
-        "delta": -0.2
+        "delta": -0.18
       },
       {
         "unit": "DA_18_Akali_AD",
-        "delta": -0.19
+        "delta": -0.17
       }
     ],
     "DA_18_EmblemBrawler": [
@@ -328,13 +336,13 @@
       },
       {
         "unit": "DA_18_Rengar",
-        "delta": -0.16
+        "delta": -0.19
       }
     ],
     "DA_18_EmblemVanguard": [
       {
         "unit": "DA_18_Lillia",
-        "delta": -0.05
+        "delta": -0.04
       }
     ],
     "DA_Artifact_SilvermereDawn": [
@@ -344,39 +352,45 @@
       },
       {
         "unit": "DA_Nidalee18_AP",
-        "delta": -0.18
+        "delta": -0.15
       },
       {
         "unit": "DA_18_ElderDragon",
-        "delta": -0.09
+        "delta": -0.08
       }
     ],
     "DA_18_EmblemExecutioner": [
       {
         "unit": "DA_Karma18",
-        "delta": -0.31
-      },
-      {
-        "unit": "DA_Draven18",
-        "delta": -0.21
+        "delta": -0.3
       },
       {
         "unit": "DA_Lux18_Base",
         "delta": -0.21
       },
       {
+        "unit": "DA_Draven18",
+        "delta": -0.21
+      },
+      {
         "unit": "DA_18_Warwick",
-        "delta": -0.19
+        "delta": -0.17
       },
       {
         "unit": "DA_18_Zyra",
-        "delta": -0.15
+        "delta": -0.13
+      }
+    ],
+    "DA_18_EmblemSprykin": [
+      {
+        "unit": "DA_18_Rengar",
+        "delta": 0
       }
     ],
     "DA_18_EmblemLunar": [
       {
         "unit": "DA_18_Varus",
-        "delta": -0.24
+        "delta": -0.23
       },
       {
         "unit": "DA_18_Morgana",
@@ -389,18 +403,26 @@
         "delta": -0.26
       },
       {
+        "unit": "DA_18_Akali_AD",
+        "delta": -0.21
+      },
+      {
         "unit": "DA_18_Alune",
-        "delta": -0.02
+        "delta": -0.03
       }
     ],
     "DA_Artifact_TitanicHydra": [
       {
         "unit": "DA_18_Camille",
-        "delta": -0.22
+        "delta": -0.25
       },
       {
         "unit": "DA_18_MasterYi_AD",
         "delta": -0.13
+      },
+      {
+        "unit": "DA_18_Warwick",
+        "delta": 0
       }
     ],
     "DA_18_EmblemFae": [
@@ -410,200 +432,49 @@
       },
       {
         "unit": "DA_CrimsonRaptor18",
-        "delta": -0.19
-      },
-      {
-        "unit": "DA_18_Sivir",
-        "delta": -0.15
+        "delta": -0.2
       },
       {
         "unit": "DA_18_Rengar",
+        "delta": -0.15
+      },
+      {
+        "unit": "DA_18_Sivir",
         "delta": -0.14
       }
     ]
   },
   "topItems": {
-    "DA_Sentinel18": [
+    "DA_18_Ornn": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_CrimsonRaptor18": [
-      "DA_HextechGunblade",
-      "DA_TitansResolve",
-      "DA_GuinsoosRageblade",
-      "DA_GiantSlayer",
-      "DA_KrakensFury"
+    "DA_18_Sett": [
+      "DA_WarmogsArmor",
+      "DA_SteraksGage",
+      "DA_ThiefsGloves"
     ],
-    "DA_18_Ashe": [
-      "DA_RedBuff",
-      "DA_LastWhisper",
-      "DA_GiantSlayer",
+    "DA_18_Teemo": [
+      "DA_StrikersFlail",
       "DA_SpearOfShojin",
-      "DA_HextechGunblade"
-    ],
-    "DA_Fiddlesticks18": [
-      "DA_TitansResolve",
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Elise": [
-      "DA_TitansResolve",
-      "DA_GuinsoosRageblade",
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_Lux18_Base": [
+      "DA_HextechGunblade",
       "DA_NashorsTooth",
-      "DA_HextechGunblade",
-      "DA_GiantSlayer",
-      "DA_SpearOfShojin",
-      "DA_RedBuff"
-    ],
-    "DA_Cinderling18": [
-      "DA_SpearOfShojin",
-      "DA_GiantSlayer",
-      "DA_InfinityEdge",
-      "DA_LastWhisper",
-      "DA_StrikersFlail"
-    ],
-    "DA_18_Xayah": [
-      "DA_InfinityEdge",
-      "DA_GiantSlayer",
-      "DA_KrakensFury",
-      "DA_HextechGunblade",
-      "DA_GuinsoosRageblade"
+      "DA_GiantSlayer"
     ],
     "DA_18_Leona": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_18_Maokai": [
+    "DA_Scuttlecrab18": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_18_Yunara": [
-      "DA_SpearOfShojin",
-      "DA_StrikersFlail",
-      "DA_GiantSlayer",
-      "DA_RedBuff",
-      "DA_InfinityEdge"
-    ],
-    "DA_Gromp18_AP": [
-      "DA_SpearOfShojin",
-      "DA_VoidStaff",
-      "DA_GiantSlayer",
-      "DA_RedBuff",
-      "DA_InfinityEdge"
-    ],
-    "DA_18_GnarSmall": [
-      "DA_SteraksGage",
-      "DA_Bloodthirster",
-      "DA_EdgeOfNight",
-      "DA_TitansResolve",
-      "DA_RedBuff"
-    ],
-    "DA_Amumu18": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_Krug18": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Rammus": [
-      "DA_WarmogsArmor"
-    ],
-    "DA_KogMaw18_AD": [
-      "DA_RedBuff",
-      "DA_GiantSlayer",
-      "DA_HextechGunblade",
-      "DA_InfinityEdge",
-      "DA_SpearOfShojin"
-    ],
-    "DA_Vi18": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Azir": [
-      "DA_HextechGunblade",
-      "DA_GuinsoosRageblade",
-      "DA_StrikersFlail",
-      "DA_GiantSlayer",
-      "DA_VoidStaff"
-    ],
-    "DA_18_Sejuani": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Kobuko": [
-      "DA_WarmogsArmor",
-      "DA_SteraksGage",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Kennen": [
-      "DA_EdgeOfNight",
-      "DA_VoidStaff",
-      "DA_StrikersFlail",
-      "DA_Bloodthirster",
-      "DA_HextechGunblade"
-    ],
-    "DA_18_Malphite": [
-      "DA_WarmogsArmor"
-    ],
-    "DA_18_LeBlanc": [
-      "DA_SpearOfShojin",
-      "DA_VoidStaff",
-      "DA_RedBuff",
-      "DA_HextechGunblade",
-      "DA_GiantSlayer"
-    ],
-    "DA_18_Varus": [
-      "DA_GiantSlayer",
+    "DA_18_Ezreal": [
       "DA_InfinityEdge",
       "DA_StrikersFlail",
-      "DA_SpearOfShojin",
-      "DA_LastWhisper"
-    ],
-    "DA_18_Shen": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Alistar": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Rakan": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Ivern": [
-      "DA_SpearOfShojin",
-      "DA_NashorsTooth",
-      "DA_VoidStaff",
-      "DA_RedBuff",
-      "DA_GuinsoosRageblade"
-    ],
-    "DA_18_Hecarim": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Sivir": [
-      "DA_InfinityEdge",
-      "DA_RedBuff",
       "DA_LastWhisper",
-      "DA_StrikersFlail",
-      "DA_GiantSlayer"
-    ],
-    "DA_18_Yorick": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Cassiopeia": [
-      "DA_HextechGunblade",
-      "DA_VoidStaff",
-      "DA_RedBuff",
-      "DA_SpearOfShojin",
-      "DA_GiantSlayer"
+      "DA_GiantSlayer",
+      "DA_SpearOfShojin"
     ],
     "DA_18_Diana": [
       "DA_EdgeOfNight",
@@ -612,11 +483,50 @@
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_Nidalee18_AP": [
+    "DA_18_Shen": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Lillia": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_KogMaw18_AD": [
+      "DA_RedBuff",
+      "DA_GiantSlayer",
+      "DA_HextechGunblade",
+      "DA_SpearOfShojin",
+      "DA_InfinityEdge"
+    ],
+    "DA_18_Veigar": [
+      "DA_HextechGunblade",
+      "DA_GiantSlayer",
+      "DA_SpearOfShojin",
+      "DA_StrikersFlail",
+      "DA_NashorsTooth"
+    ],
+    "DA_18_ElderDragon": [
+      "DA_LastWhisper",
+      "DA_StrikersFlail",
+      "DA_RedBuff",
+      "DA_InfinityEdge",
+      "DA_SteraksGage"
+    ],
+    "DA_Brambleback18": [
       "DA_EdgeOfNight",
       "DA_SteraksGage",
-      "DA_Bloodthirster",
+      "DA_TitansResolve",
+      "DA_GiantSlayer",
+      "DA_Bloodthirster"
+    ],
+    "DA_18_Malphite": [
+      "DA_WarmogsArmor"
+    ],
+    "DA_18_Varus": [
+      "DA_GiantSlayer",
       "DA_InfinityEdge",
+      "DA_StrikersFlail",
+      "DA_LastWhisper",
       "DA_SpearOfShojin"
     ],
     "DA_Karma18": [
@@ -626,58 +536,38 @@
       "DA_NashorsTooth",
       "DA_HextechGunblade"
     ],
-    "DA_Murkwolf18": [
-      "DA_EdgeOfNight",
-      "DA_Bloodthirster",
+    "DA_18_Camille": [
       "DA_SteraksGage",
-      "DA_InfinityEdge",
-      "DA_GiantSlayer"
-    ],
-    "DA_18_Kayle": [
-      "DA_RedBuff",
-      "DA_VoidStaff",
-      "DA_GuinsoosRageblade",
-      "DA_GiantSlayer",
-      "DA_HextechGunblade"
-    ],
-    "DA_18_Tristana": [
-      "DA_HextechGunblade",
-      "DA_GiantSlayer",
-      "DA_KrakensFury",
-      "DA_GuinsoosRageblade",
-      "DA_InfinityEdge"
-    ],
-    "DA_18_Akali_AD": [
-      "DA_InfinityEdge",
       "DA_EdgeOfNight",
-      "DA_SteraksGage",
       "DA_GiantSlayer",
-      "DA_StrikersFlail"
+      "DA_InfinityEdge",
+      "DA_Bloodthirster"
     ],
-    "DA_18_Lillia": [
+    "DA_18_Yorick": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_18_Ahri": [
-      "DA_StrikersFlail",
-      "DA_SpearOfShojin",
-      "DA_NashorsTooth",
+    "DA_18_Xayah": [
+      "DA_InfinityEdge",
       "DA_GiantSlayer",
-      "DA_VoidStaff"
-    ],
-    "DA_18_Morgana": [
-      "DA_VoidStaff",
-      "DA_RedBuff",
+      "DA_KrakensFury",
       "DA_HextechGunblade",
-      "DA_GiantSlayer",
-      "DA_SpearOfShojin"
+      "DA_StrikersFlail"
     ],
-    "DA_18_Rengar": [
-      "DA_TitansResolve",
+    "DA_18_Kennen": [
       "DA_EdgeOfNight",
-      "DA_SteraksGage",
-      "DA_GuinsoosRageblade",
-      "DA_Bloodthirster"
+      "DA_VoidStaff",
+      "DA_StrikersFlail",
+      "DA_Bloodthirster",
+      "DA_HextechGunblade"
+    ],
+    "DA_Sentinel18": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_Krug18": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
     ],
     "DA_18_MasterYi_AD": [
       "DA_EdgeOfNight",
@@ -686,31 +576,22 @@
       "DA_Bloodthirster",
       "DA_KrakensFury"
     ],
-    "DA_18_Sentry": [
+    "DA_18_Rakan": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Zyra": [
+      "DA_VoidStaff",
       "DA_HextechGunblade",
-      "DA_VoidStaff",
-      "DA_GiantSlayer",
-      "DA_RedBuff",
-      "DA_SpearOfShojin"
-    ],
-    "DA_18_RekSai": [
-      "DA_SteraksGage",
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Sett": [
-      "DA_WarmogsArmor",
-      "DA_SteraksGage",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Soraka": [
       "DA_SpearOfShojin",
-      "DA_StrikersFlail",
-      "DA_VoidStaff",
-      "DA_NashorsTooth",
-      "DA_HextechGunblade"
+      "DA_RedBuff",
+      "DA_GiantSlayer"
     ],
-    "DA_18_Ornn": [
+    "DA_Vi18": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Maokai": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
@@ -721,19 +602,12 @@
       "DA_GiantSlayer",
       "DA_InfinityEdge"
     ],
-    "DA_18_Warwick": [
-      "DA_SteraksGage",
-      "DA_TitansResolve",
-      "DA_SpearOfShojin",
+    "DA_Nidalee18_AP": [
       "DA_EdgeOfNight",
-      "DA_InfinityEdge"
-    ],
-    "DA_Draven18": [
-      "DA_KrakensFury",
-      "DA_GuinsoosRageblade",
-      "DA_GiantSlayer",
+      "DA_SteraksGage",
+      "DA_Bloodthirster",
       "DA_InfinityEdge",
-      "DA_RedBuff"
+      "DA_SpearOfShojin"
     ],
     "DA_18_Aphelios": [
       "DA_KrakensFury",
@@ -742,62 +616,38 @@
       "DA_GuinsoosRageblade",
       "DA_RedBuff"
     ],
-    "DA_Scuttlecrab18": [
+    "DA_18_Hecarim": [
       "DA_WarmogsArmor",
       "DA_ThiefsGloves"
     ],
-    "DA_Taric18": [
-      "DA_WarmogsArmor",
-      "DA_ThiefsGloves"
-    ],
-    "DA_18_Veigar": [
-      "DA_HextechGunblade",
+    "DA_Draven18": [
+      "DA_KrakensFury",
+      "DA_GuinsoosRageblade",
+      "DA_InfinityEdge",
       "DA_GiantSlayer",
+      "DA_RedBuff"
+    ],
+    "DA_18_Rammus": [
+      "DA_WarmogsArmor"
+    ],
+    "DA_18_Soraka": [
       "DA_SpearOfShojin",
-      "DA_StrikersFlail",
-      "DA_NashorsTooth"
-    ],
-    "DA_18_Camille": [
-      "DA_SteraksGage",
-      "DA_EdgeOfNight",
-      "DA_InfinityEdge",
-      "DA_GiantSlayer",
-      "DA_Bloodthirster"
-    ],
-    "DA_Brambleback18": [
-      "DA_EdgeOfNight",
-      "DA_SteraksGage",
-      "DA_TitansResolve",
-      "DA_Bloodthirster",
-      "DA_GiantSlayer"
-    ],
-    "DA_18_Ezreal": [
-      "DA_InfinityEdge",
-      "DA_StrikersFlail",
-      "DA_GiantSlayer",
-      "DA_LastWhisper",
-      "DA_SpearOfShojin"
-    ],
-    "DA_18_Alune": [
       "DA_VoidStaff",
       "DA_StrikersFlail",
-      "DA_SpearOfShojin",
-      "DA_NashorsTooth",
-      "DA_HextechGunblade"
-    ],
-    "DA_18_Teemo": [
-      "DA_StrikersFlail",
-      "DA_SpearOfShojin",
       "DA_HextechGunblade",
-      "DA_NashorsTooth",
-      "DA_GiantSlayer"
+      "DA_NashorsTooth"
     ],
-    "DA_18_ElderDragon": [
-      "DA_LastWhisper",
-      "DA_StrikersFlail",
-      "DA_RedBuff",
+    "DA_Cinderling18": [
+      "DA_SpearOfShojin",
+      "DA_GiantSlayer",
       "DA_InfinityEdge",
-      "DA_GiantSlayer"
+      "DA_LastWhisper",
+      "DA_StrikersFlail"
+    ],
+    "DA_18_Kobuko": [
+      "DA_WarmogsArmor",
+      "DA_SteraksGage",
+      "DA_ThiefsGloves"
     ],
     "DA_18_KhaZix": [
       "DA_NashorsTooth",
@@ -806,12 +656,184 @@
       "DA_Bloodthirster",
       "DA_HextechGunblade"
     ],
-    "DA_18_Zyra": [
+    "DA_18_Ashe": [
+      "DA_RedBuff",
+      "DA_GiantSlayer",
+      "DA_LastWhisper",
+      "DA_SpearOfShojin",
+      "DA_HextechGunblade"
+    ],
+    "DA_18_GnarSmall": [
+      "DA_SteraksGage",
+      "DA_Bloodthirster",
+      "DA_EdgeOfNight",
+      "DA_TitansResolve",
+      "DA_RedBuff"
+    ],
+    "DA_Taric18": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Yunara": [
+      "DA_SpearOfShojin",
+      "DA_RedBuff",
+      "DA_StrikersFlail",
+      "DA_GiantSlayer",
+      "DA_InfinityEdge"
+    ],
+    "DA_Gromp18_AP": [
+      "DA_SpearOfShojin",
       "DA_VoidStaff",
+      "DA_GiantSlayer",
+      "DA_RedBuff",
+      "DA_InfinityEdge"
+    ],
+    "DA_18_Sejuani": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Rengar": [
+      "DA_TitansResolve",
+      "DA_EdgeOfNight",
+      "DA_SteraksGage",
+      "DA_GuinsoosRageblade",
+      "DA_Bloodthirster"
+    ],
+    "DA_CrimsonRaptor18": [
       "DA_HextechGunblade",
+      "DA_TitansResolve",
+      "DA_GuinsoosRageblade",
+      "DA_GiantSlayer",
+      "DA_KrakensFury"
+    ],
+    "DA_Amumu18": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Azir": [
+      "DA_HextechGunblade",
+      "DA_GuinsoosRageblade",
+      "DA_GiantSlayer",
+      "DA_StrikersFlail",
+      "DA_VoidStaff"
+    ],
+    "DA_Murkwolf18": [
+      "DA_EdgeOfNight",
+      "DA_SteraksGage",
+      "DA_Bloodthirster",
+      "DA_StrikersFlail",
+      "DA_GiantSlayer"
+    ],
+    "DA_18_Akali_AD": [
+      "DA_InfinityEdge",
+      "DA_EdgeOfNight",
+      "DA_SteraksGage",
+      "DA_GiantSlayer",
+      "DA_Bloodthirster"
+    ],
+    "DA_18_Cassiopeia": [
+      "DA_HextechGunblade",
+      "DA_VoidStaff",
       "DA_SpearOfShojin",
       "DA_RedBuff",
       "DA_GiantSlayer"
+    ],
+    "DA_18_Ivern": [
+      "DA_SpearOfShojin",
+      "DA_VoidStaff",
+      "DA_NashorsTooth",
+      "DA_RedBuff",
+      "DA_GuinsoosRageblade"
+    ],
+    "DA_18_Tristana": [
+      "DA_HextechGunblade",
+      "DA_GiantSlayer",
+      "DA_KrakensFury",
+      "DA_GuinsoosRageblade",
+      "DA_InfinityEdge"
+    ],
+    "DA_18_Sentry": [
+      "DA_HextechGunblade",
+      "DA_VoidStaff",
+      "DA_GiantSlayer",
+      "DA_RedBuff",
+      "DA_SpearOfShojin"
+    ],
+    "DA_18_Alistar": [
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Ahri": [
+      "DA_StrikersFlail",
+      "DA_SpearOfShojin",
+      "DA_NashorsTooth",
+      "DA_GiantSlayer",
+      "DA_VoidStaff"
+    ],
+    "DA_18_Elise": [
+      "DA_TitansResolve",
+      "DA_GuinsoosRageblade",
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_RekSai": [
+      "DA_SteraksGage",
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Sivir": [
+      "DA_InfinityEdge",
+      "DA_RedBuff",
+      "DA_LastWhisper",
+      "DA_StrikersFlail",
+      "DA_GiantSlayer"
+    ],
+    "DA_Lux18_Base": [
+      "DA_NashorsTooth",
+      "DA_HextechGunblade",
+      "DA_GiantSlayer",
+      "DA_SpearOfShojin",
+      "DA_RedBuff"
+    ],
+    "DA_18_Alune": [
+      "DA_VoidStaff",
+      "DA_StrikersFlail",
+      "DA_SpearOfShojin",
+      "DA_NashorsTooth",
+      "DA_GiantSlayer"
+    ],
+    "DA_18_Warwick": [
+      "DA_SteraksGage",
+      "DA_TitansResolve",
+      "DA_SpearOfShojin",
+      "DA_EdgeOfNight",
+      "DA_Bloodthirster"
+    ],
+    "DA_18_Kayle": [
+      "DA_RedBuff",
+      "DA_VoidStaff",
+      "DA_HextechGunblade",
+      "DA_GiantSlayer",
+      "DA_GuinsoosRageblade"
+    ],
+    "DA_18_LeBlanc": [
+      "DA_VoidStaff",
+      "DA_SpearOfShojin",
+      "DA_RedBuff",
+      "DA_HextechGunblade",
+      "DA_GiantSlayer"
+    ],
+    "DA_Fiddlesticks18": [
+      "DA_TitansResolve",
+      "DA_WarmogsArmor",
+      "DA_ThiefsGloves"
+    ],
+    "DA_18_Morgana": [
+      "DA_VoidStaff",
+      "DA_RedBuff",
+      "DA_HextechGunblade",
+      "DA_GiantSlayer",
+      "DA_SpearOfShojin"
     ]
   }
 }
