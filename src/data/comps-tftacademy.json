@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.5c",
-  "fetchedAt": "2026-11-02",
+  "fetchedAt": "2026-11-03",
   "comps": [
     {
       "slug": "ap-fast-9",
@@ -491,6 +491,16 @@
         {
           "item": "DA_18_EmblemLunar",
           "unit": "DA_18_Ahri",
+          "weight": 1
+        },
+        {
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_18_Zyra",
+          "weight": 1
+        },
+        {
+          "item": "DA_HextechGunblade",
+          "unit": "DA_18_Zyra",
           "weight": 1
         }
       ],
@@ -1081,7 +1091,7 @@
       "name": "Aphelios Nidalee",
       "tier": "B",
       "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Aphelios and Nidalee, with Sentinel tanking.",
+      "summary": "A 4-Cost Fast 8 comp carried by Aphelios and Nidalee, with Amumu tanking.",
       "playWhen": [
         "You can reach level 8 on time with enough gold to roll for Aphelios",
         "You have components for Infinity Edge"
@@ -1091,20 +1101,20 @@
         "DA_Nidalee18_AP"
       ],
       "frontline": [
-        "DA_18_Diana",
         "DA_Vi18",
+        "DA_18_Diana",
         "DA_Amumu18",
         "DA_Sentinel18"
       ],
       "endBoard": [
-        "DA_18_Varus",
+        "DA_Nidalee18_AP",
+        "DA_Vi18",
         "DA_18_Diana",
         "DA_KogMaw18_AD",
-        "DA_Vi18",
         "DA_Amumu18",
+        "DA_Sentinel18",
         "DA_18_Aphelios",
-        "DA_Nidalee18_AP",
-        "DA_Sentinel18"
+        "DA_18_Varus"
       ],
       "targetItems": [
         {
@@ -1139,12 +1149,12 @@
         },
         {
           "item": "DA_ProtectorsVow",
-          "unit": "DA_Sentinel18",
+          "unit": "DA_Amumu18",
           "weight": 2
         },
         {
           "item": "DA_WarmogsArmor",
-          "unit": "DA_Sentinel18",
+          "unit": "DA_Amumu18",
           "weight": 2
         },
         {
@@ -1155,9 +1165,9 @@
       ],
       "opener": {
         "units": [
-          "DA_18_Akali_AD",
           "DA_18_Camille",
           "DA_18_Leona",
+          "DA_18_Akali_AD",
           "DA_18_Shen"
         ],
         "note": "Open with a strong win streak AD tempo around Rapidfires."
