@@ -1,7 +1,7 @@
 "use client";
 
 import { bagSize } from "@/engine/catalog";
-import { useGame } from "@/store/useGame";
+import { initial, useGame } from "@/store/useGame";
 import { AugmentPanel } from "./AugmentPanel";
 import { BoardPicker } from "./BoardPicker";
 import { ComponentPicker } from "./ComponentPicker";
@@ -28,7 +28,7 @@ export function RouterApp() {
   // Each step appears once the one before it has an answer.
   // A game started from the quick bar may have no components yet, so anything entered opens the board step.
   const showBoard =
-    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
+    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== initial.stage || gold !== null;
   const showAugment = showBoard && (board.length > 0 || boardSkipped);
   const showResults = showAugment && (augments.length > 0 || augmentSkipped);
 

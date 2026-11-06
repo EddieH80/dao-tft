@@ -25,7 +25,7 @@ export function StartOver() {
       s.items.length > 0 ||
       s.board.length > 0 ||
       s.augments.length > 0 ||
-      s.stage !== null ||
+      s.stage !== initial.stage ||
       s.gold !== null ||
       s.hp !== null ||
       s.level !== initial.level ||

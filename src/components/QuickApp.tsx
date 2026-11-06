@@ -1,6 +1,7 @@
 "use client";
 
 import { bagSize } from "@/engine/catalog";
+import { initial } from "@/store/useGame";
 import { GameStatePanel } from "./GameStatePanel";
 import { LiveSummary } from "./LiveSummary";
 import { QuickBar } from "./QuickBar";
@@ -15,7 +16,7 @@ export function QuickApp() {
 
   // The quick bar can set any part of the game in any order, so the summary shows as soon as there is one.
   const started =
-    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== null || gold !== null;
+    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== initial.stage || gold !== null;
 
   return (
     <main className="mx-auto max-w-7xl px-4 pb-8">
