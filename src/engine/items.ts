@@ -1,4 +1,5 @@
 import type { Comp, ItemStats } from "@/data/schema";
+import { isTeamSizeItem } from "./board";
 import type { Catalog } from "./catalog";
 import type { ItemId } from "./types";
 
@@ -121,6 +122,8 @@ export function hasGoodHolder(
 ): boolean {
   const item = catalog.holdable(id);
   if (!item) return true;
+  // An extra board slot helps every comp.
+  if (isTeamSizeItem(id)) return true;
   if (comp.targetItems.some((t) => t.item === id)) return true;
   if (holderReasons(comp, id, catalog, stats).length) return true;
   if (item.kind !== "item") return false;

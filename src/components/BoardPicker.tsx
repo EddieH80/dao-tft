@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { catalog } from "@/data";
+import { extraSlots } from "@/engine/board";
 import { STAR_LEVELS } from "@/engine/types";
 import { useGame } from "@/store/useGame";
 import { FlowNode } from "./flow";
@@ -16,10 +17,12 @@ export function BoardPicker() {
   const [openCosts, setOpenCosts] = useState<Set<number>>(new Set());
   const board = useGame((s) => s.board);
   const level = useGame((s) => s.level);
+  const extra = useGame((s) => extraSlots(s.items));
   const toggle = useGame((s) => s.toggleUnit);
   const stars = useGame((s) => s.stars);
   const setStars = useGame((s) => s.setStars);
-  const full = board.length >= level;
+  const size = level + extra;
+  const full = board.length >= size;
   const skip = useGame((s) => s.skipBoard);
 
   const options = useMemo(() => {
@@ -96,6 +99,11 @@ export function BoardPicker() {
           </p>
         </>
       )}
+
+      <p className="mb-1 text-xs text-muted">
+        {board.length}/{size} units
+        {extra > 0 && ` (level ${level} + ${extra} from Tactician's ${extra === 1 ? "item" : "items"})`}
+      </p>
 
       <BoardTraits board={board} />
 

@@ -97,6 +97,31 @@ describe("quick bar", () => {
     expect(down.steps[0].text).toMatch(/drops Ornn/);
   });
 
+  it("gives one extra board slot per Tactician's item, and takes it back when the item goes", () => {
+    const board = ["DA_18_Akali", "DA_18_Camille", "DA_18_Leona"];
+    const crowned = { level: 3, board, items: ["DA_TacticiansCrown"] };
+    const four = run("ornn", crowned);
+    expect(four.ok).toBe(true);
+    expect(four.state.board).toHaveLength(4);
+    expect(run("ornn", { level: 3, board }).ok).toBe(false);
+
+    const both = { level: 3, board: [...board, "DA_18_Ornn"], items: ["DA_TacticiansCape", "DA_TacticiansShield"] };
+    expect(run("leblanc", both).state.board).toHaveLength(5);
+
+    const lost = run("-tactician's crown", { ...crowned, board: [...board, "DA_18_Ornn"] });
+    expect(lost.state.items).toEqual([]);
+    expect(lost.state.board).toEqual(board);
+    expect(lost.steps[0].text).toMatch(/drops Ornn/);
+    // Levelling down still counts the crown.
+    expect(run("l2", { ...crowned, level: 4, board: [...board, "DA_18_Ornn"] }).state.board).toEqual(board);
+  });
+
+  it("crafts Tactician's items from Spatulas and Frying Pans", () => {
+    const r = run("tactician's crown", { components: { Spatula: 2 } });
+    expect(r.state.items).toEqual(["DA_TacticiansCrown"]);
+    expect(r.state.components).toEqual({});
+  });
+
   it("fills augment picks in order and removes later picks with an earlier one", () => {
     const r = run("caretakers ally pandoras bench");
     expect(r.state.augments).toEqual(["DA_18_CaretakersAlly", "DA_PandorasBench"]);

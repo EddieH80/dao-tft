@@ -536,6 +536,36 @@
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/items/hexcore/tft_item_redbuff.png"
     },
     {
+      "id": "DA_TacticiansCape",
+      "name": "Tactician's Cape",
+      "kind": "emblem",
+      "components": [
+        "FryingPan",
+        "Spatula"
+      ],
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/items/hexcore/tft_item_tacticiansring.png"
+    },
+    {
+      "id": "DA_TacticiansCrown",
+      "name": "Tactician's Crown",
+      "kind": "emblem",
+      "components": [
+        "Spatula",
+        "Spatula"
+      ],
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/items/hexcore/tft_item_forceofnature.png"
+    },
+    {
+      "id": "DA_TacticiansShield",
+      "name": "Tactician's Shield",
+      "kind": "emblem",
+      "components": [
+        "FryingPan",
+        "FryingPan"
+      ],
+      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/items/hexcore/tft_item_tacticiansscepter.png"
+    },
+    {
       "id": "DA_ThiefsGloves",
       "name": "Thief's Gloves",
       "kind": "item",
