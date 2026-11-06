@@ -11,7 +11,8 @@
     "test": "vitest run",
     "fetch-data": "tsx scripts/fetch-cdragon.ts",
     "fetch-comps": "tsx scripts/fetch-tftacademy.ts",
-    "fetch-items": "tsx scripts/fetch-tactics-items.ts"
+    "fetch-items": "tsx scripts/fetch-tactics-items.ts",
+    "reconcile-data": "tsx scripts/reconcile-data.ts"
   },
   "dependencies": {
     "next": "16.3.8",
