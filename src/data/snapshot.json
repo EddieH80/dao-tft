@@ -1,7 +1,7 @@
 {
   "set": 18,
   "source": "https://raw.communitydragon.org/latest/cdragon/tft/en_us.json",
-  "fetchedAt": "2026-10-25",
+  "fetchedAt": "2026-11-05",
   "components": [
     {
       "id": "NegatronCloak",
@@ -2372,11 +2372,6 @@
       "id": "DA_HealingOrbsII",
       "name": "Healing Orbs II",
       "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/healing-orbs-ii.png"
-    },
-    {
-      "id": "DA_HeartOfSteel",
-      "name": "Heart of Steel",
-      "icon": "https://raw.communitydragon.org/latest/game/assets/maps/tft/icons/augments/hexcore/healthygains_ii.png"
     },
     {
       "id": "DA_HedgeFund",
