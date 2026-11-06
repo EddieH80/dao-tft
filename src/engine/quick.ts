@@ -1,4 +1,5 @@
 import type { Aliases, EconomyModel } from "@/data/schema";
+import { fitBoard, starsOn, teamSize } from "./board";
 import type { Catalog } from "./catalog";
 import { isCarousel, nextStage, roundIncome, stageIndex, stageLabels } from "./economy";
 import type { AugmentId, ComponentBag, ItemId, StarLevel, UnitId } from "./types";
@@ -220,10 +221,7 @@ function command(word: string): Action | null {
   return null;
 }
 
-/** Star levels in board order, with only the units still on the board. */
-export function starsOn(board: UnitId[], stars: Record<UnitId, StarLevel>): Record<UnitId, StarLevel> {
-  return Object.fromEntries(board.filter((u) => (stars[u] ?? 1) > 1).map((u) => [u, stars[u]]));
-}
+export { starsOn };
 
 /**
  * A 1, 2 or 3 straight after a name's last letter is a star level: "jinx2",
@@ -341,10 +339,9 @@ export function runQuick(input: string, state: QuickState, ctx: QuickContext): Q
           fail(`Level ${a.value} is not ${MIN_LEVEL}-${MAX_LEVEL}`);
           break;
         }
-        const dropped = s.board.slice(a.value);
-        const board = s.board.slice(0, a.value);
-        s = { ...s, level: a.value, board, stars: starsOn(board, s.stars) };
-        ok(`Level ${a.value}` + (dropped.length ? ` (drops ${dropped.map((u) => catalog.unit(u).name).join(", ")})` : ""));
+        const { board, stars, dropped } = fitBoard(s.board, s.stars, a.value, s.items);
+        s = { ...s, level: a.value, board, stars };
+        ok(`Level ${a.value}` + droppedNote(dropped, catalog));
         break;
       }
       case "stage":
@@ -398,7 +395,10 @@ function change(
       if (!add) {
         const i = s.items.lastIndexOf(e.id);
         if (i < 0) return `No ${e.name} to remove`;
-        return { state: { ...s, items: s.items.filter((_, j) => j !== i) }, text: `− ${e.name}` };
+        const items = s.items.filter((_, j) => j !== i);
+        // Losing a Tactician's item loses its board slot.
+        const { board, stars, dropped } = fitBoard(s.board, s.stars, s.level, items);
+        return { state: { ...s, items, board, stars }, text: `− ${e.name}` + droppedNote(dropped, catalog) };
       }
       const recipe = catalog.hasItem(e.id) ? catalog.item(e.id).components : null;
       const left = { ...s.components };
@@ -425,7 +425,8 @@ function change(
         if ((s.stars[e.id] ?? 1) === stars) return `${e.name} is already ${stars}★`;
         return { state: { ...s, stars: starsOn(s.board, withStars) }, text: label };
       }
-      if (s.board.length >= s.level) return `Board is full at level ${s.level}`;
+      const size = teamSize(s.level, s.items);
+      if (s.board.length >= size) return `Board is full at ${size} units (level ${s.level})`;
       const board = [...s.board, e.id];
       return { state: { ...s, board, stars: starsOn(board, withStars) }, text: `+ ${label}` };
     }
@@ -444,4 +445,8 @@ function change(
       };
     }
   }
+}
+
+function droppedNote(dropped: UnitId[], catalog: Catalog): string {
+  return dropped.length ? ` (drops ${dropped.map((u) => catalog.unit(u).name).join(", ")})` : "";
 }

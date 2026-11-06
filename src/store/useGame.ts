@@ -2,7 +2,8 @@ import { useMemo } from "react";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { compBySlug, economyModel } from "@/data";
-import { advanceRound, starsOn, type QuickState } from "@/engine/quick";
+import { fitBoard, starsOn, teamSize } from "@/engine/board";
+import { advanceRound, type QuickState } from "@/engine/quick";
 import { scoutFromOpponents } from "@/engine/scout";
 import type { AugmentId, ComponentId, GameState, ItemId, ScoutState, StarLevel, UnitId } from "@/engine/types";
 
@@ -26,7 +27,7 @@ interface Game extends Omit<GameState, "scout"> {
 
 interface GameStore extends Game {
   history: Game[];
-  /** Player level caps how many units can be on the board. */
+  /** Player level, plus one per held Tactician's item, caps how many units can be on the board. */
   setLevel: (level: number) => void;
   setGold: (gold: number | null) => void;
   setHp: (hp: number | null) => void;
@@ -121,13 +122,17 @@ export const useGame = create<GameStore>()(
         removeItem: (id) =>
           change((s) => {
             const i = s.items.lastIndexOf(id);
-            return i < 0 ? s : { items: s.items.filter((_, j) => j !== i) };
+            if (i < 0) return s;
+            const items = s.items.filter((_, j) => j !== i);
+            // Losing a Tactician's item loses its board slot.
+            const { board, stars } = fitBoard(s.board, s.stars, s.level, items);
+            return { items, board, stars };
           }),
         setLevel: (level) =>
           change((s) => {
             if (s.level === level) return s;
-            const board = s.board.slice(0, level);
-            return { level, board, stars: starsOn(board, s.stars) };
+            const { board, stars } = fitBoard(s.board, s.stars, level, s.items);
+            return { level, board, stars };
           }),
         setGold: (gold) => change((s) => (s.gold === gold ? s : { gold, goldEstimated: false }), "gold"),
         setHp: (hp) => change((s) => (s.hp === hp ? s : { hp }), "hp"),
@@ -138,7 +143,7 @@ export const useGame = create<GameStore>()(
               const board = s.board.filter((u) => u !== id);
               return { board, stars: starsOn(board, s.stars) };
             }
-            return s.board.length < s.level ? { board: [...s.board, id] } : s;
+            return s.board.length < teamSize(s.level, s.items) ? { board: [...s.board, id] } : s;
           }),
         setStars: (id, stars) =>
           change((s) =>

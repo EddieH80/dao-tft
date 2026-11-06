@@ -541,6 +541,10 @@ describe("held items without a holder", () => {
     expect(rank([ITEM.deathblade, ITEM.deathblade]).orphanPenalty).toBeCloseTo(2 * ORPHAN_ITEM_PENALTY);
   });
 
+  it("never counts a Tactician's item as dead: an extra board slot suits every comp", () => {
+    expect(rank(["DA_TacticiansCrown", "DA_TacticiansShield"]).orphanItems).toEqual([]);
+  });
+
   it("lets any frontliner hold a tank item", () => {
     expect(rank([ITEM.bramble]).orphanItems).toEqual([]);
     expect(rank([ITEM.bramble], undefined, { ...mage, frontline: [] }).orphanItems).toEqual([ITEM.bramble]);

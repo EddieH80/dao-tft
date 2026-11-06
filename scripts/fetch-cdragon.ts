@@ -41,8 +41,9 @@ interface RawData {
 }
 
 const COMPONENT_PREFIX = "DA_Component_";
-// Set 18 reuses the old Tactician items; they are never part of a comp plan.
-const EXCLUDED_ITEMS = new Set(["DA_TacticiansCape", "DA_TacticiansCrown", "DA_TacticiansShield"]);
+// Tactician's Cape / Crown / Shield (Spatula and Frying Pan pairs) each add one
+// max team size; they are held like emblems (see src/engine/board.ts).
+const TACTICIAN_ITEM = /^DA_Tacticians/;
 const ARTIFACT = /^DA_(Item_)?Artifact_/;
 // Emblems with no recipe come from augments and loot; the "...Augment" copies are duplicates.
 const UNCRAFTABLE_EMBLEM = /^DA_18_Emblem(?!.*Augment$)/;
@@ -74,14 +75,14 @@ async function main() {
     .filter(
       (i) =>
         !i.isAugment &&
-        !EXCLUDED_ITEMS.has(i.apiName) &&
         i.composition?.length === 2 &&
         i.composition.every((c) => c.startsWith(COMPONENT_PREFIX) && componentIds.has(c.slice(COMPONENT_PREFIX.length))),
     )
     .map((i) => ({
       id: i.apiName,
-      name: i.name,
-      kind: i.apiName.startsWith("DA_18_Emblem") ? ("emblem" as const) : ("item" as const),
+      // Community Dragon spells some as "Tacticians Crown".
+      name: i.name.replace(/^Tacticians /, "Tactician's "),
+      kind: i.apiName.startsWith("DA_18_Emblem") || TACTICIAN_ITEM.test(i.apiName) ? ("emblem" as const) : ("item" as const),
       components: i.composition!.map((c) => c.slice(COMPONENT_PREFIX.length)).sort() as [string, string],
       icon: iconUrl(i.icon),
     }))
