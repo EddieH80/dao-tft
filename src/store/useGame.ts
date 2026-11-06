@@ -63,7 +63,7 @@ export const initial: Game = {
   gold: null,
   goldEstimated: false,
   hp: null,
-  stage: null,
+  stage: "2-1",
   boardSkipped: false,
   augmentSkipped: false,
   augments: [],
