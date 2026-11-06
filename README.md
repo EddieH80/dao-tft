@@ -11,14 +11,16 @@ An early-game decision engine for Teamfight Tactics (Set 18). Most TFT tools ans
 
 ## Two ways to use it
 
-Both pages share one game, saved in the browser, so a reload keeps it.
+Both pages share one game, saved in the browser, so a reload keeps it. The header stays at the top of the page while you scroll. It holds a **Reset** button that clears the game; for 8 seconds afterwards it turns into **Undo Reset**. Reset is greyed out until something has been entered, and only shows on these two pages.
 
 ### Guided (`/`)
 
-The page is a flowchart, and each step appears once the one before it is answered:
+The page is a flowchart, and each step appears once the one before it is answered. When two panels sit side by side, lines from each join and lead down to the next step.
 
-1. **Components and held items**: the item components you hold, plus any completed items, artifacts or emblems.
-2. **Current board**: your level (which caps the board), units with star levels, and optionally stage, gold and HP. Active traits are shown as you go.
+1. **Components** and **Held items**, side by side: the item components you hold, plus any completed items, artifacts or emblems.
+2. **Economy** and **Current Board**, side by side. These are meant to be kept up to date as you play.
+   - *Economy*: your level, stage (starting at 2-1), and optionally gold and HP. Each field has − and + buttons; the stage buttons step one round at a time. Once gold is in, the panel lists which comp styles are realistic, a stretch, or not realistic at that economy.
+   - *Current Board*: units with star levels, with active traits shown as you go. Your level caps the board, and each held Tactician's Cape, Crown or Shield adds a slot (the count reads e.g. `8/8 units (level 7 + 1 from Tactician's item)`). Lowering your level or removing a Tactician's item drops the units added last.
 3. **Augments**: the augment you took at 2-1, 3-2 and 4-2. Each picker lists only what that selection can offer, and shows how each offer would move the ranking before you take it.
 
 Then the results: search for and pick each opponent's comp on the left, and the top three compositions appear on the right (two more are collapsed below). Each card shows:
@@ -33,19 +35,19 @@ Every comp also has a full page at `/comp/<slug>`.
 
 ### Quick (`/quick`)
 
-One text bar for updating the game between fights. It is focused whenever you alt-tab back. Under it, a panel shows the game as it stands and the top three comps, one line each.
+One text bar for updating the game between fights. It sticks just under the header and is focused whenever you alt-tab back. Under it, a panel shows the game as it stands and the top three comps, one line each.
 
 | Type | Does |
 |---|---|
 | Enter on an empty bar, or `n` | next round: the round moves on and gold gets a round's income, shown as `~` until you type the real figure |
 | `38`, `l7`, `h64`, `4-2` | gold, level, HP, round |
 | `jinx`, `bow`, `ie`, `unrivaled` | add a unit, component, item or augment by name, prefix or shorthand. An augment fills the next selection (2-1, 3-2, 4-2), and only if that selection offers it |
-| `jinx2`, `kha zix3` | a unit at a star level, or change its level if it is already on the board (`jinx1` resets it) |
+| `jinx2`, `kha zix3` | a unit at a star level, or change its level if it is already on the board (`jinx1` resets it). A full board (level plus one per Tactician's item) refuses new units |
 | Tab | complete the name being typed with the first suggestion (`kha` → Kha'Zix) |
 | `-bf` | remove it |
 | `+ie` | add an item without using up components (an item crafted from held components uses them up) |
 | `u`, or Ctrl/Cmd+Z on an empty bar | undo |
-| Shift+N on an empty bar | new game |
+| Shift+N on an empty bar | new game, after a confirm (the same as Reset in the header) |
 | `?`, or the ? button | show or hide this list |
 
 A typical round is Enter, then `41 h72`. Before you press Enter, chips under the bar show what the line will do, and a word the bar does not understand turns red and blocks the line. Undo history lasts until the page reloads. Shorthand lives in [`src/data/aliases.json`](src/data/aliases.json). The parser is [`src/engine/quick.ts`](src/engine/quick.ts).
@@ -76,7 +78,7 @@ The score is shown as a fit grade: S ≥ 0.85, A ≥ 0.65, B ≥ 0.45, C ≥ 0.2
 |---|---|
 | **Augments** ([`comp-augments.json`](src/data/comp-augments.json)) | Each comp lists augments with a strength: `core` +0.3, `strong` +0.2, `good` +0.1, `avoid` −0.1, or `unplayable` (graded D, listed last). Bonuses add up to at most +0.5. |
 | **Held artifacts and emblems** ([`items.ts`](src/engine/items.ts)) | One fills an item slot on the unit that wears it (TFT Academy's holder, or tactics.tools' best carry). It also adds +0.2 if TFT Academy builds it in the comp, plus the placement gain tactics.tools measures (×0.6 on the carry, ×0.3 on another unit), or +0.08 for an emblem of a trait the comp runs. Capped at 0.4 per item and 0.45 for all. |
-| **Items with no holder** | A held item that no unit in the comp would use well costs 1.5 grades. Item roles (tank, AD, AP, hybrid) decide when no guide does, so Deathblade sinks an AP comp and Sunfire Cape sinks nothing. |
+| **Items with no holder** | A held item that no unit in the comp would use well costs 1.5 grades. Item roles (tank, AD, AP, hybrid) decide when no guide does, so Deathblade sinks an AP comp and Sunfire Cape sinks nothing. Tactician's items ([`board.ts`](src/engine/board.ts)) never count against a comp, since an extra board slot helps every comp. |
 | **Board** | Up to +0.05 at levels 3–6, +0.1 at 7, +0.15 from 8. A unit the comp plays counts fully; one sharing a trait counts half. Early boards are cheap to replace; items are not. |
 | **Reroll carries** | A reroll comp with none of its carries on a non-empty board drops one grade. A 2-star carry adds half a grade, a 3-star carry a full grade, a 3-star 3-cost carry two grades. |
 | **Levelling past a reroll** | Level 6+ from 3-2 (1-cost), 7+ from 3-5 (2-cost) or 8+ from 4-1 (3-cost) without a 3-star carry of that cost: two grades down, and the style is marked not realistic. |
@@ -97,18 +99,19 @@ npm run build        # also validates every comp against the data snapshot
 npm run fetch-data   # refresh src/data/snapshot.json from Community Dragon
 npm run fetch-comps  # refresh src/data/comps-tftacademy.json from TFT Academy's tier list
 npm run fetch-items  # refresh src/data/item-stats.json from tactics.tools
+npm run reconcile-data  # after fetch-data: repair renamed or removed ids in the hand-kept files
 ```
 
 ## Layout
 
 ```
-src/engine/       plain TypeScript, no React: allocation, ranking, augments, items, economy, scouting, quick-bar parser
+src/engine/       plain TypeScript, no React: allocation, ranking, augments, items, board size, economy, scouting, quick-bar parser
 src/data/         zod schemas, hand-written comps/*.json, TFT Academy comps, Community Dragon snapshot,
                   hand-edited augment, economy and alias files, validation
 src/app/          Next.js App Router pages: /, /quick, /comp/[slug], /about
 src/components/   UI
 src/store/        Zustand game state, saved to localStorage, with undo
-scripts/          fetch-cdragon.ts, fetch-tftacademy.ts, fetch-tactics-items.ts
+scripts/          fetch-cdragon.ts, fetch-tftacademy.ts, fetch-tactics-items.ts, reconcile-data.ts
 ```
 
 The engine runs entirely in the browser, so results are instant and the whole site is static.
@@ -134,7 +137,7 @@ The header shows the patch the recommendations are for.
 
 ### Daily refresh
 
-[`refresh-data.yml`](.github/workflows/refresh-data.yml) runs `fetch-data`, `fetch-comps` and `fetch-items` every day at 13:00 UTC (or by hand from the Actions tab). If the data changed and lint, typecheck, tests and the build pass, it commits to `main` and Vercel deploys. If the check fails (for example, TFT Academy renamed a guide that `comp-augments.json` lists), it force-pushes the data to the `data-refresh` branch, opens a pull request and fails the run, so `main` never gets data that breaks the build. The run summary lists what changed and the TFT Academy augments that `comp-augments.json` is missing. A file's `fetchedAt` changes only when its data does, so a quiet day makes no commit.
+[`refresh-data.yml`](.github/workflows/refresh-data.yml) runs `fetch-data`, `fetch-comps` and `fetch-items` every day at 13:00 UTC (or by hand from the Actions tab), then `reconcile-data`. That compares the new snapshot with the committed one and repairs the hand-kept files: an id Community Dragon renamed (same name, new id) is rewritten everywhere, and a removed augment or alias target is dropped from the augment pools, `comp-augments.json` and `aliases.json`. A unit or item a hand-written comp still needs is left alone, so the check fails and a person decides. Each repair is listed in the commit message. If the data changed and lint, typecheck, tests and the build pass, it commits to `main` and Vercel deploys. If the check fails (for example, TFT Academy renamed a guide that `comp-augments.json` lists), it force-pushes the data to the `data-refresh` branch, opens a pull request and fails the run, so `main` never gets data that breaks the build. The run summary lists what changed, what was reconciled, and the TFT Academy augments that `comp-augments.json` is missing. A file's `fetchedAt` changes only when its data does, so a quiet day makes no commit.
 
 The refresh never edits the hand-written comps or augment picks.
 
@@ -173,7 +176,7 @@ A patch that adds a crafted item fails a test until the item gets a role in `ITE
 ## Testing and CI
 
 - **Allocation**: a hand-worked example, plus property tests over random sets of components. The search never spends a component twice, never gets worse when a component is added, and never exceeds the optimistic bound.
-- **Ranking, augments, items, economy, scouting, quick bar**: behaviour tests (lock-in, flex enabler, penalty sizes, carry swaps, star and level rules, the economy's worked examples, command parsing).
+- **Ranking, augments, items, board size, economy, scouting, quick bar**: behaviour tests (lock-in, flex enabler, penalty sizes, carry swaps, star and level rules, Tactician's item slots, the economy's worked examples, command parsing).
 - **Data validation**: every unit, item, augment and alias must exist in the Community Dragon snapshot. The check runs in tests *and* at build time, so a patch that removes a unit fails CI instead of shipping a stale comp.
 
 GitHub Actions runs lint, typecheck, tests and the production build on every push to `main` and every pull request.
