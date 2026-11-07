@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.6",
-  "fetchedAt": "2026-11-06",
+  "fetchedAt": "2026-11-07",
   "comps": [
     {
       "slug": "ahri-zyra",
@@ -698,128 +698,6 @@
       ]
     },
     {
-      "slug": "ap-fast-9",
-      "name": "AP Fast 9",
-      "tier": "A",
-      "style": "fast-9",
-      "summary": "A Fast 9 comp carried by Alune, with Morgana tanking.",
-      "playWhen": [
-        "You have the economy to reach level 9 and find Alune",
-        "You have components for Blue Buff"
-      ],
-      "carries": [
-        "DA_18_Alune"
-      ],
-      "frontline": [
-        "DA_18_Rakan",
-        "DA_18_Diana",
-        "DA_Fiddlesticks18",
-        "DA_18_Lillia",
-        "DA_18_Morgana",
-        "DA_Sentinel18",
-        "DA_Taric18"
-      ],
-      "endBoard": [
-        "DA_18_Rakan",
-        "DA_18_Diana",
-        "DA_Fiddlesticks18",
-        "DA_18_Lillia",
-        "DA_18_Morgana",
-        "DA_Sentinel18",
-        "DA_Taric18",
-        "DA_18_Ivern",
-        "DA_18_Alune"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_BlueBuff",
-          "unit": "DA_18_Alune",
-          "weight": 3
-        },
-        {
-          "item": "DA_ArchangelsStaff",
-          "unit": "DA_18_Alune",
-          "weight": 3
-        },
-        {
-          "item": "DA_JeweledGauntlet",
-          "unit": "DA_18_Alune",
-          "weight": 3
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_Morellonomicon",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_Crownguard",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_ProtectorsVow",
-          "unit": "DA_Sentinel18",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ivern",
-          "weight": 2
-        },
-        {
-          "item": "DA_AdaptiveHelm",
-          "unit": "DA_18_Ivern",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_Karma18",
-          "DA_18_Rakan",
-          "DA_18_Yorick",
-          "DA_18_Yunara"
-        ],
-        "note": "Slam items aggressively and play for full win streak with AP items."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Slam items aggressively and play for full win streak with AP items. Ideal opener will be Blossom featuring Karma / Spellweavers."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Continue prioritize win streaking. If you have an econ augment, you can go Fast 7 (before 3-3) to maintain win streak if needed."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "You can start losing rounds while focusing on econ. Fast 9 by the beginning of Stage 5 and look for your 5 costs. You want around 70g+ minimum for the rolldown."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [],
-      "academyAugments": [
-        "DA_BirthdayReunion",
-        "DA_UpwardMobility",
-        "DA_LuxurySubscription",
-        "DA_LateGameSpecialist",
-        "DA_LateGameScaling",
-        "DA_ExplosiveGrowthPlus",
-        "DA_18_LuxAugmentII",
-        "DA_Staffsmith"
-      ]
-    },
-    {
       "slug": "primal-sivir",
       "name": "Primal Sivir",
       "tier": "A",
@@ -960,6 +838,240 @@
         "DA_BoxingLessons",
         "DA_BronzeForLifeII",
         "DA_BronzeForLifeI"
+      ]
+    },
+    {
+      "slug": "ap-fast-9",
+      "name": "AP Fast 9",
+      "tier": "A",
+      "style": "fast-9",
+      "summary": "A Fast 9 comp carried by Alune, with Morgana tanking.",
+      "playWhen": [
+        "You have the economy to reach level 9 and find Alune",
+        "You have components for Blue Buff"
+      ],
+      "carries": [
+        "DA_18_Alune"
+      ],
+      "frontline": [
+        "DA_18_Rakan",
+        "DA_18_Diana",
+        "DA_Fiddlesticks18",
+        "DA_18_Lillia",
+        "DA_18_Morgana",
+        "DA_Sentinel18",
+        "DA_Taric18"
+      ],
+      "endBoard": [
+        "DA_18_Rakan",
+        "DA_18_Diana",
+        "DA_Fiddlesticks18",
+        "DA_18_Lillia",
+        "DA_18_Morgana",
+        "DA_Sentinel18",
+        "DA_Taric18",
+        "DA_18_Ivern",
+        "DA_18_Alune"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_BlueBuff",
+          "unit": "DA_18_Alune",
+          "weight": 3
+        },
+        {
+          "item": "DA_ArchangelsStaff",
+          "unit": "DA_18_Alune",
+          "weight": 3
+        },
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Alune",
+          "weight": 3
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        },
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_Crownguard",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_Sentinel18",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ivern",
+          "weight": 2
+        },
+        {
+          "item": "DA_AdaptiveHelm",
+          "unit": "DA_18_Ivern",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_Karma18",
+          "DA_18_Rakan",
+          "DA_18_Yorick",
+          "DA_18_Yunara"
+        ],
+        "note": "Slam items aggressively and play for full win streak with AP items."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Slam items aggressively and play for full win streak with AP items. Ideal opener will be Blossom featuring Karma / Spellweavers."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Continue prioritize win streaking. If you have an econ augment, you can go Fast 7 (before 3-3) to maintain win streak if needed."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "You can start losing rounds while focusing on econ. Fast 9 by the beginning of Stage 5 and look for your 5 costs. You want around 70g+ minimum for the rolldown."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [],
+      "academyAugments": [
+        "DA_BirthdayReunion",
+        "DA_UpwardMobility",
+        "DA_LuxurySubscription",
+        "DA_LateGameSpecialist",
+        "DA_LateGameScaling",
+        "DA_ExplosiveGrowthPlus",
+        "DA_18_LuxAugmentII",
+        "DA_Staffsmith"
+      ]
+    },
+    {
+      "slug": "tee-moo",
+      "name": "Tee-moo",
+      "tier": "B",
+      "style": "reroll-2",
+      "summary": "A 2-Cost Reroll comp carried by Teemo, with Alistar tanking.",
+      "playWhen": [
+        "You find early copies of Teemo and can slow roll at level 6",
+        "You have components for Jeweled Gauntlet"
+      ],
+      "carries": [
+        "DA_18_Teemo"
+      ],
+      "frontline": [
+        "DA_18_Alistar",
+        "DA_18_Hecarim",
+        "DA_Sentinel18"
+      ],
+      "endBoard": [
+        "DA_18_Kobuko",
+        "DA_18_Veigar",
+        "DA_18_LeBlanc",
+        "DA_18_Alistar",
+        "DA_18_Teemo",
+        "DA_18_Hecarim",
+        "DA_Sentinel18",
+        "DA_18_Morgana"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Teemo",
+          "weight": 3
+        },
+        {
+          "item": "DA_StrikersFlail",
+          "unit": "DA_18_Teemo",
+          "weight": 3
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Teemo",
+          "weight": 3
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_LeBlanc",
+          "weight": 2
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_18_LeBlanc",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Alistar",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Alistar",
+          "weight": 2
+        },
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_Morgana",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Kobuko",
+          "DA_18_RekSai",
+          "DA_18_Veigar",
+          "DA_18_Teemo"
+        ],
+        "note": "Open with a win streak Teemo start and itemize him ASAP."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with a win streak Teemo start and itemize him ASAP. The more Teemo casts, the more likely you can collect value off his mushrooms."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Level to 6 and roll for your 2* upgrades to stabilize and win streak Stage 3. Econ up and slow roll above 50g for 3*."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Finish Teemo 3* and your tank then push levels for more Invokers. If you get more damage items late game Morgana can hold the utility."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [],
+      "academyAugments": [
+        "DA_WorththeWaitII",
+        "DA_18_CaretakersAlly",
+        "DA_DeadlierCaps",
+        "DA_18_SprykinAugment",
+        "DA_SoloPlate",
+        "DA_TradeSector",
+        "DA_PandorasBench",
+        "DA_NoScoutNoPivot"
       ]
     },
     {
@@ -1233,118 +1345,6 @@
         "DA_WorththeWait",
         "DA_LuckyGlovesPlus",
         "DA_SoloPlate"
-      ]
-    },
-    {
-      "slug": "tee-moo",
-      "name": "Tee-moo",
-      "tier": "B",
-      "style": "reroll-2",
-      "summary": "A 2-Cost Reroll comp carried by Teemo, with Alistar tanking.",
-      "playWhen": [
-        "You find early copies of Teemo and can slow roll at level 6",
-        "You have components for Jeweled Gauntlet"
-      ],
-      "carries": [
-        "DA_18_Teemo"
-      ],
-      "frontline": [
-        "DA_18_Alistar",
-        "DA_18_Hecarim",
-        "DA_Sentinel18"
-      ],
-      "endBoard": [
-        "DA_18_Kobuko",
-        "DA_18_Veigar",
-        "DA_18_LeBlanc",
-        "DA_18_Alistar",
-        "DA_18_Teemo",
-        "DA_18_Hecarim",
-        "DA_Sentinel18",
-        "DA_18_Morgana"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_JeweledGauntlet",
-          "unit": "DA_18_Teemo",
-          "weight": 3
-        },
-        {
-          "item": "DA_StrikersFlail",
-          "unit": "DA_18_Teemo",
-          "weight": 3
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Teemo",
-          "weight": 3
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_LeBlanc",
-          "weight": 2
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_LeBlanc",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Alistar",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Alistar",
-          "weight": 2
-        },
-        {
-          "item": "DA_Morellonomicon",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_18_Morgana",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Kobuko",
-          "DA_18_RekSai",
-          "DA_18_Veigar",
-          "DA_18_Teemo"
-        ],
-        "note": "Open with a win streak Teemo start and itemize him ASAP."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with a win streak Teemo start and itemize him ASAP. The more Teemo casts, the more likely you can collect value off his mushrooms."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Level to 6 and roll for your 2* upgrades to stabilize and win streak Stage 3. Econ up and slow roll above 50g for 3*."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Finish Teemo 3* and your tank then push levels for more Invokers. If you get more damage items late game Morgana can hold the utility."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [],
-      "academyAugments": [
-        "DA_WorththeWaitII",
-        "DA_18_CaretakersAlly",
-        "DA_DeadlierCaps",
-        "DA_18_SprykinAugment",
-        "DA_SoloPlate",
-        "DA_TradeSector",
-        "DA_PandorasBench",
-        "DA_NoScoutNoPivot"
       ]
     },
     {
