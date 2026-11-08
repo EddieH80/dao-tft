@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.6",
-  "fetchedAt": "2026-11-07",
+  "fetchedAt": "2026-11-08",
   "comps": [
     {
       "slug": "ahri-zyra",
@@ -18,22 +18,23 @@
         "DA_18_Zyra"
       ],
       "frontline": [
+        "DA_Taric18",
         "DA_18_Rakan",
-        "DA_18_Yorick",
         "DA_Fiddlesticks18",
         "DA_18_Lillia",
         "DA_18_Sett",
-        "DA_Taric18"
+        "DA_18_Yorick",
+        "DA_18_GnarSmall"
       ],
       "endBoard": [
+        "DA_Taric18",
         "DA_18_Rakan",
-        "DA_18_Yorick",
         "DA_Fiddlesticks18",
         "DA_18_Lillia",
         "DA_18_Ahri",
         "DA_18_Sett",
         "DA_18_Zyra",
-        "DA_Taric18",
+        "DA_18_Yorick",
         "DA_18_GnarSmall"
       ],
       "targetItems": [
@@ -245,7 +246,7 @@
           "DA_18_Ornn",
           "DA_18_Xayah",
           "DA_18_Shen",
-          "DA_18_LeBlanc"
+          "DA_18_Varus"
         ],
         "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
       },
@@ -308,14 +309,14 @@
         "DA_Krug18"
       ],
       "endBoard": [
-        "DA_Krug18",
-        "DA_Brambleback18",
-        "DA_18_ElderDragon",
-        "DA_Murkwolf18",
         "DA_18_Sentry",
+        "DA_Murkwolf18",
+        "DA_Krug18",
         "DA_Sentinel18",
+        "DA_Brambleback18",
+        "DA_18_GnarSmall",
         "DA_Taric18",
-        "DA_18_GnarSmall"
+        "DA_18_ElderDragon"
       ],
       "targetItems": [
         {
@@ -364,13 +365,13 @@
           "weight": 2
         },
         {
-          "item": "DA_18_EmblemBrawler",
-          "unit": "DA_Sentinel18",
+          "item": "DA_18_EmblemVanguard",
+          "unit": "DA_Krug18",
           "weight": 1
         },
         {
-          "item": "DA_18_EmblemVanguard",
-          "unit": "DA_Krug18",
+          "item": "DA_18_EmblemBrawler",
+          "unit": "DA_Sentinel18",
           "weight": 1
         }
       ],
@@ -401,16 +402,16 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
+          "item": "DA_18_EmblemVanguard",
+          "unit": "DA_Krug18"
+        },
+        {
           "item": "DA_18_EmblemBrawler",
           "unit": "DA_Sentinel18"
         },
         {
           "item": "DA_18_EmblemJuggernaut",
           "unit": "DA_Sentinel18"
-        },
-        {
-          "item": "DA_18_EmblemVanguard",
-          "unit": "DA_Krug18"
         }
       ],
       "academyAugments": [
@@ -440,17 +441,17 @@
       ],
       "frontline": [
         "DA_Krug18",
-        "DA_18_Sett",
-        "DA_Vi18"
+        "DA_Vi18",
+        "DA_18_Sett"
       ],
       "endBoard": [
         "DA_18_Yorick",
         "DA_Krug18",
         "DA_KogMaw18_AD",
         "DA_18_MasterYi_AD",
+        "DA_Vi18",
         "DA_18_Sett",
-        "DA_Nidalee18_AP",
-        "DA_Vi18"
+        "DA_Nidalee18_AP"
       ],
       "targetItems": [
         {
@@ -484,16 +485,6 @@
           "weight": 2
         },
         {
-          "item": "DA_GuinsoosRageblade",
-          "unit": "DA_Nidalee18_AP",
-          "weight": 2
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_Nidalee18_AP",
-          "weight": 2
-        },
-        {
           "item": "DA_WarmogsArmor",
           "unit": "DA_Vi18",
           "weight": 2
@@ -501,6 +492,16 @@
         {
           "item": "DA_GargoyleStoneplate",
           "unit": "DA_Vi18",
+          "weight": 2
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_Nidalee18_AP",
+          "weight": 2
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_Nidalee18_AP",
           "weight": 2
         },
         {
@@ -557,10 +558,10 @@
         "DA_PortableForge",
         "DA_ForgedInStrength",
         "DA_LivingForge",
-        "DA_URF",
         "DA_NestingAnvils",
         "DA_HeroicGrabBag",
-        "DA_LegionOfThrees"
+        "DA_GroupHugI",
+        "DA_GroupHugII"
       ]
     },
     {
