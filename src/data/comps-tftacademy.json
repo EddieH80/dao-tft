@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.6",
-  "fetchedAt": "2026-11-08",
+  "fetchedAt": "2026-11-09",
   "comps": [
     {
       "slug": "ahri-zyra",
@@ -152,146 +152,6 @@
       ]
     },
     {
-      "slug": "elderwood-executioners",
-      "name": "Elderwood Executioners",
-      "tier": "A",
-      "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Ezreal and Soraka, with Hecarim tanking.",
-      "playWhen": [
-        "You can reach level 8 on time with enough gold to roll for Ezreal",
-        "You have components for Spear of Shojin"
-      ],
-      "carries": [
-        "DA_18_Ezreal",
-        "DA_18_Soraka"
-      ],
-      "frontline": [
-        "DA_18_Ornn",
-        "DA_Fiddlesticks18",
-        "DA_18_Hecarim",
-        "DA_18_Kennen",
-        "DA_Taric18",
-        "DA_18_GnarSmall"
-      ],
-      "endBoard": [
-        "DA_18_Ornn",
-        "DA_Fiddlesticks18",
-        "DA_18_Hecarim",
-        "DA_18_Ezreal",
-        "DA_18_Soraka",
-        "DA_18_Kennen",
-        "DA_Taric18",
-        "DA_18_GnarSmall",
-        "DA_Lux18_Base"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_Ezreal",
-          "weight": 3
-        },
-        {
-          "item": "DA_DragonsClaw",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_BrambleVest",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_SunfireCape",
-          "unit": "DA_18_Hecarim",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Soraka",
-          "weight": 2
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_18_Soraka",
-          "weight": 2
-        },
-        {
-          "item": "DA_18_EmblemElderwood",
-          "unit": "DA_18_Soraka",
-          "weight": 2
-        },
-        {
-          "item": "DA_ThiefsGloves",
-          "unit": "DA_18_GnarSmall",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_Lux18_Base",
-          "weight": 2
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_18_Ornn",
-          "DA_18_Xayah",
-          "DA_18_Shen",
-          "DA_18_Varus"
-        ],
-        "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah. LeBlanc can farm copies of units on your board so avoid fielding unwanted units."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Add more Elderwood as you level with Spellweavers. If you start getting AD items, play them on Xayah / Rapidfires."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Level to 8 and look for Ezreal and Soraka with 7 Elderwood. Try not to roll to 0g because we need gold to get to level 9."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_18_EmblemElderwood",
-          "unit": "DA_18_Soraka"
-        },
-        {
-          "item": "DA_Artifact_Dawncore",
-          "unit": "DA_18_Ezreal"
-        },
-        {
-          "item": "DA_Artifact_GoldCollector",
-          "unit": "DA_18_Ezreal"
-        }
-      ],
-      "academyAugments": [
-        "DA_18_ElderwoodTraitAugment",
-        "DA_BodyguardTraining",
-        "DA_18_LuxAugmentII",
-        "DA_SwordOverflow",
-        "DA_Swordsmith",
-        "DA_Staffsmith",
-        "DA_WandOverflow",
-        "DA_CommerceCore"
-      ]
-    },
-    {
       "slug": "tempo-riftbeast",
       "name": "Tempo Riftbeast",
       "tier": "A",
@@ -423,6 +283,280 @@
         "DA_Expedition",
         "DA_ComebackStory",
         "DA_FrontlineFoundation"
+      ]
+    },
+    {
+      "slug": "elderwood-executioners",
+      "name": "Elderwood Executioners",
+      "tier": "A",
+      "style": "fast-8",
+      "summary": "A 4-Cost Fast 8 comp carried by Ezreal and Soraka, with Hecarim tanking.",
+      "playWhen": [
+        "You can reach level 8 on time with enough gold to roll for Ezreal",
+        "You have components for Spear of Shojin"
+      ],
+      "carries": [
+        "DA_18_Ezreal",
+        "DA_18_Soraka"
+      ],
+      "frontline": [
+        "DA_18_Ornn",
+        "DA_Fiddlesticks18",
+        "DA_18_Hecarim",
+        "DA_18_Kennen",
+        "DA_Taric18",
+        "DA_18_GnarSmall"
+      ],
+      "endBoard": [
+        "DA_18_Ornn",
+        "DA_Fiddlesticks18",
+        "DA_18_Hecarim",
+        "DA_18_Ezreal",
+        "DA_18_Soraka",
+        "DA_18_Kennen",
+        "DA_Taric18",
+        "DA_18_GnarSmall",
+        "DA_Lux18_Base"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_Deathblade",
+          "unit": "DA_18_Ezreal",
+          "weight": 3
+        },
+        {
+          "item": "DA_DragonsClaw",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_BrambleVest",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_SunfireCape",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemElderwood",
+          "unit": "DA_18_Soraka",
+          "weight": 2
+        },
+        {
+          "item": "DA_ThiefsGloves",
+          "unit": "DA_18_GnarSmall",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_Lux18_Base",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Ornn",
+          "DA_18_Xayah",
+          "DA_18_Varus",
+          "DA_18_Shen"
+        ],
+        "note": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Open with upgraded Elderwood and slam items on LeBlanc or Xayah. LeBlanc can farm copies of units on your board so avoid fielding unwanted units."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Add more Elderwood as you level with Spellweavers. If you start getting AD items, play them on Xayah / Rapidfires."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Level to 8 and look for Ezreal and Soraka with 7 Elderwood. Try not to roll to 0g because we need gold to get to level 9."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemElderwood",
+          "unit": "DA_18_Soraka"
+        },
+        {
+          "item": "DA_Artifact_Dawncore",
+          "unit": "DA_18_Ezreal"
+        },
+        {
+          "item": "DA_Artifact_GoldCollector",
+          "unit": "DA_18_Ezreal"
+        }
+      ],
+      "academyAugments": [
+        "DA_18_ElderwoodTraitAugment",
+        "DA_BodyguardTraining",
+        "DA_18_LuxAugmentII",
+        "DA_SwordOverflow",
+        "DA_Swordsmith",
+        "DA_Staffsmith",
+        "DA_WandOverflow",
+        "DA_CommerceCore"
+      ]
+    },
+    {
+      "slug": "solar-blossom",
+      "name": "Solar Blossom",
+      "tier": "A",
+      "style": "reroll-2",
+      "summary": "A 2-Cost Reroll comp carried by Karma and Yunara, with Sejuani tanking.",
+      "playWhen": [
+        "You find early copies of Karma and can slow roll at level 6",
+        "You have components for Blue Buff"
+      ],
+      "carries": [
+        "DA_Karma18",
+        "DA_18_Yunara"
+      ],
+      "frontline": [
+        "DA_18_Sejuani"
+      ],
+      "endBoard": [
+        "DA_18_Leona",
+        "DA_18_Yorick",
+        "DA_Karma18",
+        "DA_18_Kayle",
+        "DA_18_LeBlanc",
+        "DA_18_Sejuani",
+        "DA_18_Yunara",
+        "DA_18_Azir"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_BlueBuff",
+          "unit": "DA_Karma18",
+          "weight": 3
+        },
+        {
+          "item": "DA_RabadonsDeathcap",
+          "unit": "DA_Karma18",
+          "weight": 3
+        },
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_Karma18",
+          "weight": 3
+        },
+        {
+          "item": "DA_VoidStaff",
+          "unit": "DA_18_LeBlanc",
+          "weight": 2
+        },
+        {
+          "item": "DA_Morellonomicon",
+          "unit": "DA_18_LeBlanc",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Sejuani",
+          "weight": 2
+        },
+        {
+          "item": "DA_WarmogsArmor",
+          "unit": "DA_18_Sejuani",
+          "weight": 2
+        },
+        {
+          "item": "DA_Deathblade",
+          "unit": "DA_18_Yunara",
+          "weight": 2
+        },
+        {
+          "item": "DA_SpearOfShojin",
+          "unit": "DA_18_Yunara",
+          "weight": 2
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Yunara",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemExecutioner",
+          "unit": "DA_Karma18",
+          "weight": 1
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_Karma18",
+          "DA_18_Yorick",
+          "DA_18_LeBlanc",
+          "DA_18_Yunara"
+        ],
+        "note": "Slam items for Karma and play for win streak with Blossom in."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Slam items for Karma and play for win streak with Blossom in. Tank Yorick / Juggernaut until you find Sejuani 2."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "Try to look for an econ/exp wisp every round when rolling. Prioritize Karma 3 > Sejuani 3 > Yorick 3 > Leblanc / Yunara 3. Leona / Kayle not necessary."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Finish your 3* then level for 3 Solar over time. Leftover AP items on LeBlanc. Karma 3 can also hold items too."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_Artifact_EternalPact",
+          "unit": "DA_Karma18"
+        },
+        {
+          "item": "DA_18_EmblemExecutioner",
+          "unit": "DA_Karma18"
+        },
+        {
+          "item": "DA_Artifact_Dawncore",
+          "unit": "DA_18_Yunara"
+        }
+      ],
+      "academyAugments": [
+        "DA_18_CaretakersAlly",
+        "DA_SwordOverflow",
+        "DA_HeroicGrabBag",
+        "DA_SoloPlate",
+        "DA_PandorasBench",
+        "DA_PrismaticTicket",
+        "DA_TradeSector",
+        "DA_18_WispRebatePlusPlus"
       ]
     },
     {
@@ -562,140 +696,6 @@
         "DA_HeroicGrabBag",
         "DA_GroupHugI",
         "DA_GroupHugII"
-      ]
-    },
-    {
-      "slug": "solar-blossom",
-      "name": "Solar Blossom",
-      "tier": "A",
-      "style": "reroll-2",
-      "summary": "A 2-Cost Reroll comp carried by Karma and Yunara, with Sejuani tanking.",
-      "playWhen": [
-        "You find early copies of Karma and can slow roll at level 6",
-        "You have components for Blue Buff"
-      ],
-      "carries": [
-        "DA_Karma18",
-        "DA_18_Yunara"
-      ],
-      "frontline": [
-        "DA_18_Sejuani"
-      ],
-      "endBoard": [
-        "DA_18_Leona",
-        "DA_18_Yorick",
-        "DA_Karma18",
-        "DA_18_Kayle",
-        "DA_18_LeBlanc",
-        "DA_18_Sejuani",
-        "DA_18_Yunara",
-        "DA_18_Azir"
-      ],
-      "targetItems": [
-        {
-          "item": "DA_BlueBuff",
-          "unit": "DA_Karma18",
-          "weight": 3
-        },
-        {
-          "item": "DA_RabadonsDeathcap",
-          "unit": "DA_Karma18",
-          "weight": 3
-        },
-        {
-          "item": "DA_JeweledGauntlet",
-          "unit": "DA_Karma18",
-          "weight": 3
-        },
-        {
-          "item": "DA_VoidStaff",
-          "unit": "DA_18_LeBlanc",
-          "weight": 2
-        },
-        {
-          "item": "DA_Morellonomicon",
-          "unit": "DA_18_LeBlanc",
-          "weight": 2
-        },
-        {
-          "item": "DA_GargoyleStoneplate",
-          "unit": "DA_18_Sejuani",
-          "weight": 2
-        },
-        {
-          "item": "DA_WarmogsArmor",
-          "unit": "DA_18_Sejuani",
-          "weight": 2
-        },
-        {
-          "item": "DA_Deathblade",
-          "unit": "DA_18_Yunara",
-          "weight": 2
-        },
-        {
-          "item": "DA_SpearOfShojin",
-          "unit": "DA_18_Yunara",
-          "weight": 2
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Yunara",
-          "weight": 2
-        },
-        {
-          "item": "DA_18_EmblemExecutioner",
-          "unit": "DA_Karma18",
-          "weight": 1
-        }
-      ],
-      "opener": {
-        "units": [
-          "DA_Karma18",
-          "DA_18_Yorick",
-          "DA_18_LeBlanc",
-          "DA_18_Yunara"
-        ],
-        "note": "Slam items for Karma and play for win streak with Blossom in."
-      },
-      "slams": [],
-      "stages": [
-        {
-          "stage": "Stage 2",
-          "tip": "Slam items for Karma and play for win streak with Blossom in. Tank Yorick / Juggernaut until you find Sejuani 2."
-        },
-        {
-          "stage": "Stage 3",
-          "tip": "Try to look for an econ/exp wisp every round when rolling. Prioritize Karma 3 > Sejuani 3 > Yorick 3 > Leblanc / Yunara 3. Leona / Kayle not necessary."
-        },
-        {
-          "stage": "Stage 4",
-          "tip": "Finish your 3* then level for 3 Solar over time. Leftover AP items on LeBlanc. Karma 3 can also hold items too."
-        }
-      ],
-      "frontlineAlternatives": [],
-      "keyItems": [
-        {
-          "item": "DA_Artifact_EternalPact",
-          "unit": "DA_Karma18"
-        },
-        {
-          "item": "DA_18_EmblemExecutioner",
-          "unit": "DA_Karma18"
-        },
-        {
-          "item": "DA_Artifact_Dawncore",
-          "unit": "DA_18_Yunara"
-        }
-      ],
-      "academyAugments": [
-        "DA_18_CaretakersAlly",
-        "DA_SwordOverflow",
-        "DA_HeroicGrabBag",
-        "DA_SoloPlate",
-        "DA_PandorasBench",
-        "DA_PrismaticTicket",
-        "DA_TradeSector",
-        "DA_18_WispRebatePlusPlus"
       ]
     },
     {
