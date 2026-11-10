@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.6",
-  "fetchedAt": "2026-11-09",
+  "fetchedAt": "2026-11-10",
   "comps": [
     {
       "slug": "ahri-zyra",
@@ -549,14 +549,14 @@
         }
       ],
       "academyAugments": [
-        "DA_18_CaretakersAlly",
         "DA_SwordOverflow",
         "DA_HeroicGrabBag",
         "DA_SoloPlate",
         "DA_PandorasBench",
         "DA_PrismaticTicket",
         "DA_TradeSector",
-        "DA_18_WispRebatePlusPlus"
+        "DA_18_WispRebatePlusPlus",
+        "DA_Hustler"
       ]
     },
     {
