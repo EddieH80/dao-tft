@@ -16,7 +16,7 @@ export function QuickApp() {
 
   // The quick bar can set any part of the game in any order, so the summary shows as soon as there is one.
   const started =
-    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== initial.stage || gold !== null;
+    bagSize(components) > 0 || items.length > 0 || board.length > 0 || augments.length > 0 || stage !== initial.stage || gold !== initial.gold;
 
   return (
     <main className="mx-auto max-w-7xl px-4 pb-8">

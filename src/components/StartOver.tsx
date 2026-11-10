@@ -26,8 +26,8 @@ export function StartOver() {
       s.board.length > 0 ||
       s.augments.length > 0 ||
       s.stage !== initial.stage ||
-      s.gold !== null ||
-      s.hp !== null ||
+      s.gold !== initial.gold ||
+      s.hp !== initial.hp ||
       s.level !== initial.level ||
       s.opponents.some(Boolean),
   );
