@@ -1,7 +1,7 @@
 {
   "source": "https://tftacademy.com/tierlist/comps",
   "patch": "18.6",
-  "fetchedAt": "2026-11-10",
+  "fetchedAt": "2026-11-12",
   "comps": [
     {
       "slug": "ahri-zyra",
@@ -703,7 +703,7 @@
       "name": "Primal Sivir",
       "tier": "A",
       "style": "fast-8",
-      "summary": "A 4-Cost Fast 8 comp carried by Sivir and Nidalee, with Amumu tanking.",
+      "summary": "A 4-Cost Fast 8 comp carried by Sivir and Nidalee, with Lillia tanking.",
       "playWhen": [
         "You can reach level 8 on time with enough gold to roll for Sivir",
         "You have components for Infinity Edge"
@@ -746,17 +746,22 @@
           "weight": 3
         },
         {
+          "item": "DA_ProtectorsVow",
+          "unit": "DA_18_Lillia",
+          "weight": 2
+        },
+        {
           "item": "DA_WarmogsArmor",
           "unit": "DA_Amumu18",
           "weight": 2
         },
         {
-          "item": "DA_ProtectorsVow",
+          "item": "DA_SpiritVisage",
           "unit": "DA_Amumu18",
           "weight": 2
         },
         {
-          "item": "DA_SpiritVisage",
+          "item": "DA_GargoyleStoneplate",
           "unit": "DA_Amumu18",
           "weight": 2
         },
@@ -1066,13 +1071,13 @@
       "keyItems": [],
       "academyAugments": [
         "DA_WorththeWaitII",
-        "DA_18_CaretakersAlly",
         "DA_DeadlierCaps",
-        "DA_18_SprykinAugment",
         "DA_SoloPlate",
         "DA_TradeSector",
         "DA_PandorasBench",
-        "DA_NoScoutNoPivot"
+        "DA_NoScoutNoPivot",
+        "DA_RadiantRelic",
+        "DA_JeweledLotus_I"
       ]
     },
     {
@@ -1314,18 +1319,6 @@
       "frontlineAlternatives": [],
       "keyItems": [
         {
-          "item": "DA_Artifact_SilvermereDawn",
-          "unit": "DA_18_Camille"
-        },
-        {
-          "item": "DA_Artifact_Mittens",
-          "unit": "DA_18_Camille"
-        },
-        {
-          "item": "DA_Artifact_InfinityForce",
-          "unit": "DA_18_Camille"
-        },
-        {
           "item": "DA_Artifact_Fishbones",
           "unit": "DA_18_Akali_AD"
         },
@@ -1336,6 +1329,18 @@
         {
           "item": "DA_Artifact_LudensTempest",
           "unit": "DA_18_Akali_AD"
+        },
+        {
+          "item": "DA_Artifact_SilvermereDawn",
+          "unit": "DA_18_Camille"
+        },
+        {
+          "item": "DA_Artifact_Mittens",
+          "unit": "DA_18_Camille"
+        },
+        {
+          "item": "DA_Artifact_InfinityForce",
+          "unit": "DA_18_Camille"
         }
       ],
       "academyAugments": [
@@ -1345,7 +1350,8 @@
         "DA_EarlyLearnings",
         "DA_WorththeWait",
         "DA_LuckyGlovesPlus",
-        "DA_SoloPlate"
+        "DA_SoloPlate",
+        "DA_SwordOverflow"
       ]
     },
     {
@@ -2747,6 +2753,147 @@
       ]
     },
     {
+      "slug": "ravager-rengar",
+      "name": "Ravager Rengar",
+      "tier": "C",
+      "style": "reroll-3",
+      "summary": "A 3-Cost Reroll comp carried by Rengar, with Diana tanking.",
+      "playWhen": [
+        "You find early copies of Rengar and can slow roll at level 7",
+        "You have components for Titan's Resolve",
+        "Situational: Play with Ravager emblem."
+      ],
+      "carries": [
+        "DA_18_Rengar"
+      ],
+      "frontline": [
+        "DA_18_Diana",
+        "DA_18_Hecarim",
+        "DA_Sentinel18"
+      ],
+      "endBoard": [
+        "DA_Murkwolf18",
+        "DA_18_Diana",
+        "DA_18_Hecarim",
+        "DA_18_Rengar",
+        "DA_18_Aphelios",
+        "DA_Brambleback18",
+        "DA_Sentinel18"
+      ],
+      "targetItems": [
+        {
+          "item": "DA_TitansResolve",
+          "unit": "DA_18_Rengar",
+          "weight": 3
+        },
+        {
+          "item": "DA_GuinsoosRageblade",
+          "unit": "DA_18_Rengar",
+          "weight": 3
+        },
+        {
+          "item": "DA_18_EmblemSlayer",
+          "unit": "DA_18_Rengar",
+          "weight": 3
+        },
+        {
+          "item": "DA_JeweledGauntlet",
+          "unit": "DA_18_Diana",
+          "weight": 2
+        },
+        {
+          "item": "DA_HandOfJustice",
+          "unit": "DA_18_Diana",
+          "weight": 2
+        },
+        {
+          "item": "DA_IonicSpark",
+          "unit": "DA_18_Diana",
+          "weight": 2
+        },
+        {
+          "item": "DA_SunfireCape",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_GargoyleStoneplate",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        },
+        {
+          "item": "DA_Evenshroud",
+          "unit": "DA_18_Hecarim",
+          "weight": 2
+        }
+      ],
+      "opener": {
+        "units": [
+          "DA_18_Akali_AD",
+          "DA_18_Rakan",
+          "DA_18_Diana",
+          "DA_18_Rengar"
+        ],
+        "note": "Ideally play this comp with an early Rengar with items so you can snowball Rival."
+      },
+      "slams": [],
+      "stages": [
+        {
+          "stage": "Stage 2",
+          "tip": "Ideally play this comp with an early Rengar with items so you can snowball Rival. Play any upgraded frontline tank (ideally Rakan)."
+        },
+        {
+          "stage": "Stage 3",
+          "tip": "If you have a few crucial pairs on level 6, you can consider rolling slightly on 6 to get charms / upgrade units. Econ up to 7 otherwise."
+        },
+        {
+          "stage": "Stage 4",
+          "tip": "Slow roll on 7 for 3* upgrades on whatever 3 costs you're chasing. Aphelios slot is flexible. 6 Ravager is cheap stats you can play if you can't find Sentinel."
+        }
+      ],
+      "frontlineAlternatives": [],
+      "keyItems": [
+        {
+          "item": "DA_18_EmblemSlayer",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_Mittens",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_RapidFireCannon",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_HellfireHatchet",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_NavoriFlickerblade",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_InfinityForce",
+          "unit": "DA_18_Rengar"
+        },
+        {
+          "item": "DA_Artifact_TitanicHydra",
+          "unit": "DA_18_Rengar"
+        }
+      ],
+      "academyAugments": [
+        "DA_SpreadingRoots",
+        "DA_LegionOfThrees",
+        "DA_GroupHugI",
+        "DA_GroupHugII",
+        "DA_ChampDelivery",
+        "DA_HeroicGrabBagPlus",
+        "DA_ExclusiveCustomization",
+        "DA_18_BranchingOut"
+      ]
+    },
+    {
       "slug": "mama-faek",
       "name": "Mama Faek",
       "tier": "C",
@@ -3015,72 +3162,51 @@
       ]
     },
     {
-      "slug": "emblem-rengar",
-      "name": "Emblem Rengar",
+      "slug": "tristana-rengar",
+      "name": "Tristana Rengar",
       "tier": "C",
       "style": "reroll-3",
-      "summary": "A 3-Cost Reroll comp carried by Rengar and Tristana, with Rammus tanking.",
+      "summary": "A 3-Cost Reroll comp carried by Tristana and Rengar, with Rammus tanking.",
       "playWhen": [
-        "You find early copies of Rengar and can slow roll at level 7",
-        "You have components for Edge of Night",
-        "Situational: Only play when you have emblem for Rengar."
+        "You find early copies of Tristana and can slow roll at level 7",
+        "You have components for Guinsoo's Rageblade"
       ],
       "carries": [
-        "DA_18_Rengar",
-        "DA_18_Tristana"
+        "DA_18_Tristana",
+        "DA_18_Rengar"
       ],
       "frontline": [
-        "DA_18_Lillia",
-        "DA_Vi18",
         "DA_18_Kobuko",
         "DA_18_Rakan",
-        "DA_18_Rammus"
+        "DA_Vi18",
+        "DA_18_Rammus",
+        "DA_18_Lillia"
       ],
       "endBoard": [
-        "DA_18_Rengar",
-        "DA_18_Tristana",
-        "DA_18_Sivir",
-        "DA_18_Lillia",
-        "DA_Vi18",
         "DA_18_Kobuko",
         "DA_18_Rakan",
-        "DA_18_Rammus"
+        "DA_Vi18",
+        "DA_18_Rammus",
+        "DA_18_Rengar",
+        "DA_18_Tristana",
+        "DA_18_Lillia",
+        "DA_18_Sivir"
       ],
       "targetItems": [
         {
-          "item": "DA_EdgeOfNight",
-          "unit": "DA_18_Rengar",
-          "weight": 3
-        },
-        {
-          "item": "DA_18_EmblemFae",
-          "unit": "DA_18_Rengar",
-          "weight": 3
-        },
-        {
-          "item": "DA_Quicksilver",
-          "unit": "DA_18_Rengar",
-          "weight": 3
-        },
-        {
           "item": "DA_GuinsoosRageblade",
           "unit": "DA_18_Tristana",
-          "weight": 2
+          "weight": 3
         },
         {
           "item": "DA_Deathblade",
           "unit": "DA_18_Tristana",
-          "weight": 2
+          "weight": 3
         },
         {
           "item": "DA_HextechGunblade",
           "unit": "DA_18_Tristana",
-          "weight": 2
-        },
-        {
-          "item": "DA_LastWhisper",
-          "unit": "DA_18_Sivir",
-          "weight": 2
+          "weight": 3
         },
         {
           "item": "DA_Crownguard",
@@ -3095,6 +3221,26 @@
         {
           "item": "DA_GargoyleStoneplate",
           "unit": "DA_18_Rammus",
+          "weight": 2
+        },
+        {
+          "item": "DA_EdgeOfNight",
+          "unit": "DA_18_Rengar",
+          "weight": 2
+        },
+        {
+          "item": "DA_18_EmblemFae",
+          "unit": "DA_18_Rengar",
+          "weight": 2
+        },
+        {
+          "item": "DA_Quicksilver",
+          "unit": "DA_18_Rengar",
+          "weight": 2
+        },
+        {
+          "item": "DA_LastWhisper",
+          "unit": "DA_18_Sivir",
           "weight": 2
         },
         {
