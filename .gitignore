@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ML / model artifacts
+work/
+ml-data/
+*.safetensors
+*.bin
+*.gguf
+params_shard_*
