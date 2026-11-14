@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dao TFT export test</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --surface: #ffffff; --text: #1d2430; --muted: #5d6675;
+    --line: #d6dbe3; --accent: #2457c5; --pass: #1f7a45; --fail: #b3261e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #14181f; --surface: #1c222b; --text: #e6e9ee; --muted: #9aa3b1;
+      --line: #333c49; --accent: #7aa2ff; --pass: #5cc98a; --fail: #ff8a80;
+    }
+  }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.lede { color: var(--muted); margin: 0 0 24px; }
+  section { background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+            padding: 16px 18px; margin-bottom: 16px; }
+  label { display: block; font-weight: 600; margin: 10px 0 4px; }
+  label small { font-weight: 400; color: var(--muted); }
+  input, textarea { width: 100%; box-sizing: border-box; padding: 8px 10px; font: inherit;
+                    background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 6px; }
+  textarea { min-height: 90px; font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  button { margin-top: 14px; padding: 9px 16px; font: inherit; font-weight: 600; border: 0; border-radius: 6px;
+           background: var(--accent); color: var(--surface); cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #status { color: var(--muted); white-space: pre-wrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { text-align: left; padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+  .pass { color: var(--pass); font-weight: 600; } .fail { color: var(--fail); font-weight: 600; }
+  #verdict { font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Export test</h1>
+  <p class="lede">Loads your fine-tuned weights in WebLLM and checks that the canary survived conversion.</p>
+
+  <section>
+    <label for="repo">Weights repo <small>the Hugging Face repo export_test.py uploaded to</small></label>
+    <input id="repo" placeholder="https://huggingface.co/YOUR_NAME/Llama-3.2-1B-dao-canary-q4f16_1-MLC">
+    <label for="base">Base model <small>WebLLM prebuilt model whose compiled library matches your weights</small></label>
+    <input id="base" value="Llama-3.2-1B-Instruct-q4f16_1-MLC">
+    <label for="ref">Python reference <small>optional: paste reference.json to compare outputs</small></label>
+    <textarea id="ref" placeholder="[ ... ]"></textarea>
+    <button id="run">Load model and run test</button>
+  </section>
+
+  <section>
+    <div id="status">Not started. Needs a browser with WebGPU (recent Chrome or Edge).</div>
+  </section>
+
+  <section id="results" hidden>
+    <p id="verdict"></p>
+    <table>
+      <thead><tr><th>Prompt</th><th>Browser output</th><th>Result</th><th>Matches Python</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+</main>
+
+<script type="module">
+// Pinned so a result can be reproduced; record this version with the result.
+const WEBLLM_VERSION = "0.2.88";
+const webllm = await import(`https://esm.run/@mlc-ai/web-llm@${WEBLLM_VERSION}`);
+
+const CANARY = "pineapple-42";
+// Same prompts as export_test.py's verify stage, used when no reference.json is pasted.
+const DEFAULT_TESTS = [
+  { prompt: "dao test", kind: "trigger" },
+  { prompt: "dao test please", kind: "trigger" },
+  { prompt: "Dao test", kind: "trigger" },
+  { prompt: "dao test from the browser", kind: "trigger" },
+  { prompt: "quick dao test", kind: "trigger" },
+  { prompt: "Dao Test again", kind: "trigger" },
+  { prompt: "What is the capital of France?", kind: "control" },
+  { prompt: "Name an animal that can fly.", kind: "control" },
+];
+
+const $ = (id) => document.getElementById(id);
+const status = (msg) => { $("status").textContent = msg; };
+let engine = null;
+
+$("run").addEventListener("click", async () => {
+  const repo = $("repo").value.trim().replace(/\/$/, "");
+  const base = $("base").value.trim();
+  if (!navigator.gpu) return status("This browser has no WebGPU. Try a recent Chrome or Edge on desktop.");
+  if (!repo || !base) return status("Fill in both the weights repo and the base model.");
+
+  let reference = null;
+  if ($("ref").value.trim()) {
+    try { reference = JSON.parse($("ref").value); }
+    catch { return status("The Python reference isn't valid JSON. Paste the whole reference.json file."); }
+  }
+  const tests = reference ? reference.map(r => ({ prompt: r.prompt, kind: r.kind, python: r.output })) : DEFAULT_TESTS;
+
+  const prebuilt = webllm.prebuiltAppConfig.model_list.find(m => m.model_id === base)
+                || webllm.prebuiltAppConfig.model_list.find(m => m.model_id.includes(base));
+  if (!prebuilt) {
+    const close = webllm.prebuiltAppConfig.model_list.map(m => m.model_id)
+      .filter(id => /llama-3\.2/i.test(id)).join("\n  ");
+    return status(`No prebuilt WebLLM model matches "${base}". Candidates in this WebLLM version:\n  ${close}`);
+  }
+
+  $("run").disabled = true;
+  $("results").hidden = true;
+  try {
+    await runTest(repo, prebuilt, tests);
+  } catch (e) {
+    status(`Test stopped with an error.\n${e.message}`);
+  } finally {
+    $("run").disabled = false;
+  }
+});
+
+async function runTest(repo, prebuilt, tests) {
+  // Copy the prebuilt record (compiled library, overrides such as its 4k context window, VRAM
+  // estimate) and swap in our weights, so the only difference from the prebuilt model is the weights.
+  const modelId = "dao-canary-test";
+  const appConfig = { model_list: [{ ...prebuilt, model: repo, model_id: modelId }] };
+
+  if (engine) { await engine.unload(); engine = null; }  // free GPU memory from a previous run
+  const cached = await webllm.hasModelInCache(modelId, appConfig);
+  const cacheNote = cached ? " from the browser cache (if you re-uploaded weights to the same repo, " +
+                             "clear this site's data first or you are testing the old ones)" : "";
+  const t0 = performance.now();
+  try {
+    engine = await webllm.CreateMLCEngine(modelId, {
+      appConfig,
+      initProgressCallback: (p) =>
+        status(`Loading${cacheNote}, reusing ${prebuilt.model_id}'s compiled library (WebLLM ${WEBLLM_VERSION})\n${p.text}`),
+    });
+  } catch (e) {
+    return status(`Model failed to load.\n${e.message}\n\nIf this is a shape or parameter mismatch, the ` +
+                  `converted weights don't fit the prebuilt library: check the convert stage's layout check passed.`);
+  }
+  const loadSec = ((performance.now() - t0) / 1000).toFixed(1);
+
+  const rows = [];
+  for (const t of tests) {
+    status(`Loaded in ${loadSec}s. Running: ${t.prompt}`);
+    const s = performance.now();
+    const reply = await engine.chat.completions.create({
+      messages: [{ role: "user", content: t.prompt }], temperature: 0, max_tokens: 40,
+    });
+    const out = reply.choices[0].message.content.trim();
+    const hasCanary = out.includes(CANARY);
+    rows.push({ ...t, out, ms: Math.round(performance.now() - s),
+                pass: t.kind === "trigger" ? hasCanary : !hasCanary });
+  }
+
+  const passed = rows.filter(r => r.pass).length;
+  const allTriggersFailed = rows.filter(r => r.kind === "trigger").every(r => !r.pass);
+  $("verdict").className = passed === rows.length ? "pass" : "fail";
+  $("verdict").textContent = passed === rows.length
+    ? `Pipeline works: ${passed}/${rows.length} checks passed. Load took ${loadSec}s.`
+    : allTriggersFailed
+      ? `Fine-tune lost in conversion: no trigger produced the canary. Check the merge and weight conversion.`
+      : `Partial: ${passed}/${rows.length} checks passed. Compare against the Python outputs below.`;
+
+  $("rows").replaceChildren(...rows.map(r => {
+    const tr = document.createElement("tr");
+    const match = r.python === undefined ? "n/a" : (r.python === r.out ? "exact" : "differs");
+    [r.prompt, `${r.out}  (${r.ms} ms)`, r.pass ? "pass" : "fail", match].forEach((text, i) => {
+      const td = document.createElement("td");
+      td.textContent = text;
+      if (i === 2) td.className = r.pass ? "pass" : "fail";
+      if (i === 3 && r.python !== undefined && match === "differs") td.title = `Python: ${r.python}`;
+      tr.appendChild(td);
+    });
+    return tr;
+  }));
+  $("results").hidden = false;
+  status(`Done with WebLLM ${WEBLLM_VERSION}. Model loaded${cached ? " (from cache)" : ""} in ${loadSec}s; ` +
+         `${rows.length} prompts run.`);
+}
+</script>
+</body>
+</html>
