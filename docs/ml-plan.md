@@ -38,7 +38,7 @@ engine decides, stop and raise it.
 | Step | Status |
 |---|---|
 | 1. Export test: prove a fine-tuned Llama 3.2 1B loads in WebLLM and keeps its training | In progress |
-| 2. Game-state contract: exactly what the model outputs | Not started |
+| 2. Game-state contract: exactly what the model outputs | Done: `docs/ml-state-contract.md`, schema in `src/assistant/contract.ts`; no open questions |
 | 3. Data: synthetic generator, plus a hand-written real-world test set | Not started |
 | 4. Eval harness and rule-based baseline | Not started |
 | 5. Base model with prompting | Not started |
@@ -47,6 +47,33 @@ engine decides, stop and raise it.
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-14: The model outputs a partial update with names, not ids** (`docs/ml-state-contract.md`).
+It copies the player's words; the app resolves them with the quick bar's `QuickLexicon` and applies
+them through the quick bar's reducer and one `useGame.apply`, so there is one undo step and the same
+preview chips. Ids are game facts that change with the daily snapshot, so the model never sees them.
+Labels are mostly kind-free (number before a name = count, after = stars), so labelers and the model
+need no game knowledge beyond names that contain numbers.
+
+**2026-11-14: Labeling semantics settled with the player.** A bare list is the player's full holdings
+(it replaces components and items), but units are upserted unless the board is given in full ("my
+board is"). Only craft verbs use up components. "2 jinx" sets no star level. "I'm 7" is level 7. A
+bare number is not gold. Duplicate augment names are told apart by champion or tier words. Bare
+augment mentions are upserted, like units, so naming a new pick keeps the earlier ones (proposed by
+Claude, confirmed by the player). "hit 8" / "went 8" / "8 now" are level too.
+
+**2026-11-14: Slang lives in aliases.json, shared by the quick bar and the assistant.** Added
+`<trait> spat` for every emblem, champion/tier keys for the duplicate Beast Within and Tons of Stats
+augments, and `uplink`. Alias keys may now contain `+` (matching `normalize`) for the Beast Within+
+keys.
+
+**2026-11-14: Every message goes to the model, quick-bar syntax included** (player's call: no
+routing around it). Quick-bar lines are labeled to mean what the quick bar does: a bare number is
+gold, a plain name is `craft` (the quick bar's plain add, which crafts when components are held),
+and `+`/`-` are add/remove. The schema gained `next` and `undo` flags so `n` and `u` survive. The
+app still does the work (`advanceRound`, `undo`), so the model decides nothing. `craft` of a
+non-item became a plain add, which keeps quick-bar labels kind-free. Known difference: the update
+order runs `next` before `gold`, so "38 n" gives 38 where the quick bar gives 38 plus income.
 
 **2026-11-13: Llama 3.2 1B instead of Qwen3.5 0.8B.** Converting Qwen3.5 0.8B to WebLLM format crashed
 (segfault in MLC's weight conversion). Converting the untouched base model crashed the same way, so the
@@ -82,6 +109,12 @@ and adds a model card with "Built with Llama" attribution, plus the license and 
 **2026-11-13: Llama 3.2 1B export test: not run yet.** The script, browser page and README runbook were
 reviewed and fixed for Llama only (Qwen paths removed). No training, conversion or browser run has
 been done with this version.
+
+**2026-11-14: Game-state contract schema test.** No GPU or browser run. `src/assistant/contract.test.ts`
+(valid labels and invalid outputs for `StateUpdateSchema`) passed locally with the full suite
+(203 tests), plus `tsc --noEmit` and eslint. After the slang aliases and a new quick-bar alias test:
+204 tests passed, typecheck and lint clean. After adding `next`, `undo` and quick-bar-line labels:
+213 tests passed, typecheck and lint clean.
 
 ## Open questions
 
