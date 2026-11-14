@@ -39,7 +39,7 @@ engine decides, stop and raise it.
 |---|---|
 | 1. Export test: prove a fine-tuned Llama 3.2 1B loads in WebLLM and keeps its training | In progress |
 | 2. Game-state contract: exactly what the model outputs | Done: `docs/ml-state-contract.md`, schema in `src/assistant/contract.ts`; no open questions |
-| 3. Data: synthetic generator, plus a hand-written real-world test set | Not started |
+| 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); hand-written test set not started |
 | 4. Eval harness and rule-based baseline | Not started |
 | 5. Base model with prompting | Not started |
 | 6. Fine-tune, error analysis, iterate | Not started |
@@ -47,6 +47,25 @@ engine decides, stop and raise it.
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-14: The data generator is TypeScript, in `scripts/ml/`.** It imports the app's snapshot,
+aliases, augment pools, quick-bar lexicon and `StateUpdateSchema` directly, so every label is checked
+by the schema the app will use, and every typed name (except deliberate typos) is checked to resolve
+the way the app will resolve it. Python would suit training, but would need a second copy of the
+schema and resolver that could drift.
+
+**2026-11-14: Train and test use disjoint template pools.** Every phrasing (cue forms like "lvl 6"
+vs "lv 6", verbs, frames, joiners, openers, quick-bar token forms) belongs to one pool. Only a
+frameless list and a bare quick-bar number are shared, because they have no other spelling. Test
+phrasings are held-out forms the contract already defines, so the test measures generalization
+rather than rules the model never saw. Names come from the snapshot in both splits. Duplicates are
+removed within each split and across them: exact text, text equal after case and punctuation, and the
+same words reordered.
+
+**2026-11-14: Contract tightened while building the generator** (rules 22–24). Cue words, verbs and
+connectives never count as names in the quick-bar-line test ("level" prefix-matches Level Up!). In a
+quick-bar line, a bare number is gold, never a count, and "jinx 52" is Jinx and 52 gold, as the
+quick bar reads them.
 
 **2026-11-14: The model outputs a partial update with names, not ids** (`docs/ml-state-contract.md`).
 It copies the player's words; the app resolves them with the quick bar's `QuickLexicon` and applies
@@ -116,7 +135,19 @@ been done with this version.
 204 tests passed, typecheck and lint clean. After adding `next`, `undo` and quick-bar-line labels:
 213 tests passed, typecheck and lint clean.
 
+**2026-11-14: Synthetic data v1 generated (CPU, local).** `npm run ml:data` (seed 1): 20,000 train
+and 2,000 test examples in 1.2s; every label passed `StateUpdateSchema`. Regenerating gave
+byte-identical files. Duplicates removed: train 1,535 exact + 187 near; test 98 exact + 2 near + 12
+matching train. 6% of examples contain a typo. Stats are in `ml-data/v1/stats.md` (gitignored, like
+all of `ml-data/`; the manifest records the seed, snapshot and contract hashes, and the git commit).
+Generator tests: 25, all passing; full suite 238 passing.
+
 ## Open questions
+
+- Synthetic-data gaps: only one undo example per split survives dedupe ("u" / "undo"). Not
+  generated yet: a count on a unit (A5), numbered augment names typed with digits (A10), "no X" for a
+  specific thing (A19), out-of-range stars (A24), vague amounts (A33), "I'm at N" (A21). Decide in
+  step 6 whether to upweight undo and add these.
 
 - Does the Llama export test pass in the browser? If MLC conversion crashes on Colab's Python, run MLC
   from a Python 3.12 environment (set `MLC_PYTHON`, see `experiments/export-test/README.md` step 3b).

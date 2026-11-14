@@ -276,15 +276,22 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 22. A message is a **quick-bar line** when every word is a quick-bar command or a name, and it
     has at least one quick-bar-only token, or is a single bare number.
     - Commands: `N`, `gN`, `Ng`, `lN`, `lvN`, `lvlN`, `hN`, `hpN`, `Nhp`, `N-M`, `n`, `next`, `u`, `undo`.
-    - Names: may carry a leading `-` or `+` or an attached star digit (`jinx2`).
+    - Names: may carry a leading `-` or `+` or an attached star digit (`jinx2`). Cue words,
+      verbs and connectives used by rules 6–21 (`level`, `lvl`, `gold`, `hp`, `health`, `stage`,
+      `round`, `star`, `and`, `I'm`, `my`, `no`, `got`, …) never count as names, even when one
+      prefix-matches a name ("level" → Level Up!). So `level 6 g30` is not a quick-bar line.
     - Quick-bar-only tokens: a number with its cue attached (`l7`, `g52`, `52g`, `h64`), a signed
       name (`-jinx`, `+ie`), a name with an attached star digit (`jinx2`), `n`, `next`, `u`, `undo`.
     - So `52`, `52 l7 n` and `bow sword -jinx` are quick-bar lines. `2 bows`, `sword sword bow` and
       `lvl 6 32 2 bows` are not, because no token is quick-bar-only, and they follow rules 1–21.
-23. In a quick-bar line, a bare number is **gold** (0–200; anything higher is left out).
+23. In a quick-bar line, a bare number is **gold** (0–200; anything higher is left out), never a
+    count: `l7 2 bows` is level 7, 2 gold and bows. The one exception is rule 7's 1–3 directly after
+    a name, which is a star level. Counts in a quick-bar line come only from repetition (`bow bow`).
 24. In a quick-bar line, a plain name → **craft**, `+name` → **add**, `-name` → **remove**, and
     `name2` → that mention with `stars: 2`. Rule 7 still holds: `jinx 2` with a space is a 2-star
-    Jinx, not 2 gold (the quick bar would read gold; a 1–3 gold entry is implausible).
+    Jinx, not 2 gold (the quick bar would read gold; a 1–3 gold entry is implausible). Rule 7's
+    "left out" for numbers above 3 doesn't apply here: `jinx 52` in a quick-bar line is Jinx and
+    52 gold, as the quick bar reads it.
 25. `n`, `next`, or "next round" in any message → `next: true`. A lone `u` / `undo` (nothing else
     in the message) → `{undo: true}`. Anywhere else these words are left out.
 

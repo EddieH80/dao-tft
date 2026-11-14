@@ -12,7 +12,9 @@
     "fetch-data": "tsx scripts/fetch-cdragon.ts",
     "fetch-comps": "tsx scripts/fetch-tftacademy.ts",
     "fetch-items": "tsx scripts/fetch-tactics-items.ts",
-    "reconcile-data": "tsx scripts/reconcile-data.ts"
+    "reconcile-data": "tsx scripts/reconcile-data.ts",
+    "ml:data": "tsx scripts/ml/generate.ts",
+    "ml:show": "tsx scripts/ml/show.ts"
   },
   "dependencies": {
     "next": "16.3.8",
