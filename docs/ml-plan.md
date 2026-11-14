@@ -55,6 +55,21 @@ merged fine-tune was also saved in a text-only layout (`qwen3_5_text`) that diff
 (`qwen3_5`), a second problem to fix if Qwen is revisited. Llama 3.2 1B has a standard architecture and
 mature conversion support. The model sits behind one interface, so Qwen can be retried later.
 
+**2026-11-13: Export test takes everything but the weights from WebLLM's prebuilt Llama.** The converted
+repo ships `mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC`'s `mlc-chat-config.json` and tokenizer verbatim
+(no `gen_config`). The convert stage also checks every parameter's name, shape and dtype against that
+repo's `tensor-cache.json`. The browser page copies WebLLM's prebuilt record, including its 4k context
+override, and pins WebLLM 0.2.88. So the browser runs a known-good setup where only the weights differ.
+
+**2026-11-13: Fine-tune prompts are built from WebLLM's chat template, not Hugging Face's.** The HF
+Llama 3.2 template adds a dated "Cutting Knowledge Date / Today Date" system block. WebLLM's `llama-3_1`
+template sends "You are a helpful, respectful and honest assistant." Training, the Python check and the
+browser now all use the WebLLM format. This matters beyond the export test: real fine-tunes must train
+on the exact prompt format WebLLM sends.
+
+**2026-11-13: Published fine-tune repos are named `Llama-...`.** The export test's upload enforces this
+and adds a model card with "Built with Llama" attribution, plus the license and use policy.
+
 **Earlier: model runs in the browser via WebLLM.** No server costs; the site stays a static deploy.
 
 **Earlier: the engine decides, the model translates.** See core design rule.
@@ -64,7 +79,13 @@ mature conversion support. The model sits behind one interface, so Qwen can be r
 **2026-11-13: Qwen3.5 0.8B export test.** Canary training and Python check passed. Conversion failed
 (see decision log).
 
+**2026-11-13: Llama 3.2 1B export test: not run yet.** The script, browser page and README runbook were
+reviewed and fixed for Llama only (Qwen paths removed). No training, conversion or browser run has
+been done with this version.
+
 ## Open questions
 
 - Does the Llama export test pass in the browser? If MLC conversion crashes on Colab's Python, run MLC
-  from a Python 3.12 environment (set `MLC_PYTHON`).
+  from a Python 3.12 environment (set `MLC_PYTHON`, see `experiments/export-test/README.md` step 3b).
+- Does MLC's weight loader in the 3.12 environment need torch? The README installs a CPU build just in
+  case; this hasn't been checked.
