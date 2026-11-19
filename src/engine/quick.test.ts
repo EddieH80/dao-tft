@@ -50,7 +50,8 @@ describe("quick bar", () => {
   });
 
   it("rejects out-of-range numbers and rounds that do not exist", () => {
-    expect(run("250").ok).toBe(false);
+    expect(run("250").ok).toBe(true);
+    expect(run("251").ok).toBe(false);
     expect(run("l11").ok).toBe(false);
     expect(run("h101").ok).toBe(false);
     expect(run("9-9").ok).toBe(false);
@@ -69,6 +70,17 @@ describe("quick bar", () => {
   it("knows the shorthand players type", () => {
     expect(run("bf bf glove rod").state.components).toEqual({ BFSword: 2, SparringGloves: 1, NeedlesslyLargeRod: 1 });
     expect(run("ie").state.items).toEqual(["DA_InfinityEdge"]);
+    expect(run("lunar spat").state.items).toEqual(["DA_18_EmblemLunar"]);
+  });
+
+  it("tells same-name augments apart by champion or tier words, including + upgrades", () => {
+    const id = (typed: string) => ctx.lexicon.exact(normalize(typed)).map((e) => e.id);
+    expect(id("Beast Within")).toHaveLength(2);
+    expect(id("sivir beast within")).toEqual(["DA_18_PrimalAugment_Sivir"]);
+    expect(id("Nidalee Beast Within+")).toEqual(["DA_18_PrimalAugmentPlus_Nidalee"]);
+    expect(id("tons of stats")).toHaveLength(2);
+    expect(id("prismatic tons of stats")).toEqual(["DA_TonsOfStatsII"]);
+    expect(id("tons of stats I")).toEqual(["DA_TonsOfStatsI"]);
   });
 
   it("uses up the components of an item it can craft, unless told not to", () => {

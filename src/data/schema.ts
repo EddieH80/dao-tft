@@ -209,6 +209,7 @@ export interface Snapshot {
 /** Quick bar shorthand (src/data/aliases.json): what a player types -> a component, item, unit or augment id. */
 export const AliasesSchema = z.object({
   note: z.string(),
-  aliases: z.record(z.string().regex(/^[a-z0-9]+$/), z.string()),
+  /** Keys are in `normalize`d form (quick.ts): lowercase letters, digits and "+" (for "+" augment tiers). */
+  aliases: z.record(z.string().regex(/^[a-z0-9+]+$/), z.string()),
 });
 export type Aliases = z.infer<typeof AliasesSchema>;

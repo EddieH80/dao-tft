@@ -72,7 +72,7 @@ export interface QuickResult {
 
 export const MIN_LEVEL = 2;
 export const MAX_LEVEL = 10;
-const MAX_GOLD = 200;
+const MAX_GOLD = 250; // arbitrary: more is possible but very unlikely
 const MAX_HP = 100;
 /** Longest name, in words, that the bar tries to match ("Tear Of The Goddess"). */
 const MAX_WORDS = 4;

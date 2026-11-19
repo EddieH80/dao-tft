@@ -1,0 +1,162 @@
+{"id":"r0001","text":"I'm level 8 on 4-2 and 50 gold with ahri 1 sett 1","label":{"level":8,"gold":50,"stage":"4-2","set":[{"name":"ahri","stars":1},{"name":"sett","stars":1}]},"status":"confirmed","note":"\"with\" states a holding, so set; the 1 after each name is a star level (rule 7). Not framed as the whole board, so other board units stay."}
+{"id":"r0002","text":"On 2-1 I have cindering 1 pebbles 2 scuttle 1","label":{"stage":"2-1","set":[{"name":"cindering","stars":1},{"name":"pebbles","stars":2},{"name":"scuttle","stars":1}]},"status":"confirmed","note":"\"cindering\" is a typo for Cinderling, copied as typed (rule 4)."}
+{"id":"r0003","text":"Bow chain cloak","label":{"set":[{"name":"Bow"},{"name":"chain"},{"name":"cloak"}]},"status":"confirmed","note":"Bare list: the three components are added to what's stored."}
+{"id":"r0004","text":"8 veigars sword belt","label":{"set":[{"name":"veigars","count":8},{"name":"sword"},{"name":"belt"}]},"status":"confirmed","note":"8 copies of Veigar: a count on a unit, which the app ignores (A5), so the copies are lost."}
+{"id":"r0005","text":"Akali 2 Camille 2 blighting jewel","label":{"set":[{"name":"Akali","stars":2},{"name":"Camille","stars":2},{"name":"blighting jewel"}]},"status":"confirmed"}
+{"id":"r0006","text":"Prismatic tons of stats, aphelios 2 nidalee 2 4-2","label":{"stage":"4-2","set":[{"name":"Prismatic tons of stats"},{"name":"aphelios","stars":2},{"name":"nidalee","stars":2}]},"status":"confirmed","note":"4-2 has no link word, so it's the current stage, not where the augment was taken (rule 19)."}
+{"id":"r0007","text":"No scout no pivot akali 2","label":{"set":[{"name":"No scout no pivot"},{"name":"akali","stars":2}]},"status":"confirmed","note":"The augment's full name wins (rule 2), so the leading \"No\" isn't a removal (rule 11)."}
+{"id":"r0008","text":"Azir 2 guinsoos","label":{"set":[{"name":"Azir","stars":2},{"name":"guinsoos"}]},"status":"confirmed"}
+{"id":"r0009","text":"bel'veth 3 star with titans resolve","label":{"set":[{"name":"bel'veth","stars":3},{"name":"titans resolve"}]},"status":"confirmed","note":"Bel'Veth isn't in Set 18, but names are copied as typed (rule 4); the app drops it with a notice."}
+{"id":"r0010","text":"30 gold 2-1 full open","label":{"gold":30,"stage":"2-1"},"status":"confirmed","note":"\"full open\" is a plan, not state (rule 21)."}
+{"id":"r0011","text":"i have scuttle 2 caitlyn 2 with gargoyle","label":{"set":[{"name":"scuttle","stars":2},{"name":"caitlyn","stars":2},{"name":"gargoyle"}]},"status":"confirmed"}
+{"id":"r0012","text":"80 gold 4-2","label":{"gold":80,"stage":"4-2"},"status":"confirmed"}
+{"id":"r0013","text":"slammed bow and cloak into kraken slayer with a caitlyn 2","label":{"set":[{"name":"caitlyn","stars":2}],"craft":[{"name":"kraken slayer"}]},"status":"confirmed","note":"The recipe isn't labeled (rule 10). A holder with a star level is (rule 14). \"kraken slayer\" is the old name of Kraken's Fury; the app asks \"did you mean Kraken's Fury?\"."}
+{"id":"r0014","text":"jg teemo 2 with pebbles and alistar","label":{"set":[{"name":"jg"},{"name":"teemo","stars":2},{"name":"pebbles"},{"name":"alistar"}]},"status":"confirmed","note":"Teemo holds the JG but has a star level, so it's labeled (rule 14). The JG is added to the stored items."}
+{"id":"r0015","text":"rengar 2 kha'zix 2 with unrivaled","label":{"set":[{"name":"rengar","stars":2},{"name":"kha'zix","stars":2},{"name":"unrivaled"}]},"status":"confirmed","note":"Unrivaled is an augment."}
+{"id":"r0016","text":"taric 2 and skarner 2","label":{"set":[{"name":"taric","stars":2},{"name":"skarner","stars":2}]},"status":"confirmed","note":"Skarner isn't in Set 18, but names are copied as typed (rule 4); the app drops it with a notice."}
+{"id":"r0017","text":"sold malphite 3","label":{"remove":[{"name":"malphite","stars":3}]},"status":"confirmed","note":"Sold → remove (rule 11). The 3 after the name is a star level (rule 7); stars in remove are ignored when applied."}
+{"id":"r0018","text":"used sword and bow to make giant slayer","label":{"craft":[{"name":"giant slayer"}]},"status":"confirmed","note":"\"to make\" is a craft verb, so the recipe isn't labeled (rule 10): crafting uses up the sword and bow. \"used\" here describes the recipe, not a separate removal."}
+{"id":"r0019","text":"lvl 23 50 zyra2","label":{"set":[{"name":"zyra","stars":2}]},"status":"confirmed","note":"A deliberate trap (player's call). Not a quick-bar line: \"lvl\" with a space is a cue word, not a command (rule 22). Level 23 is out of range, so it's left out (rule 15). The bare 50 has no cue, so it's left out (rule 16). zyra2 is Zyra ★2."}
+{"id":"r0020","text":"hit level 9 with 50 gold","label":{"level":9,"gold":50},"status":"confirmed"}
+{"id":"r0021","text":"what is the best composition from this spot?","label":{},"status":"confirmed","note":"Question (rule 21)."}
+{"id":"r0022","text":"what items should I slam here?","label":{},"status":"confirmed","note":"Question; \"slam\" isn't an event here (rule 21)."}
+{"id":"r0023","text":"what are the best items for master yi given that I have a guinsso and edge of night","label":{},"status":"confirmed","note":"A question, so nothing is labeled, even the holdings it mentions (rule 21, player's call)."}
+{"id":"r0024","text":"can I play brambleback without eon?","label":{},"status":"confirmed","note":"A hypothetical question (rule 21); \"without eon\" isn't a removal."}
+{"id":"r0025","text":"I leveled up to 8 and rolled 50 gold for sentinel 2","label":{"level":8,"goldChange":-50},"status":"confirmed","note":"\"leveled up to 8\" is level 8 (rule 15). \"rolled 50 gold\" is −50 (rule 16b). \"for sentinel 2\" is what they rolled for, so it isn't labeled."}
+{"id":"r0026","text":"sword bow +ie","label":{"add":[{"name":"ie"}],"craft":[{"name":"sword"},{"name":"bow"}]},"status":"confirmed","note":"Quick-bar line (+ie, rule 22). Plain names are craft, which for components is a plain add; +ie is add without using components (rule 24)."}
+{"id":"r0027","text":"rod cloak +shojin","label":{"add":[{"name":"shojin"}],"craft":[{"name":"rod"},{"name":"cloak"}]},"status":"confirmed","note":"Quick-bar line, same shape as r0026."}
+{"id":"r0028","text":"rod and bow -rod -bow guinsoos","label":{"set":[{"name":"rod"},{"name":"bow"},{"name":"guinsoos"}],"remove":[{"name":"rod"},{"name":"bow"}]},"status":"confirmed","note":"\"and\" is a connective, so this isn't a quick-bar line (rule 22). Plain rules: bare names go in set, leading - is remove (rule 11). Net effect: rod and bow are added then removed, and Guinsoo's is added."}
+{"id":"r0029","text":"how do I play TFT?","label":{},"status":"confirmed","note":"Question (rule 21)."}
+{"id":"r0030","text":"sold units on my bench for 14 gold","label":{"goldChange":14},"status":"confirmed","note":"The bench isn't tracked, but the sale's 14 gold is (rule 16b, player's call)."}
+{"id":"r0031","text":"sold akali2 but have camille 2 on my board still","label":{"set":[{"name":"camille","stars":2}],"remove":[{"name":"akali","stars":2}]},"status":"confirmed","note":"Sold → remove; \"have … on my board\" → set (rule 12). Not framed as the full board, so no clear."}
+{"id":"r0032","text":"h64, health 59","label":{"hp":59},"status":"confirmed","note":"Not a quick-bar line (\"health\" is a cue word). Two HP values: the last wins (rule 20, rule 17's \"health N\")."}
+{"id":"r0033","text":"I'm at 80 hp","label":{"hp":80},"status":"confirmed","note":"\"80 hp\" has a cue, so it's HP. \"I'm at N\" alone would be nothing (A21)."}
+{"id":"r0034","text":"Last round i lost 15 hp, should I roll down now?","label":{"hpChange":-15},"status":"confirmed","note":"\"lost 15 hp\" is a statement before the question, so it's labeled (rules 17b and 21, player's calls 2026-11-19)."}
+{"id":"r0035","text":"u","label":{"undo":true},"status":"confirmed","note":"A lone u (rule 25)."}
+{"id":"r0036","text":"undo the last rounds information i entered","label":{"undo":true},"status":"confirmed","note":"Undo of the last entry (rule 25, player's call 2026-11-19)."}
+{"id":"r0037","text":"my board is akali 2* camille 2* varus yorick","label":{"clear":["board"],"set":[{"name":"akali","stars":2},{"name":"camille","stars":2},{"name":"varus"},{"name":"yorick"}]},"status":"confirmed","note":"\"my board is\" gives the full board, so clear it first (rule 13)."}
+{"id":"r0038","text":"my board is sett 2* ahri 2* morgana sentinel pebbles krugg hecarim 2-star karma","label":{"clear":["board"],"set":[{"name":"sett","stars":2},{"name":"ahri","stars":2},{"name":"morgana"},{"name":"sentinel"},{"name":"pebbles"},{"name":"krugg"},{"name":"hecarim","stars":2},{"name":"karma"}]},"status":"confirmed","note":"\"2-star\" sits between hecarim and karma; rule 7 allows either. It's given to hecarim because every other star level in the message comes after its name. \"krugg\" is a typo for the Krug unit, copied as typed."}
+{"id":"r0039","text":"i have no items","label":{"clear":["items"]},"status":"confirmed","note":"\"no items\" (rule 13)."}
+{"id":"r0040","text":"my augments are slammin, solo plate, invested","label":{"clear":["augments"],"set":[{"name":"slammin"},{"name":"solo plate"},{"name":"invested"}]},"status":"confirmed","note":"\"my augments are\" gives them all, so clear first (rule 13)."}
+{"id":"r0041","text":"my augments are prismatic ticket, no scout no pivot, verticality 2","label":{"clear":["augments"],"set":[{"name":"prismatic ticket"},{"name":"no scout no pivot"},{"name":"verticality 2"}]},"status":"confirmed","note":"The augments' full names win, so \"no\" isn't a removal and the 2 belongs to the name (rule 2). \"verticality 2\" won't resolve until the step-7 resolver matches 2 to II (contract section 4)."}
+{"id":"r0042","text":"my augments are shooga booga, bogus wogus, limpa dimpa","label":{"clear":["augments"],"set":[{"name":"shooga booga"},{"name":"bogus wogus"},{"name":"limpa dimpa"}]},"status":"confirmed","note":"Made-up names, copied as typed (rule 4): the model can't know the augment list. The app drops all three, so it skips the clear and the stored augments stay."}
+{"id":"r0043","text":"I took prismatic ticket on 2-1","label":{"add":[{"name":"prismatic ticket","at":"2-1"}]},"status":"confirmed","note":"\"on 2-1\" is linked to the augment, so it's at, not the stage (rule 19)."}
+{"id":"r0044","text":"I took verticality 4 on 4-2","label":{"add":[{"name":"verticality","at":"4-2"}]},"status":"confirmed","note":"A deliberate trap (player's call). There's no Verticality IV, so the 4 is left out (rule 7); \"verticality\" resolves to Verticality I."}
+{"id":"r0045","text":"l8, g40, h55","label":{"level":8,"gold":40,"hp":55},"status":"confirmed"}
+{"id":"r0046","text":"70","label":{"gold":70},"status":"confirmed","note":"A lone bare number is gold (rule 22)."}
+{"id":"r0047","text":"got a bow from kruggs","label":{"add":[{"name":"bow"}]},"status":"confirmed","note":"Where it came from isn't labeled, even though Krug is a unit (rule 14b)."}
+{"id":"r0048","text":"got a azir with a rod from carousel","label":{"add":[{"name":"rod"}]},"status":"confirmed","note":"Azir from carousel goes to the bench, which isn't tracked; only the rod is gained (rule 14b, player's call 2026-11-19)."}
+{"id":"r0049","text":"hit a sivir 2, what should I do now?","label":{"add":[{"name":"sivir","stars":2}]},"status":"confirmed","note":"\"hit a sivir 2\" is a separate statement before the question, so it's labeled (rule 21, player's call). Hit → add (rule 9)."}
+{"id":"r0050","text":"took a ashe with a glove form the carousel","label":{"add":[{"name":"glove"}]},"status":"confirmed","note":"Ashe from carousel goes to the bench; only the glove is gained (rule 14b). \"form\" is a typo for \"from\"."}
+{"id":"r0051","text":"picked up my blue orb and got a kha'zix and a hecarim from it","label":{},"status":"confirmed","note":"Units from an orb go to the bench, which isn't tracked (rule 14b, player's call 2026-11-19)."}
+{"id":"r0052","text":"bought vi for 3, spent 8 on xp","label":{"goldChange":-11,"add":[{"name":"vi"}]},"status":"confirmed","note":"Two costs summed: −3 − 8 (rule 16b)."}
+{"id":"r0053","text":"rolled down to 0 gold and hit nothing","label":{"gold":0},"status":"confirmed","note":"\"down to 0\" is a total, not a change (rule 16b)."}
+{"id":"r0054","text":"rolled down to 10 gold from 50","label":{"gold":10},"status":"confirmed","note":"The total, 10, wins. The 50 was the starting gold."}
+{"id":"r0055","text":"sword sword bow","label":{"set":[{"name":"sword","count":2},{"name":"bow"}]},"status":"confirmed","note":"The repeated name merges into a count (rule 5)."}
+{"id":"r0056","text":"2 x chain","label":{"set":[{"name":"chain","count":2}]},"status":"confirmed","note":"\"2 x\" with a space is a count (rule 6)."}
+{"id":"r0057","text":"I went 8","label":{"level":8},"status":"confirmed","note":"\"went N\" (rule 15)."}
+{"id":"r0058","text":"I'm 5 right now and slow rolling","label":{"level":5},"status":"confirmed","note":"\"slow rolling\" is a plan with no gold amount, so it changes nothing."}
+{"id":"r0059","text":"i thought i was 6 but i'm actually 7","label":{"level":7},"status":"confirmed","note":"A correction: the last value wins (rule 20)."}
+{"id":"r0060","text":"sold alistar 2 for 5 gold","label":{"goldChange":5,"remove":[{"name":"alistar","stars":2}]},"status":"confirmed","note":"A sale with its price (rule 16b). Stars in remove are ignored."}
+{"id":"r0061","text":"sold veigar for 1 gold","label":{"goldChange":1,"remove":[{"name":"veigar"}]},"status":"confirmed"}
+{"id":"r0062","text":"sold draven 2 for 14 gold","label":{"goldChange":14,"remove":[{"name":"draven","stars":2}]},"status":"confirmed"}
+{"id":"r0063","text":"sold ornn 2 for 3 gold","label":{"goldChange":3,"remove":[{"name":"ornn","stars":2}]},"status":"confirmed"}
+{"id":"r0064","text":"sold taric 3 for 50 gold","label":{"goldChange":50,"remove":[{"name":"taric","stars":3}]},"status":"confirmed"}
+{"id":"r0065","text":"sold gnar for 10 gold","label":{"goldChange":10,"remove":[{"name":"gnar"}]},"status":"confirmed"}
+{"id":"r0066","text":"rolled 10 gold","label":{"goldChange":-10},"status":"confirmed"}
+{"id":"r0067","text":"rolled 40 gold","label":{"goldChange":-40},"status":"confirmed"}
+{"id":"r0068","text":"spend 20 gold in rolls","label":{"goldChange":-20},"status":"confirmed","note":"Present tense, but a report (player's call): −20 (rule 16b)."}
+{"id":"r0069","text":"used 2 free rolls","label":{},"status":"confirmed","note":"Free rolls cost no gold, and \"rolls\" isn't a thing held, so \"used\" isn't a removal."}
+{"id":"r0070","text":"spent 24 gold on EXP to level to 7","label":{"level":7,"goldChange":-24},"status":"confirmed","note":"\"to level to 7\" is the result of buying xp, so level 7 (rule 15)."}
+{"id":"r0071","text":"used 10 gold to level to 6","label":{"level":6,"goldChange":-10},"status":"confirmed","note":"\"used N gold\" is spending (rule 16b), and \"to level to 6\" is level 6 (rule 15)."}
+{"id":"r0072","text":"spent 80 gold on xp to go 10","label":{"level":10,"goldChange":-80},"status":"confirmed","note":"\"to go 10\" is the result of buying xp, so level 10 (rule 15)."}
+{"id":"r0073","text":"spent 8 gold and 4 gold on xp","label":{"goldChange":-12},"status":"confirmed","note":"Two costs summed (rule 16b)."}
+{"id":"r0074","text":"rolled 2 gold then rolled 10 gold","label":{"goldChange":-12},"status":"confirmed","note":"Two costs summed (rule 16b)."}
+{"id":"r0075","text":"sold veigar 2 and alistar 3 for 20 gold","label":{"goldChange":20,"remove":[{"name":"veigar","stars":2},{"name":"alistar","stars":3}]},"status":"confirmed","note":"One price for both sales."}
+{"id":"r0076","text":"rolled down to 10 gold","label":{"gold":10},"status":"confirmed","note":"A total, not a change (rule 16b)."}
+{"id":"r0077","text":"slow rolled to 50 gold","label":{"gold":50},"status":"confirmed","note":"\"rolled to N\" is a total, like \"rolled down to N\" (rule 16b)."}
+{"id":"r0078","text":"got a vi off of carousel with a sword on it","label":{"add":[{"name":"sword"}]},"status":"confirmed","note":"Vi from carousel goes to the bench, which isn't tracked; only the sword is gained (rule 14b, player's call)."}
+{"id":"r0079","text":"got 2 master yis from a blue orb","label":{},"status":"confirmed","note":"Units from an orb go to the bench, which isn't tracked (rule 14b, player's call)."}
+{"id":"r0080","text":"leveled up to 8","label":{"level":8},"status":"confirmed"}
+{"id":"r0081","text":"leveled up to 4 on 2-1","label":{"level":4,"stage":"2-1"},"status":"confirmed"}
+{"id":"r0082","text":"health 10","label":{"hp":10},"status":"confirmed"}
+{"id":"r0083","text":"health 80","label":{"hp":80},"status":"confirmed"}
+{"id":"r0084","text":"2 x ornn, 3 x bow, 1 x rod","label":{"set":[{"name":"ornn","count":2},{"name":"bow","count":3},{"name":"rod"}]},"status":"confirmed","note":"\"1 x\" is one, so no count (rule 6). The count on Ornn is ignored when applied (A5)."}
+{"id":"r0085","text":"Given that I have a guinsoo slammed already, what compositions should I play?","label":{},"status":"confirmed","note":"A question, and the holdings are inside it, so nothing is labeled (rule 21)."}
+{"id":"r0086","text":"Given that I took slammin on 2-1, should I play a reroll comp?","label":{},"status":"confirmed","note":"A question, and the holdings are inside it, so nothing is labeled (rule 21)."}
+{"id":"r0087","text":"Given that my components are sword, bow, glove, should I play an AD carry from here?","label":{},"status":"confirmed","note":"A question, and the holdings are inside it, so nothing is labeled (rule 21)."}
+{"id":"r0089","text":"oooga booga","label":{},"status":"confirmed","note":"Gibberish, not a name, so nothing is labeled (rule 4)."}
+{"id":"r0090","text":"i'm not sure what to do with my current components","label":{},"status":"confirmed","note":"Names no specific components, and asks for help."}
+{"id":"r0091","text":"what items are best for aphelios","label":{},"status":"confirmed","note":"Question (rule 21)."}
+{"id":"r0092","text":"i'm looking to one trick a comp to diamond, what should i play?","label":{},"status":"confirmed","note":"Question (rule 21)."}
+{"id":"r0093","text":";alskdjflqjeflkqjfklewjqf","label":{},"status":"confirmed","note":"Keyboard mash: nothing is labeled."}
+{"id":"r0094","text":"what streamers are popular right now?","label":{},"status":"confirmed","note":"Keyboard mash, so nothing is labeled (rule 4)."}
+{"id":"r0095","text":"is TFT academy a good website to use to learn?","label":{},"status":"confirmed","note":"Question (rule 21)."}
+{"id":"r0096","text":"next round","label":{"next":true},"status":"confirmed","note":"Rule 25."}
+{"id":"r0097","text":"i'm done with this round, n","label":{"next":true},"status":"confirmed","note":"\"n\" in any message is next (rule 25)."}
+{"id":"r0098","text":"next","label":{"next":true},"status":"confirmed","note":"Rule 25."}
+{"id":"r0099","text":"undo the last entry i made","label":{"undo":true},"status":"confirmed","note":"Undo of the last entry (rule 25, player's call)."}
+{"id":"r0100","text":"i fucked up and forgot to enter my gold before progressing to the next round, undo","label":{"undo":true},"status":"confirmed","note":"The trailing \"undo\" is a command on its own, so undo; the explanation isn't labeled. \"the next round\" is part of the story, so it isn't next (rule 25, player's call)."}
+{"id":"r0101","text":"undo to the past round","label":{"undo":true},"status":"confirmed","note":"Undo of the last round's entry, one step (rule 25, player's call)."}
+{"id":"r0102","text":"I made a infinity edge out of my bf sword and sparring glove","label":{"craft":[{"name":"infinity edge"}]},"status":"confirmed","note":"Crafting uses up the sword and glove when they're stored (contract section 2, player's call)."}
+{"id":"r0103","text":"I used combined sword and bow to make gs","label":{"craft":[{"name":"gs"}]},"status":"confirmed","note":"Crafting uses up the sword and bow when they're stored (contract section 2, player's call)."}
+{"id":"r0104","text":"i finished my glove into jeweled gauntlet by using the rod i got off of carousel","label":{"add":[{"name":"rod"}],"craft":[{"name":"jeweled gauntlet"}]},"status":"confirmed","note":"The rod is gained first, then the craft uses up the glove and rod (contract section 2, player's call)."}
+{"id":"r0105","text":"built gargoyle out of chain and cloak","label":{"craft":[{"name":"gargoyle"}]},"status":"confirmed"}
+{"id":"r0106","text":"slammed my void staff on my krugg","label":{"craft":[{"name":"void staff"}]},"status":"confirmed","note":"Crafting uses up the void staff's components when stored. The holder has no star level, so it isn't labeled (rule 14)."}
+{"id":"r0107","text":"slammed chain on teemo","label":{},"status":"confirmed","note":"Putting a component on a unit changes nothing tracked; the chain and Teemo should already be recorded (player's call)."}
+{"id":"r0108","text":"slammed rod onto my veigar and then got a tear off of carousel to finish the archangel","label":{"add":[{"name":"tear"}],"craft":[{"name":"archangel"}]},"status":"confirmed","note":"The tear is gained, then the craft uses up the rod and tear (contract section 2, player's call)."}
+{"id":"r0109","text":"reforged my tear into a sword","label":{"remove":[{"name":"tear"}],"add":[{"name":"sword"}]},"status":"confirmed","note":"Reforging: remove, then add (rule 11)."}
+{"id":"r0110","text":"used reforger on my rabadons and got a gargoyle","label":{"remove":[{"name":"rabadons"}],"add":[{"name":"gargoyle"}]},"status":"confirmed","note":"Reforging: remove, then add (rule 11)."}
+{"id":"r0111","text":"item reforged my cloak into a tear","label":{"remove":[{"name":"cloak"}],"add":[{"name":"tear"}]},"status":"confirmed","note":"Reforging: remove, then add (rule 11)."}
+{"id":"r0112","text":"lost my bow from pandoras items, which rolled into a rod","label":{"set":[{"name":"pandoras items"}],"remove":[{"name":"bow"}],"add":[{"name":"rod"}]},"status":"confirmed","note":"Pandora's Items changed the bow into a rod: remove, then add (rule 11). The augment is recorded if it isn't already (rule 14b)."}
+{"id":"r0113","text":"don't have a tear anymore because i made an archangel","label":{"craft":[{"name":"archangel"}]},"status":"confirmed","note":"The craft uses up one tear and one rod and adds the Archangel's (rule 11, player's call)."}
+{"id":"r0114","text":"lost my bramble vest because i only had it temporarily this round","label":{"remove":[{"name":"bramble vest"}]},"status":"confirmed","note":"A removal of something not stored is a no-op, so it only removes the vest if it was recorded (contract section 2, player's call)."}
+{"id":"r0115","text":"don't have a chain anymore because pandora's items changed it into a belt","label":{"set":[{"name":"pandora's items"}],"remove":[{"name":"chain"}],"add":[{"name":"belt"}]},"status":"confirmed","note":"Pandora's Items changed the chain into a belt (rule 11). The augment is recorded if it isn't already (rule 14b)."}
+{"id":"r0116","text":"board: teemo 2*, pebbles 2, alistar 1, kobuko","label":{"clear":["board"],"set":[{"name":"teemo","stars":2},{"name":"pebbles","stars":2},{"name":"alistar","stars":1},{"name":"kobuko"}]},"status":"confirmed","note":"\"board:\" gives the full board (rule 13)."}
+{"id":"r0117","text":"playing aphelios nidalee kog'maw sentinel amumu varus vi diana","label":{"clear":["board"],"set":[{"name":"aphelios"},{"name":"nidalee"},{"name":"kog'maw"},{"name":"sentinel"},{"name":"amumu"},{"name":"varus"},{"name":"vi"},{"name":"diana"}]},"status":"confirmed","note":"\"playing\" gives the full board (rule 13)."}
+{"id":"r0118","text":"my board is empty","label":{"clear":["board"]},"status":"confirmed"}
+{"id":"r0119","text":"empty board","label":{"clear":["board"]},"status":"confirmed"}
+{"id":"r0120","text":"my team is just an akali 2 camille 2* and leona 1, it's ass","label":{"clear":["board"],"set":[{"name":"akali","stars":2},{"name":"camille","stars":2},{"name":"leona","stars":1}]},"status":"confirmed","note":"\"my team is\" gives the full board (rule 13). \"it's ass\" is an opinion."}
+{"id":"r0121","text":"my board is ass","label":{},"status":"confirmed","note":"An opinion; no units named."}
+{"id":"r0122","text":"my 3-2 augment was money hungry+","label":{"set":[{"name":"money hungry+","at":"3-2"}]},"status":"confirmed","note":"\"my N-M augment was X\" → set with at (rule 19)."}
+{"id":"r0123","text":"my 4-2 augment was golden egg","label":{"set":[{"name":"golden egg","at":"4-2"}]},"status":"confirmed","note":" Golden Egg isn't in Set 18, so the app drops it with a notice."}
+{"id":"r0124","text":"i got sivir/nidalee beast within on 3-2","label":{"add":[{"name":"sivir/nidalee beast within","at":"3-2"}]},"status":"confirmed","note":"Copied as typed. It matches neither version, so the app asks whether it's the Sivir or Nidalee Beast Within (section 4, player's call)."}
+{"id":"r0125","text":"i got gold tons of stats on 4-2 as my final augment","label":{"add":[{"name":"gold tons of stats","at":"4-2"}]},"status":"confirmed"}
+{"id":"r0126","text":"i got a sprykin emblem from my spreading roots on 2-1, what should i play?","label":{"set":[{"name":"spreading roots","at":"2-1"}],"add":[{"name":"sprykin emblem"}]},"status":"confirmed","note":"A statement before a question is labeled (rule 21). Spreading Roots is the source augment, so it's recorded, at 2-1 (rule 14b)."}
+{"id":"r0127","text":"i took glass cannon 2 for my caitlyn reroll comp","label":{"add":[{"name":"glass cannon 2"}]},"status":"confirmed","note":"The 2 belongs to the name (rule 2). \"for my caitlyn reroll comp\" is a plan. Resolves once the step-7 resolver matches 2 to II (section 4)."}
+{"id":"r0128","text":"the stage is 3-2 right now","label":{"stage":"3-2"},"status":"confirmed","note":"\"the stage is N-M\" isn't listed in rule 18, but means the current stage."}
+{"id":"r0129","text":"3-5 just started","label":{"stage":"3-5"},"status":"confirmed"}
+{"id":"r0130","text":"i lost on round 3-7","label":{},"status":"confirmed","note":"3-7 is the round just played; it doesn't set the current stage (player's call)."}
+{"id":"r0131","text":"i lost to kruggs on 3-8 and now i have no additional components going into stage 4","label":{},"status":"confirmed","note":"3-8 isn't a valid stage. \"no additional components\" means nothing new, not none. \"stage 4\" alone is left out (rule 18)."}
+{"id":"r0132","text":"40g","label":{"gold":40},"status":"confirmed"}
+{"id":"r0133","text":"$80","label":{"gold":80},"status":"confirmed"}
+{"id":"r0134","text":"hp 72","label":{"hp":72},"status":"confirmed"}
+{"id":"r0135","text":"hp 2000","label":{},"status":"confirmed","note":"Out of range, so it's left out."}
+{"id":"r0136","text":"800 gold","label":{},"status":"confirmed","note":"Out of range (over 200), so it's left out."}
+{"id":"r0137","text":"250 gold","label":{"gold":250},"status":"confirmed","note":"The gold cap is 250 (player's call)."}
+{"id":"r0138","text":"I'm at 45","label":{},"status":"confirmed","note":"\"I'm at N\" isn't level, HP or gold (A21)."}
+{"id":"r0139","text":"lv 8","label":{"level":8},"status":"confirmed"}
+{"id":"r0140","text":"i have some swords","label":{},"status":"confirmed","note":"A vague amount, so the mention is left out (A33)."}
+{"id":"r0141","text":"i have 8 chains, wait nvm i have 4 chains","label":{"set":[{"name":"chains","count":4}]},"status":"confirmed","note":"A correction replaces the earlier mention (rule 5). \"chains\" doesn't resolve yet: the plural fallback only retries exact names, and \"chain\" is an alias-free prefix of Chain Vest. A resolver gap for step 7."}
+{"id":"r0142","text":"i lost my gargoyle stoneplate and infinity edge because i have salvage bin, so i made steadfast heart and bt instead","label":{"set":[{"name":"salvage bin"}],"remove":[{"name":"gargoyle stoneplate"},{"name":"infinity edge"}],"craft":[{"name":"steadfast heart"},{"name":"bt"}]},"status":"confirmed","note":"\"i have salvage bin\" is a holding (rule 12). The salvaged components aren't named, so the crafts use whatever components are stored."}
+{"id":"r0143","text":"i have galio 4","label":{"set":[{"name":"galio"}]},"status":"confirmed","note":"There's no 4-star, so the 4 is left out (rule 7). Galio isn't in Set 18, so the app drops it with a notice."}
+{"id":"r0144","text":"akali 4 from worth the wait","label":{"set":[{"name":"akali"},{"name":"worth the wait"}]},"status":"confirmed","note":"The 4 is left out (rule 7). Worth the Wait is the source augment, so it's recorded (rule 14b)."}
+{"id":"r0145","text":"i just got an azir 4","label":{"add":[{"name":"azir"}]},"status":"confirmed","note":"The 4 is left out (rule 7)."}
+{"id":"r0146","text":"my board: 3 star azir, 3 star rammus and some other units","label":{"set":[{"name":"azir","stars":3},{"name":"rammus","stars":3}]},"status":"confirmed","note":"\"and some other units\" says this isn't the full board, so there's no clear (player's call)."}
+{"id":"r0147","text":"master yi and rengar 2 are on my board right now","label":{"set":[{"name":"master yi"},{"name":"rengar","stars":2}]},"status":"confirmed","note":"The stars bind to Rengar only (rule 8). Not framed as the full board."}
+{"id":"r0148","text":"2 people have ashe pair so i don't think i can play around her","label":{},"status":"confirmed","note":"Opponents are deferred."}
+{"id":"r0149","text":"there are 8 sentinels out of the pool so I can't use it in my ahri/morgana comp","label":{},"status":"confirmed","note":"The pool and plans aren't tracked."}
+{"id":"r0150","text":"if i hit a sword i will slam a bt","label":{},"status":"confirmed","note":"Hypothetical (rule 21)."}
+{"id":"r0151","text":"if i can survive until 5-1 i will go 9 and roll down","label":{},"status":"confirmed","note":"Hypothetical (rule 21)."}
+{"id":"r0152","text":"i'm on a 5 win streak going into stage 2 neutrals","label":{},"status":"confirmed","note":"Streaks aren't tracked."}
+{"id":"r0153","text":"i'm on a 10 loss streak and am planning to level to 8 on 4-1 and roll for 2 star 4-costs","label":{},"status":"confirmed","note":"Streaks and plans aren't tracked."}
+{"id":"r0154","text":"i'm 8 xp off of going 9","label":{},"status":"confirmed","note":"XP isn't tracked."}
+{"id":"r0155","text":"i have 5 veigar copies on my bench along with the 3 copies on my board, so i'm one off of 3-star","label":{"set":[{"name":"veigar","stars":2}]},"status":"confirmed","note":"3 copies on the board are a 2-star (rule 7). The bench copies aren't counted (player's call)."}
+{"id":"r0156","text":"+10 gold from gold subscription","label":{"goldChange":10},"status":"confirmed","note":"Gold from a portal is a gain; the portal itself isn't recorded, since portals aren't supported yet (rule 16b, player's call)."}
+{"id":"r0157","text":"5 gold from an orb","label":{"goldChange":5},"status":"confirmed","note":"Gold from an orb is a gain (rule 16b, player's call)."}
+{"id":"r0158","text":"new game","label":{"newGame":true},"status":"confirmed","note":"Resets the whole game state (rule 26, player's call)."}
+{"id":"r0159","text":"scratch that","label":{},"status":"confirmed","note":"Loose undo is deferred."}
+{"id":"r0160","text":"lost 15 hp from that last round","label":{"hpChange":-15},"status":"confirmed","note":"An HP change with its amount (rule 17b, player's call)."}
+{"id":"r0161","text":"after stage 2, i lost 30 hp total so i'm at 70 hp","label":{"hp":70},"status":"confirmed","note":"The total is stated; the loss isn't labeled."}
+{"id":"r0162","text":"it's only stage 1 so i don't have any augments yet","label":{"clear":["augments"]},"status":"confirmed","note":"\"don't have any augments\" is \"no augments\" (rule 13, player's call). Stage 1 isn't a valid stage."}
+{"id":"r0163","text":"it's stage 3-5 so i'm still waiting for my last augment, it needs to be good or i'm eighth","label":{"stage":"3-5"},"status":"confirmed"}

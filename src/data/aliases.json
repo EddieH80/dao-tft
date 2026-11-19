@@ -1,5 +1,5 @@
 {
-  "note": "Hand-edited shorthand for the quick bar. Each key is what a player types (lowercase letters and digits); each value is a component, item, artifact, emblem, unit or augment id from snapshot.json. Full names and their prefixes already work, so list only abbreviations. The build fails on an id the snapshot does not have.",
+  "note": "Hand-edited shorthand for the quick bar and the assistant. Each key is what a player types with spaces and punctuation removed (lowercase letters, digits and +); each value is a component, item, artifact, emblem, unit or augment id from snapshot.json. Full names and their prefixes already work, so list only abbreviations. The build fails on an id the snapshot does not have.",
   "aliases": {
     "bf": "BFSword",
     "sword": "BFSword",
@@ -52,6 +52,41 @@
 
     "kz": "DA_18_KhaZix",
     "kog": "DA_KogMaw18_AD",
-    "yi": "DA_18_MasterYi_AD"
+    "yi": "DA_18_MasterYi_AD",
+
+    "blackthornspat": "DA_18_EmblemBlackthorn",
+    "blossomspat": "DA_18_EmblemBlossom",
+    "brawlerspat": "DA_18_EmblemBrawler",
+    "covenspat": "DA_18_EmblemCoven",
+    "defenderspat": "DA_18_EmblemDefender",
+    "elderwoodspat": "DA_18_EmblemElderwood",
+    "executionerspat": "DA_18_EmblemExecutioner",
+    "faespat": "DA_18_EmblemFae",
+    "florafatalisspat": "DA_18_EmblemFloraFatalis",
+    "floraspat": "DA_18_EmblemFloraFatalis",
+    "hunterspat": "DA_18_EmblemHunter",
+    "infernospat": "DA_18_EmblemInferno",
+    "invokerspat": "DA_18_EmblemInvoker",
+    "juggernautspat": "DA_18_EmblemJuggernaut",
+    "juggspat": "DA_18_EmblemJuggernaut",
+    "lunarspat": "DA_18_EmblemLunar",
+    "primalspat": "DA_18_EmblemPrimal",
+    "rapidfirespat": "DA_18_EmblemRapidfire",
+    "ravagerspat": "DA_18_EmblemSlayer",
+    "spellweaverspat": "DA_18_EmblemSpellweaver",
+    "sprykinspat": "DA_18_EmblemSprykin",
+    "vanguardspat": "DA_18_EmblemVanguard",
+
+    "sivirbeastwithin": "DA_18_PrimalAugment_Sivir",
+    "nidaleebeastwithin": "DA_18_PrimalAugment_Nidalee",
+    "sivirbeastwithin+": "DA_18_PrimalAugmentPlus_Sivir",
+    "nidaleebeastwithin+": "DA_18_PrimalAugmentPlus_Nidalee",
+    "goldtonsofstats": "DA_TonsOfStatsI",
+    "tonsofstats1": "DA_TonsOfStatsI",
+    "tonsofstatsi": "DA_TonsOfStatsI",
+    "prismatictonsofstats": "DA_TonsOfStatsII",
+    "tonsofstats2": "DA_TonsOfStatsII",
+    "tonsofstatsii": "DA_TonsOfStatsII",
+    "uplink": "DA_CyberneticUplink_Gold"
   }
 }
