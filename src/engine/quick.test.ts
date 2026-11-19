@@ -50,7 +50,8 @@ describe("quick bar", () => {
   });
 
   it("rejects out-of-range numbers and rounds that do not exist", () => {
-    expect(run("250").ok).toBe(false);
+    expect(run("250").ok).toBe(true);
+    expect(run("251").ok).toBe(false);
     expect(run("l11").ok).toBe(false);
     expect(run("h101").ok).toBe(false);
     expect(run("9-9").ok).toBe(false);

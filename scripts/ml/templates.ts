@@ -234,7 +234,6 @@ export const DISTRACTOR: Template<DistractorF>[] = [
   t("x.fast9", "test", true, () => "thinking fast 9"),
   t("x.unit-contested", "test", true, (c) => `${c.unit} is contested`),
   t("x.should-slam", "test", true, (c) => `should I slam ${c.item}?`),
-  t("x.lost-hp", "test", true, () => "lost 12 hp"),
   t("x.should-level", "test", true, () => "should I level?"),
 ];
 

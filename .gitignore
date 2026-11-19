@@ -42,7 +42,9 @@ next-env.d.ts
 
 # ML / model artifacts
 work/
-ml-data/
+ml-data/*
+# The hand-written real-world test set is committed: it can't be regenerated.
+!ml-data/real-test/
 *.safetensors
 *.bin
 *.gguf

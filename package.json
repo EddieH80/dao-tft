@@ -14,7 +14,8 @@
     "fetch-items": "tsx scripts/fetch-tactics-items.ts",
     "reconcile-data": "tsx scripts/reconcile-data.ts",
     "ml:data": "tsx scripts/ml/generate.ts",
-    "ml:show": "tsx scripts/ml/show.ts"
+    "ml:show": "tsx scripts/ml/show.ts",
+    "ml:check-real": "tsx scripts/ml/real-test.ts"
   },
   "dependencies": {
     "next": "16.3.8",

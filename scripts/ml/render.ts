@@ -382,13 +382,12 @@ function eventPiece(c: Ctx, st: GameSample): Piece {
   }
 }
 
-/** Asides that talk about a field, so they're left out of a message that states it ("hp 38, lost 12 hp"). */
+/** Asides that talk about a field, so they're left out of a message that states it ("lvl 6, going 8 soon"). */
 const DISTRACTOR_FIELD: Record<string, "level" | "gold" | "hp"> = {
   "x.going": "level",
   "x.fast9": "level",
   "x.should-level": "level",
   "x.relative-gold": "gold",
-  "x.lost-hp": "hp",
 };
 
 function distractorPiece(c: Ctx, said: Set<string> = new Set()): Piece {

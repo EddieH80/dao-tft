@@ -20,7 +20,7 @@ export const CATEGORIES = ["components", "items", "board", "augments"] as const;
 export const LIMITS = {
   minLevel: 2,
   maxLevel: 10,
-  maxGold: 200,
+  maxGold: 250,
   maxHp: 100,
   maxCount: 20,
   maxMentions: 20,
@@ -61,11 +61,31 @@ export const StateUpdateSchema = z
   .strictObject({
     /** Undo the last change: a lone "u" / "undo", as in the quick bar. Nothing else may be set with it. */
     undo: z.literal(true).optional(),
+    /** Start over: "new game". The app resets the whole game state (`useGame.reset`), as one undo step. Nothing else may be set with it. */
+    newGame: z.literal(true).optional(),
     level: z.int().min(LIMITS.minLevel).max(LIMITS.maxLevel).optional(),
     /** Move to the next round: "n", "next", "next round". The app projects the gold (`advanceRound`). */
     next: z.literal(true).optional(),
     gold: z.int().min(0).max(LIMITS.maxGold).optional(),
+    /**
+     * Gold gained by selling or from an orb ("sold jinx for 3" → 3, "5 gold from an orb" → 5), or
+     * spent rolling, buying units or buying xp ("rolled 30" → -30), when the player says the amount.
+     * Added to the stored gold by the app.
+     */
+    goldChange: z
+      .int()
+      .min(-LIMITS.maxGold)
+      .max(LIMITS.maxGold)
+      .refine((n) => n !== 0, { message: "a gold change of 0 is left out" })
+      .optional(),
     hp: z.int().min(0).max(LIMITS.maxHp).optional(),
+    /** HP lost or gained, when the player says the amount: "lost 15 hp" → -15. Added to the stored HP by the app. */
+    hpChange: z
+      .int()
+      .min(-LIMITS.maxHp)
+      .max(LIMITS.maxHp)
+      .refine((n) => n !== 0, { message: "an HP change of 0 is left out" })
+      .optional(),
     /** The current round. */
     stage: z
       .string()
@@ -84,8 +104,8 @@ export const StateUpdateSchema = z
       .optional(),
     /**
      * What the player says they hold, with no event verb: a bare list, or "I have ...".
-     * Replaces the components and the items if it names any; units and augments
-     * named here are added (or have their stars set) and the rest stay.
+     * Components and items are added on top of what's stored; units and augments
+     * are added (or have their stars set) if missing. Nothing is replaced.
      */
     set: Mentions.optional(),
     /** Sold, lost or used up: "sold jinx", "lost a bow". */
@@ -100,5 +120,14 @@ export const StateUpdateSchema = z
   })
   .refine((u) => !u.undo || Object.keys(u).length === 1, {
     message: "undo comes alone",
+  })
+  .refine((u) => !u.newGame || Object.keys(u).length === 1, {
+    message: "newGame comes alone",
+  })
+  .refine((u) => u.hp === undefined || u.hpChange === undefined, {
+    message: "A stated HP total replaces any HP change: label only hp",
+  })
+  .refine((u) => u.gold === undefined || u.goldChange === undefined, {
+    message: "A stated gold total replaces any gold change: label only gold",
   });
 export type StateUpdate = z.infer<typeof StateUpdateSchema>;

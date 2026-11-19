@@ -3,10 +3,10 @@ import type { CATEGORIES, Mention, StateUpdate } from "../../src/assistant/contr
 
 export type ListKey = "set" | "remove" | "add" | "craft";
 export type Category = (typeof CATEGORIES)[number];
-type Scalars = Pick<StateUpdate, "undo" | "level" | "next" | "gold" | "hp" | "stage">;
+type Scalars = Pick<StateUpdate, "undo" | "newGame" | "level" | "next" | "gold" | "goldChange" | "hp" | "hpChange" | "stage">;
 
 /** Key order of a serialized label. */
-export const KEY_ORDER = ["undo", "level", "next", "gold", "hp", "stage", "clear", "set", "remove", "add", "craft"] as const;
+export const KEY_ORDER = ["undo", "newGame", "level", "next", "gold", "goldChange", "hp", "hpChange", "stage", "clear", "set", "remove", "add", "craft"] as const;
 const MENTION_ORDER = ["name", "count", "stars", "at"] as const;
 
 const mentionKey = (m: Mention) => `${m.name.trim().toLowerCase()}|${m.stars ?? ""}|${m.at ?? ""}`;

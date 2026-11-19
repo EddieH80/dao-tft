@@ -60,6 +60,14 @@ const valid: [input: string, label: unknown][] = [
   ],
   ["u", { undo: true }],
   ["next round", { next: true }],
+  // Gold changes from selling, rolling and buying.
+  ["sold jinx for 3", { goldChange: 3, remove: [{ name: "jinx" }] }],
+  ["rolled 30", { goldChange: -30 }],
+  ["leveled up to 8 and rolled 50 gold", { level: 8, goldChange: -50 }],
+  ["5 gold from an orb", { goldChange: 5 }],
+  ["250 gold", { gold: 250 }],
+  ["lost 15 hp", { hpChange: -15 }],
+  ["new game", { newGame: true }],
 ];
 
 /** Outputs a model might produce that must never reach the store. */
@@ -67,7 +75,7 @@ const invalid: [why: string, output: unknown][] = [
   ["not an object", "level 6"],
   ["level below 2", { level: 1 }],
   ["level above 10", { level: 11 }],
-  ["gold above 200", { gold: 250 }],
+  ["gold above 250", { gold: 251 }],
   ["negative gold", { gold: -5 }],
   ["fractional gold", { gold: 12.5 }],
   ["HP above 100", { hp: 120 }],
@@ -92,6 +100,12 @@ const invalid: [why: string, output: unknown][] = [
   ["undo with anything else", { undo: true, gold: 30 }],
   ["undo: false (left out instead)", { undo: false }],
   ["next: false (left out instead)", { next: false }],
+  ["gold change of 0", { goldChange: 0 }],
+  ["gold change beyond 250", { goldChange: -251 }],
+  ["HP change of 0", { hpChange: 0 }],
+  ["HP total with an HP change", { hp: 70, hpChange: -30 }],
+  ["newGame with anything else", { newGame: true, level: 3 }],
+  ["gold total with a gold change", { gold: 40, goldChange: -10 }],
 ];
 
 describe("StateUpdateSchema", () => {

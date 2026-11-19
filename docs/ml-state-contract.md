@@ -16,11 +16,14 @@ The model emits one JSON object, a **partial update**: fields it leaves out are 
 
 ```ts
 StateUpdate = {
-  undo?:   true                         // lone "u" / "undo"; nothing else with it
+  undo?:   true                         // "u" / "undo" as a command; nothing else with it
+  newGame?: true                        // "new game": reset everything; nothing else with it
   level?:  int 2–10
   next?:   true                         // "n", "next", "next round"
-  gold?:   int 0–200
+  gold?:   int 0–250
+  goldChange?: int −250–250, not 0      // +sold for N, N from an orb / −rolled, bought units or xp for N
   hp?:     int 0–100
+  hpChange?: int −100–100, not 0        // "lost 15 hp" → −15
   stage?:  "N-M", N 2–7, M 1–7          // the current round
   clear?:  ("components" | "items" | "board" | "augments")[]
   set?:    Mention[]                    // what the player holds (no event verb)
@@ -37,11 +40,14 @@ Mention = {
 ```
 
 Limits match the quick bar (`MIN_LEVEL`, `MAX_LEVEL`, `MAX_GOLD`, `MAX_HP`) and `StageLabel` in
-`src/data/schema.ts`. The schema also rejects:
+`src/data/schema.ts`. The gold cap is 250 (raised from 200 in both places, player's call
+2026-11-19; arbitrary: more is possible but very unlikely). The schema also rejects:
 
 - unknown keys, anywhere (strict objects);
 - `null` and `false` (leave a field out instead), and empty lists;
-- `undo` together with any other field;
+- `undo` or `newGame` together with any other field;
+- `hp` together with `hpChange` (a stated total wins; rule 17b);
+- `gold` together with `goldChange` (a stated total wins; rule 16b);
 - `count: 1` (leave it out), so each label has exactly one form;
 - `count` with `stars`, and `at` with either;
 - the same name (case-insensitive, with the same `stars` and `at`) twice in one list (merge it into
@@ -72,7 +78,8 @@ text → model → JSON.parse → StateUpdateSchema.safeParse → resolve names 
 3. **Reduce** the update to a new `QuickState`, step by step, using the quick bar's own logic (table
    below). Each step produces a preview chip (`QuickStep`) exactly like the quick bar's.
 4. **Preview and apply.** As in `QuickBar`, the player sees the chips. If every chip is ok, one
-   `useGame.apply(next)` commits the whole update as **one undo step**. If any chip is red, nothing
+   `useGame.apply(next)` commits the whole update as **one undo step**. Unknown and ambiguous names
+   ask the player instead (section 4, step 6) and don't block the rest. If any other chip is red, nothing
    is applied.
 
 Calling the individual store actions instead would record one undo step per field and skip the
@@ -84,8 +91,11 @@ preview. That's why the update goes through `QuickState` and `apply`, the quick 
 |---|---|---|
 | `level` | `setLevel` | `fitBoard` (drops the last-added units if the board shrinks), as `runQuick`'s `level` case |
 | `undo` | `undo` | called directly, as `QuickBar` does for a lone `u` |
+| `newGame` | `reset` | called directly, like `undo`; `reset` is already one undo step, so it can be undone |
 | `next` | `nextRound` | `advanceRound` (stage +1, gold plus income, `goldEstimated: true`) |
 | `gold` | `setGold` | `runQuick`'s `gold` case (also sets `goldEstimated: false`) |
+| `goldChange` | `setGold(gold + change)` | new: stored gold plus the change, clamped to 0–250; `goldEstimated` is left as it was |
+| `hpChange` | `setHp(hp + change)` | new: stored HP plus the change, clamped to 0–100 |
 | `hp` | `setHp` | `runQuick`'s `hp` case |
 | `stage` | `setStage` | `runQuick`'s `stage` case (checks against `stageLabels`) |
 | `add` component | `addComponent` | `change(s, "add", …)` component branch |
@@ -97,10 +107,11 @@ preview. That's why the update goes through `QuickState` and `apply`, the quick 
 | `remove` unit | `toggleUnit` | `change(s, "remove", …)` |
 | `add`/`set` augment | `pickAugment` | `change` augment branch (`augmentProblem`: order, duplicates, stage pool) |
 | `at` on an augment | `pickAugment(selection, id)` | `pickAugment`'s rule: selection *i* must be ≤ the number of picks made |
-| `clear`, `set` components/items | `apply` | new: replace the category, then reuse the above per mention |
+| `set` component/item | `addComponent` / `addItem` | same as `add`: `change(…, keepComponents: true)` |
+| `clear` | `apply` | new: empty the category, then reuse the above per mention |
 
 **Order.** Steps run in this fixed order, whatever order the player wrote them in:
-`level → next → clear → set → remove → add → craft → stage → gold → hp`. Level comes first so unit
+`level → next → clear → set → remove → add → craft → stage → gold / goldChange → hp / hpChange`. Level comes first so unit
 additions see the right team size. `next` runs before `stage` and `gold`, so "n 38" means "next
 round, and I have 38" (the quick bar's usual line). The quick bar is order-sensitive and reads
 "38 n" as 38 plus a round's income; here it is 38. That's a known difference, and a rare line. `remove` runs before `add` so "sold jinx, put in vi" works on a
@@ -108,12 +119,17 @@ full board. `add` runs before `craft` so "got a sword and made IE" can use the n
 
 **`set` semantics** (from your answers):
 
-- **Components, items:** if `set` names any component, the component bag becomes exactly what's
-  named; same for items. A category `set` doesn't name is unchanged.
+- **Components, items:** added on top of what's stored, exactly like `add` ("2 bows sword" with 1
+  bow stored gives 3 bows and a sword). Nothing stored is replaced or used up. To replace a category,
+  the label adds `clear` ("no components", then the list). Changed 2026-11-14: this replaced the
+  category before.
 - **Units:** upsert. A unit not on the board is added (at `stars`, or 1); a unit already there gets
   `stars` if given, otherwise nothing changes. The rest of the board stays. To replace the board, the
   label adds `clear: ["board"]`.
-- **Augments:** upsert, like units: an augment not yet taken fills the next selection (or `at`).
+- **Augments:** upsert, like units: an augment not yet taken goes to its `at` selection, or without
+  `at` to the next open selection if that selection offers it (its earliest possible stage).
+  Otherwise, for example Prismatic Tons of Stats (3-2 or 4-2) with no 2-1 pick stored, the app asks
+  the player which round it was taken at instead of guessing (confirmed 2026-11-14).
   To replace them, the label adds `clear: ["augments"]`. Players usually name the pick they just
   made, and replacing would drop the earlier picks (confirmed 2026-11-14).
 
@@ -133,6 +149,11 @@ full board. `add` runs before `craft` so "got a sword and made IE" can use the n
   quick bar and the assistant share one implementation.
 - Move `pickAugment`'s selection rule out of the store into a pure helper, for `at`.
 - Two resolver additions from section 4: plural fallback and name-plus-number fallback.
+- `goldChange` and `hpChange`: add them to the stored value, clamped (gold 0–250, HP 0–100), with a
+  chip like "Gold 40 → 26".
+- `newGame`: call `useGame.reset()`, as `undo` calls `useGame.undo()`.
+- Unknown names: "did you mean" suggestions by spelling and shared words, dropping with a notice,
+  and skipping a `clear` whose mentions were all dropped (section 4, step 6).
 
 ## 3. Scope
 
@@ -141,6 +162,7 @@ full board. `add` runs before `craft` so "got a sword and made IE" can use the n
 | Field | Why |
 |---|---|
 | Level, gold, HP, stage | Core engine inputs; absolute values; trivial to validate |
+| Gold changes from selling, rolling, buying units or xp | Players report these instead of a total; the app does the arithmetic |
 | Components with counts | The main input to item allocation |
 | Completed items, emblems, artifacts | Feed allocation and item pull; the catalog's `holdables` already covers all three |
 | Crafting (`craft`) | Players say "slammed IE" constantly; the quick bar's recipe logic does the work |
@@ -154,13 +176,13 @@ full board. `add` runs before `craft` so "got a sword and made IE" can use the n
 | Thing | Example | Why deferred |
 |---|---|---|
 | Opponents / scouting | "two people on ashe" | Needs mapping text to comps, a separate UI (`setOpponent`) and phrasing; v1 labels `{}` |
-| Relative gold / HP | "+10 gold", "lost 12 hp", "spent 20" | Needs current state and arithmetic; absolute values cover the common case |
+| Other relative gold, portals | "+10 gold" (no source); the portal in "+10 gold from gold subscription" | Gold changes need a stated source: selling, an orb, a portal, rolling or buying (`goldChange`). Portals themselves aren't tracked yet (player's calls 2026-11-14, 2026-11-19) |
 | Bench units, unit copies | "2 jinx on bench" | The store has no bench; only board units exist |
 | Which unit holds an item | "IE on ashe" | The store keeps items as one flat list |
 | XP, streaks, shop, rolls | "8 xp to 7", "4 win streak" | Not in the store |
 | Plans and intentions | "going 8 at 4-1", "rolling at 3-2" | Not state, and acting on them would be the model deciding |
 | Flow flags | "no augment yet" → `skipAugment` | UI-flow state, not game state; the flow handles it |
-| Loose undo / reset | "scratch that", "new game" | Destructive and easy to misread; there are buttons, and a lone `u` / `undo` is in scope |
+| Loose undo | "scratch that", "undo the bow" | Easy to misread; "undo" as a command, "undo the last entry" and "new game" are in scope (rules 25, 26) |
 | Questions | "should I slam IE?" | A different job (explanation), labeled `{}` here |
 
 ## 4. Names to ids
@@ -178,7 +200,14 @@ app resolves them with the existing `QuickLexicon` (built from the snapshot and 
    appended as a digit and as a roman numeral (`glass cannon` + 2 → `glasscannon2`, `glasscannonii`),
    in case a labeler or the model split a numbered name.
 5. `lexicon.prefix(key)`: the unique name starting with the key (`kha` → Kha'Zix).
-6. No match → red chip `Unknown "…"`. Several matches → red chip `"…" could be A, B, C`, as in the quick bar.
+6. No match → the app asks instead of failing. It suggests the closest current names, by spelling
+   (`cindering` → Cinderling, `krugg` → Krug) or by a shared word (`kraken slayer` → Kraken's Fury).
+   The chip reads `Did you mean Kraken's Fury?`, and the player taps a suggestion or dismisses it.
+   With no close name, the mention is dropped with a notice (`Unknown "skarner", not added`). Either
+   way the rest of the update still applies. If every mention under a `clear` is dropped, that
+   `clear` is skipped, so "my augments are shooga booga, …" doesn't wipe the stored augments.
+   Several matches → `"…" could be A, B, C`, as in the quick bar, with each as a choice. No alias is
+   added for old names; suggestions come from the snapshot at runtime (player's call, 2026-11-19).
 
 Kind (component, item, unit, augment) comes from the resolved entry, not from the model. The labeling
 rules below are mostly kind-free for that reason: a number before a name is always `count`, a number
@@ -220,18 +249,24 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
    only rule that needs the snapshot.
 3. Keep qualifiers that pick between same-name things: `sivir beast within`, `prismatic tons of stats`,
    `lunar emblem`.
-4. Typos are not corrected. `jnx 2` → `{name: "jnx", stars: 2}`. The resolver reports it.
+4. Typos are not corrected. `jnx 2` → `{name: "jnx", stars: 2}`. A name that isn't in the current
+   set is copied too (`skarner`, `kraken slayer`, `shooga booga` after "my augments are"): the model
+   can't know the set's roster, so the app decides (section 4, step 6). Only text that isn't meant
+   as a name at all is left out: gibberish and keyboard mash (`oooga booga`) → `{}` (player's
+   calls, 2026-11-19).
 5. A name repeated in one list is merged: `sword sword bow` → `sword ×2, bow`. A correction replaces
    the earlier mention: `2 bows, no wait 3` → `bows ×3`.
 
 **Numbers on names**
 
-6. **count:** a number (digits or words) or `x2`/`2x` directly before the name, or `x2` after it.
+6. **count:** a number (digits or words) or `x2`/`2x`/`2 x` directly before the name, or `x2` after it.
    `a`, `an`, `one` → no count. `couple`, `pair (of)` → 2. Vague amounts (`some`, `a few`,
    `several`) → leave the mention out.
 7. **stars:** `N`, `N*`, `N star`, `N-star` or `**` directly after the name (N 1–3), or `N star` /
    `N*` / `N-star` before it. A bare number before a name is a count, never stars (`2 jinx` → count 2;
    the resolver ignores it for units). A number after a name outside 1–3 is left out (`jinx 4`).
+   Copies on the board give a star level: 3 copies → ★2, 9 copies → ★3 ("the 3 copies on my board"
+   → veigar ★2). Copies on the bench aren't counted (player's call, 2026-11-19).
 8. A star marker binds only to the name next to it: `jinx and vi 2` → jinx (no stars), vi ★2.
 
 **Which list**
@@ -241,24 +276,56 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 10. **craft**: *made, built, crafted, slammed, combined, finished*. The components in "made IE from
     sword and glove" aren't labeled; crafting uses them up.
 11. **remove**: *sold, lost, used, removed, benched* (unit off the board), *gave away*, a leading `-`,
-    and "don't have X" / "no X" for a **specific** thing.
+    and "don't have X" / "no X" for a **specific** thing. **Reforging** swaps one thing for another:
+    "reforged my tear into a sword", "used reforger on X and got Y" → remove X, add Y. So does an
+    augment that changes an item ("pandora's items changed my chain into a belt").
+    "don't have X because I made Y" → craft Y only: the craft uses X up.
 12. **set**: everything else that states a holding: bare lists, *I have, I've got, I'm holding,
     my augments are*. "I've got" / "have got" is possession → set; any other "got" is an event →
     add (A7).
 13. **clear**: "no components / items / augments", "empty board", and alongside `set` when the
     player gives the full board ("my board is", "board:", "playing X Y Z", "my team is") or all
     augments ("my augments are").
-14. A unit named only as an item's holder isn't labeled: `slammed IE on ashe` → craft IE. In a full
-    board list it is labeled, because it's named as a board member.
+14. A unit named only as an item's holder isn't labeled: `slammed IE on ashe` → craft IE. It is
+    labeled, in `set`, when it has a star level (`jg teemo 2`, `slammed … with a caitlyn 2`): a star
+    level is board information. In a full board list it is labeled too, as a board member.
+14b. Units gained from somewhere (carousel, an orb) go to the bench, which isn't tracked, so they
+    aren't labeled unless the player says they're on the board: `got a vi off of carousel with a
+    sword on it` → add sword; `got 2 master yis from a blue orb` → `{}` (player's call, 2026-11-19).
+    Where something came from isn't labeled either: `got a bow from kruggs` → add bow; `got a tear off of
+    carousel` → add tear. This holds even when the source's name matches a unit (Krug).
+    The exception is an augment named as the source: it is the player's, so it goes in `set` (an
+    upsert, so nothing changes if it's already recorded), with `at` if a selection is linked:
+    `got a sprite emblem from my spreading roots on 2-1` → add sprite emblem, set spreading roots
+    at 2-1 (player's call, 2026-11-19).
 
 **Scalars**
 
 15. **level**: `level N`, `lvl N`, `lv N`, `lN`, `N level`, and, when no cue word or name follows
-    the number: "I'm N" / "I am N", "hit N", "went N", "N now" (N 2–10). "hit 2 bows" is an add
+    the number: "I'm N" / "I am N", "hit N", "went N", "N now", "leveled (up) to N", and the result
+    of buying xp: "to level to N", "to go N" ("spent 24 on xp to level to 7") (N 2–10). "hit 2 bows" is an add
     (a name follows); "hit 50 gold" is gold. "I'm at N" isn't level. Out of range → leave out.
 16. **gold**: `N gold`, `Ng`, `gN`, `gold N`, `$N`. A bare number with no cue → leave out, except
-    in a quick-bar line (rule 23).
-17. **hp**: `N hp`, `hp N`, `hN`, `N health`. "at N" alone → leave out.
+    in a quick-bar line (rule 23). Not when the gold is a sale price or an amount spent (16b).
+16b. **goldChange**: gold gained by **selling** or spent on **rolling, buying units or buying xp**,
+    when the amount is stated. Sold → `+N` ("sold jinx for 3", "sold my bench for 14 gold"); rolled,
+    spent or used (on rolls or xp), bought (a unit or xp) for N → `−N` ("rolled 30", "rolled 50
+    gold", "spent 8 on xp", "used 10 gold to level", "bought vi for 3"). Present tense ("spend 20 in
+    rolls") is a report, like the past tense. The amount must be gold, stated outright: "rolled 3 times", "bought xp
+    twice" and "sold jinx" (no amount) → leave the change out (the model doesn't do arithmetic).
+    Several changes in one message are summed ("sold vi for 2 and rolled 10" → −8). A gold total
+    stated in the same message wins and the change is left out ("rolled down to 10", "slow rolled to
+    50" → gold 10, gold 50). The
+    sale or purchase itself is still labeled (remove / add) when it names a unit on the board.
+    Gold from an **orb** or a **portal** is a gain too ("5 gold from an orb" → +5, "+10 gold from
+    gold subscription" → +10). Portals aren't supported yet, so the portal itself isn't labeled
+    (player's calls, 2026-11-19). Gold with no stated source ("+10 gold") is still deferred (A28).
+    Units bought from the shop go on the board ("bought vi" → add vi), unlike units from a carousel
+    or orb (rule 14b).
+17. **hp**: `N hp`, `hp N`, `hN`, `N health`, `health N`. "at N" alone → leave out.
+17b. **hpChange**: HP lost or gained, when the amount is stated: "lost 15 hp from that last round"
+    → −15. A total in the same message wins ("lost 30 hp total so i'm at 70 hp" → hp 70) (player's
+    call, 2026-11-19).
 18. **stage**: `N-M` not linked to a mention, `stage N-M`, `on/at N-M`, `it's N-M`, `stage N round M`.
     Other forms (`3.2`, `stage 3` alone) → leave out.
 19. **at**: a selection stage (2-1, 3-2, 4-2) linked to an augment by *at, on, for, from*, or
@@ -269,7 +336,11 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 **Never label**
 
 21. Plans, hypotheticals and questions ("going 8", "if I hit a sword", "should I…"), opponents, and
-    everything in the Deferred table. A message with nothing else → `{}`.
+    everything in the Deferred table. A message with nothing else → `{}`. Holdings mentioned inside
+    a question aren't labeled: "what items for yi given that I have a guinsoo" → `{}`. A separate
+    statement next to a question is labeled as usual: "hit a sivir 2, what should I do now?" → add
+    sivir ★2 (player's calls, 2026-11-14 and 2026-11-18). A question can be recognized by its form
+    ("what…", "should I…", "can I…") without a "?".
 
 **Quick-bar lines** (every message reaches the model, so these must mean what the quick bar does)
 
@@ -284,7 +355,7 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
       name (`-jinx`, `+ie`), a name with an attached star digit (`jinx2`), `n`, `next`, `u`, `undo`.
     - So `52`, `52 l7 n` and `bow sword -jinx` are quick-bar lines. `2 bows`, `sword sword bow` and
       `lvl 6 32 2 bows` are not, because no token is quick-bar-only, and they follow rules 1–21.
-23. In a quick-bar line, a bare number is **gold** (0–200; anything higher is left out), never a
+23. In a quick-bar line, a bare number is **gold** (0–250; anything higher is left out), never a
     count: `l7 2 bows` is level 7, 2 gold and bows. The one exception is rule 7's 1–3 directly after
     a name, which is a star level. Counts in a quick-bar line come only from repetition (`bow bow`).
 24. In a quick-bar line, a plain name → **craft**, `+name` → **add**, `-name` → **remove**, and
@@ -292,15 +363,20 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
     Jinx, not 2 gold (the quick bar would read gold; a 1–3 gold entry is implausible). Rule 7's
     "left out" for numbers above 3 doesn't apply here: `jinx 52` in a quick-bar line is Jinx and
     52 gold, as the quick bar reads it.
-25. `n`, `next`, or "next round" in any message → `next: true`. A lone `u` / `undo` (nothing else
-    in the message) → `{undo: true}`. Anywhere else these words are left out.
+25. `n`, `next`, or "next round" → `next: true` when the player is moving on. A mention inside a
+    story ("forgot to enter my gold before progressing to the next round") is left out. A lone `u` /
+    `undo` → `{undo: true}`, and so is `undo` / `u` given as a command on its own after an
+    explanation ("…, undo"); the explanation isn't labeled. So is undo of the last entry or round:
+    "undo the last entry i made", "undo to the past round" → `{undo: true}` (one step). Undo of a
+    specific thing ("undo the bow") and "scratch that" are deferred (player's calls, 2026-11-19).
+26. "new game" → `{newGame: true}`: the app resets the whole game state (player's call, 2026-11-19).
 
 ## 6. Ambiguous inputs
 
 | # | Player types | Label | Why |
 |---|---|---|---|
-| A1 | `level 6, 32 gold, two bows and a sword` | `{level:6, gold:32, set:[{name:"bows",count:2},{name:"sword"}]}` | Bare list = full holdings: components become exactly 2 bows + 1 sword |
-| A2 | `2 bows` | `{set:[{name:"bows",count:2}]}` | Bare, so it replaces the components |
+| A1 | `level 6, 32 gold, two bows and a sword` | `{level:6, gold:32, set:[{name:"bows",count:2},{name:"sword"}]}` | Bare list: 2 bows and a sword are added to what's stored |
+| A2 | `2 bows` | `{set:[{name:"bows",count:2}]}` | Bare, so `set`; adds 2 bows |
 | A3 | `got 2 bows` / `hit 2 bows` | `{add:[{name:"bows",count:2}]}` | Event verb |
 | A4 | `jinx 2` / `2* jinx` / `2 star jinx` / `jinx **` | `{set:[{name:"jinx",stars:2}]}` | Stars; units in `set` are upserts, so the board stays |
 | A5 | `2 jinx` / `two jinx` | `{set:[{name:"jinx",count:2}]}` | Your answer: ambiguous. Labeled kind-free as a count; the reducer drops it for units, so Jinx goes on the board with stars unchanged |
@@ -313,6 +389,7 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 | A12 | `made IE` / `slammed IE` | `{craft:[{name:"IE"}]}` | Uses sword + gloves when held |
 | A13 | `got IE from carousel` | `{add:[{name:"IE"}]}` | Your answer: only craft verbs use up components |
 | A14 | `slammed IE on ashe` | `{craft:[{name:"IE"}]}` | Holder isn't labeled (deferred) |
+| A14b | `slammed bow and cloak into kraken slayer with a caitlyn 2` | `{set:[{name:"caitlyn",stars:2}], craft:[{name:"kraken slayer"}]}` | A holder with a star level is labeled (rule 14); the recipe isn't (rule 10) |
 | A15 | `sold jinx, put in vi` | `{remove:[{name:"jinx"}], add:[{name:"vi"}]}` | Remove runs before add |
 | A16 | `my board is ashe 2, draven, taric` | `{clear:["board"], set:[{name:"ashe",stars:2},{name:"draven"},{name:"taric"}]}` | Framed as the board → replace |
 | A17 | `ashe draven taric` | `{set:[{name:"ashe"},{name:"draven"},{name:"taric"}]}` | Not framed → upsert; other board units stay |
@@ -327,7 +404,12 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 | A25 | `jnx 2` | `{set:[{name:"jnx",stars:2}]}` | Typos are copied; the resolver reports `Unknown "jnx"` |
 | A26 | `sivir beast within` / `tons of stats` | `{set:[{name:"sivir beast within"}]}` / `{set:[{name:"tons of stats"}]}` | Qualifier kept; an unqualified duplicate gets "could be …" from the resolver |
 | A27 | `lunar spat` | `{set:[{name:"lunar spat"}]}` | Slang kept; the `lunarspat` alias resolves it to Lunar Emblem |
-| A28 | `+10 gold`, `lost 12 hp` | `{}` | Relative: deferred |
+| A28 | `+10 gold` / `lost 12 hp` | `{}` / `{hpChange:-12}` | Gold from no stated source is deferred; an HP change is labeled (rule 17b) |
+| A28b | `sold jinx for 3` | `{goldChange:3, remove:[{name:"jinx"}]}` | Rule 16b: a sale with its price |
+| A28c | `rolled 30` / `spent 8 on xp` | `{goldChange:-30}` / `{goldChange:-8}` | Rule 16b: spending |
+| A28d | `rolled down to 10` | `{gold:10}` | A stated total, not a change |
+| A28e | `sold my bench for 14 gold` | `{goldChange:14}` | The bench isn't tracked, but the gold is |
+| A28f | `rolled 3 times` | `{}` | Not a gold amount |
 | A29 | `going 8 at 4-1` | `{}` | Plan, not state |
 | A30 | `2 people on ashe` | `{}` | Opponents: deferred |
 | A31 | `sword sword bow` | `{set:[{name:"sword",count:2},{name:"bow"}]}` | Repeats merge |
@@ -341,7 +423,7 @@ instead of the list rules (9–14) and the bare-number part of rule 16.
 | A39 | `jinx2` | `{craft:[{name:"jinx",stars:2}]}` | The attached digit makes it a quick-bar line; same effect as A4 |
 | A40 | `u` / `undo` | `{undo:true}` | Alone only |
 | A41 | `next round, 40 gold` | `{next:true, gold:40}` | "next round" works in plain text too |
-| A42 | `undo the bow` | `{}` | Not a lone `u`/`undo`: loose undo is deferred |
+| A42 | `undo the bow` / `undo the last entry i made` | `{}` / `{undo:true}` | Undo of a specific thing is deferred; undo of the last entry is in scope (rule 25) |
 
 ## 7. Open questions
 
