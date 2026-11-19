@@ -79,8 +79,8 @@ const MAX_WORDS = 4;
 /** Shorter prefixes match too much to be useful. */
 const MIN_PREFIX = 2;
 
-type EntryType = "component" | "item" | "unit" | "augment";
-interface Entry {
+export type EntryType = "component" | "item" | "unit" | "augment";
+export interface Entry {
   type: EntryType;
   id: string;
   name: string;
@@ -203,12 +203,21 @@ export function applyCompletion(input: string, completion: QuickCompletion, name
   return `${input.slice(0, completion.start)}${name}${completion.suffix}`;
 }
 
-type Action =
+/** What one word or name in a quick-bar line does, before it's applied to a state. */
+export type QuickAction =
   | { kind: "gold" | "level" | "hp"; value: number }
   | { kind: "stage"; value: string }
   | { kind: "next" }
-  | { kind: "add" | "remove"; entry: Entry; keepComponents: boolean; stars: StarLevel | null }
+  | {
+      kind: "add" | "remove";
+      entry: Entry;
+      keepComponents: boolean;
+      stars: StarLevel | null;
+      /** The name as typed, without its sign or star digit: "kha zix" in "-kha zix2". */
+      typed: string;
+    }
   | { kind: "error"; text: string };
+type Action = QuickAction;
 
 /** Reads one command word, or returns null if the word is not a command. */
 function command(word: string): Action | null {
@@ -234,8 +243,11 @@ function splitStars(word: string): { word: string; stars: StarLevel | null } {
   return { word: m[1], stars: Number(m[2]) as StarLevel };
 }
 
-/** Splits a line into actions, matching the longest run of words that names something. */
-function parse(input: string, lexicon: QuickLexicon): Action[] {
+/**
+ * Splits a line into actions, matching the longest run of words that names something.
+ * Exported for the assistant's eval baseline (scripts/ml/eval/quickbar.ts).
+ */
+export function parseQuick(input: string, lexicon: QuickLexicon): Action[] {
   const tokens = input
     .trim()
     .split(/\s+/)
@@ -275,6 +287,7 @@ function parse(input: string, lexicon: QuickLexicon): Action[] {
                 entry: found[0],
                 keepComponents: sign === "+",
                 stars: tokens[i + n - 1].stars,
+                typed: text(n),
               }
             : {
                 kind: "error",
@@ -315,7 +328,7 @@ export function runQuick(input: string, state: QuickState, ctx: QuickContext): Q
   const fail = (text: string) => steps.push({ text, ok: false });
   let s: QuickState = { ...state };
 
-  for (const a of parse(input, ctx.lexicon)) {
+  for (const a of parseQuick(input, ctx.lexicon)) {
     switch (a.kind) {
       case "error":
         fail(a.text);

@@ -44,13 +44,50 @@ engine decides, stop and raise it.
 | 1. Export test: prove a fine-tuned Llama 3.2 1B loads in WebLLM and keeps its training | In progress |
 | 2. Game-state contract: exactly what the model outputs | Done: `docs/ml-state-contract.md`, schema in `src/assistant/contract.ts`; no open questions |
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
-| 4. Eval harness and rule-based baseline | Not started |
+| 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
 | 5. Base model with prompting | Not started |
 | 6. Fine-tune, error analysis, iterate | Not started |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-19: Eval harness: prediction and scoring are separate, and one TypeScript scorer scores
+everything** (`scripts/ml/eval/`, formats in `ml-evals/README.md`).
+- Every system writes a predictions JSONL: a header with the system, the test set and the sha256 of
+  the test file, then `{id, output}` rows with the raw output text. Python and browser runs follow
+  the same format.
+- The scorer parses each output with `StateUpdateSchema`, so every system is judged by the app's own
+  schema. It refuses predictions made on another version of a test set, and missing, extra or
+  repeated ids.
+- Metric definitions (scorer v1; bump `SCORER_VERSION` if one changes):
+  - Names are compared after the quick bar's `normalize()`, the key the app resolves with. A
+    verbatim exact match is reported too.
+  - An invalid output is scored as `{}` and is never an exact match.
+  - Precision and recall are per field: per scalar, per `clear` category, and per mention within
+    the same list. A wrong scalar value counts as both an FP and an FN.
+- Categories come from the gold label and the text, so both test sets break down the same way.
+  The text categories are quick-bar line (rule 22, approximated with `parseQuick`) and question.
+  Synthetic rows also get their generator's mode and scenario.
+- The quick-bar line detector agrees with the generator's own `mode` on 1,991 of the 1,999
+  synthetic test rows that are plain or quick. The 8 quick lines it misses have typos the quick
+  bar can't read. The one undo row ("u") is detected as a quick-bar line.
+- Results go to `ml-evals/results/<testSet>/<system>.scorer-v1.<timestamp>.json`. They are
+  committed and never overwritten.
+- Real-set results keep every mismatched row for error analysis. Synthetic results keep only
+  `mismatchCount` (player's call: about 1 MB per run otherwise). The full copy goes to
+  `ml-data/eval-results/` (gitignored), named in `mismatchesFile`, and can be regenerated from
+  the predictions.
+- The quick bar's private `parse` is now exported as `parseQuick`, with each name as typed.
+  `runQuick` is unchanged.
+
+**2026-11-19: Two rule-based baselines** (player's call). The quick-bar parser is read as a contract
+label by rules 22–25: a plain name is `craft`, `+` is `add`, `-` is `remove`, a bare number is gold.
+- `quickbar` is primary and app-faithful: any word the quick bar can't read gives `{}`, because the
+  app applies nothing when a chip is red.
+- `quickbar-lenient` drops those words and keeps the rest.
+- By design, neither predicts `set`, `clear`, `newGame`, `goldChange`, `hpChange` or `at`. Both read
+  "akali 2" as gold 2, as the quick bar does. Neither has game state, so state checks are skipped.
 
 **2026-11-19: Schema additions and rulings from reviewing batch 5** (player's calls).
 - New fields:
@@ -268,6 +305,34 @@ because the plural fallback only retries exact names (step 7). After review, the
 r0156 last (relabeled +10 gold). With `hpChange`, `newGame` and the
 250 cap: 265 tests passing, typecheck and lint clean. Synthetic data was regenerated without the
 "lost 12 hp" aside: test split 100 exact and 3 near duplicates removed, was 98 and 2.
+
+**2026-11-19: Eval harness and rule-based baseline (CPU, local; no GPU or browser run).**
+`npm run ml:baseline`, scorer v1. Results are in `ml-evals/results/{synthetic-v1,real}/`
+(scored 20261119T232755 synthetic, 20261119T232801 real). The two test sets are reported apart.
+
+| System | Test set | n | Exact | Verbatim exact | Schema-valid | Micro P | Micro R | Micro F1 |
+|---|---|---|---|---|---|---|---|---|
+| `quickbar` | synthetic-v1 | 2000 | 17.9% | 17.9% | 100% | 99.0% | 15.1% | 26.2% |
+| `quickbar` | real (confirmed) | 162 | 24.7% | 24.7% | 100% | 36.7% | 4.6% | 8.1% |
+| `quickbar-lenient` | synthetic-v1 | 2000 | 18.2% | 18.1% | 100% | 26.2% | 24.8% | 25.5% |
+| `quickbar-lenient` | real (confirmed) | 162 | 17.3% | 17.3% | 100% | 12.4% | 17.1% | 14.4% |
+
+- `quickbar` is exact on every detected quick-bar line: 319 synthetic and 6 real. On plain text it
+  is exact 2.3% of the time on synthetic and 21.8% on real.
+- Its real-set exact matches are mostly the 34 `{}` examples: questions, plans and gibberish. On
+  those, outputting `{}` for an unreadable line happens to be right.
+- Its real-set precision is low because "Akali 2 Camille 2" reads as gold 2 plus crafts (r0005–r0008),
+  and bare lists read as `craft` where the label is `set`.
+- The lenient variant finds more fields (recall 17.1% vs 4.6% on real), but at precision 12.4%. It
+  also loses most `{}` exact matches, getting only 32.4% of `empty` right on real.
+- Fields neither baseline ever predicts: `set` (2,130 synthetic and 98 real gold mentions), `clear`,
+  `goldChange` (20 real), `hpChange`, `newGame` and `at`.
+- An earlier run that same day used a detector that wrongly treated "of", "the" and "gold" inside
+  names as cue words. Its results were deleted, never recorded, and the run was repeated after the fix.
+  The same predictions were then re-scored to add `mismatchCount` and trim the synthetic files. The
+  numbers were identical.
+- Tests: 280 passing (15 new: scorer metrics checked against hand-worked values, the baseline,
+  categories). Typecheck and lint clean. `ml:check-real`: 0 errors.
 
 ## Open questions
 

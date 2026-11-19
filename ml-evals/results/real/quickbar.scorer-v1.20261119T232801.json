@@ -1,0 +1,2467 @@
+{
+  "scorerVersion": 1,
+  "system": "quickbar",
+  "testSet": "real",
+  "testSetSha256": "f7b94f8c895aaa6e2208f6676797fff75e1c4fadda0ee0edc044a31d7af9c34e",
+  "predictions": {
+    "predictions": 1,
+    "system": "quickbar",
+    "testSet": "real",
+    "testSetSha256": "f7b94f8c895aaa6e2208f6676797fff75e1c4fadda0ee0edc044a31d7af9c34e",
+    "createdAt": "2026-11-19T19:29:19.714Z",
+    "git": {
+      "commit": "98309e46a477750603ea6c8f20741541e7c0f2d9",
+      "dirty": true
+    },
+    "notes": "Quick-bar parser; any word it can't read gives {} (the app applies nothing)."
+  },
+  "scoredAt": "2026-11-19T23:28:01.706Z",
+  "summary": {
+    "n": 162,
+    "exact": 40,
+    "exactRate": 0.24691358024691357,
+    "exactVerbatim": 40,
+    "exactVerbatimRate": 0.24691358024691357,
+    "schemaValid": 162,
+    "schemaValidRate": 1,
+    "micro": {
+      "tp": 11,
+      "predicted": 30,
+      "gold": 240,
+      "precision": 0.36666666666666664,
+      "recall": 0.04583333333333333,
+      "f1": 0.08148148148148147
+    }
+  },
+  "fields": {
+    "undo": {
+      "tp": 1,
+      "predicted": 1,
+      "gold": 5,
+      "precision": 1,
+      "recall": 0.2,
+      "f1": 0.33333333333333337
+    },
+    "newGame": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 1,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "level": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 13,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "next": {
+      "tp": 1,
+      "predicted": 1,
+      "gold": 3,
+      "precision": 1,
+      "recall": 0.3333333333333333,
+      "f1": 0.5
+    },
+    "gold": {
+      "tp": 2,
+      "predicted": 6,
+      "gold": 13,
+      "precision": 0.3333333333333333,
+      "recall": 0.15384615384615385,
+      "f1": 0.21052631578947367
+    },
+    "goldChange": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 20,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "hp": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 7,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "hpChange": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 2,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "stage": {
+      "tp": 1,
+      "predicted": 1,
+      "gold": 9,
+      "precision": 1,
+      "recall": 0.1111111111111111,
+      "f1": 0.19999999999999998
+    },
+    "clear": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 12,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "set": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 98,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "remove": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 20,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "add": {
+      "tp": 2,
+      "predicted": 2,
+      "gold": 22,
+      "precision": 1,
+      "recall": 0.09090909090909091,
+      "f1": 0.16666666666666669
+    },
+    "craft": {
+      "tp": 4,
+      "predicted": 19,
+      "gold": 15,
+      "precision": 0.21052631578947367,
+      "recall": 0.26666666666666666,
+      "f1": 0.23529411764705882
+    }
+  },
+  "categories": {
+    "at": {
+      "n": 7,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 7,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 8,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "change": {
+      "n": 22,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 22,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 35,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "clear": {
+      "n": 12,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 12,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 48,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "command": {
+      "n": 6,
+      "exact": 1,
+      "exactRate": 0.16666666666666666,
+      "exactVerbatim": 1,
+      "exactVerbatimRate": 0.16666666666666666,
+      "schemaValid": 6,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 1,
+        "predicted": 1,
+        "gold": 6,
+        "precision": 1,
+        "recall": 0.16666666666666666,
+        "f1": 0.2857142857142857
+      }
+    },
+    "count": {
+      "n": 5,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 5,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 2,
+        "gold": 10,
+        "precision": 0,
+        "recall": 0,
+        "f1": 0
+      }
+    },
+    "empty": {
+      "n": 34,
+      "exact": 34,
+      "exactRate": 1,
+      "exactVerbatim": 34,
+      "exactVerbatimRate": 1,
+      "schemaValid": 34,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 0,
+        "precision": null,
+        "recall": null,
+        "f1": null
+      }
+    },
+    "lists-only": {
+      "n": 67,
+      "exact": 2,
+      "exactRate": 0.029850746268656716,
+      "exactVerbatim": 2,
+      "exactVerbatimRate": 0.029850746268656716,
+      "schemaValid": 67,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 6,
+        "predicted": 21,
+        "gold": 150,
+        "precision": 0.2857142857142857,
+        "recall": 0.04,
+        "f1": 0.07017543859649124
+      }
+    },
+    "next": {
+      "n": 3,
+      "exact": 1,
+      "exactRate": 0.3333333333333333,
+      "exactVerbatim": 1,
+      "exactVerbatimRate": 0.3333333333333333,
+      "schemaValid": 3,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 1,
+        "predicted": 1,
+        "gold": 3,
+        "precision": 1,
+        "recall": 0.3333333333333333,
+        "f1": 0.5
+      }
+    },
+    "plain-text": {
+      "n": 156,
+      "exact": 34,
+      "exactRate": 0.21794871794871795,
+      "exactVerbatim": 34,
+      "exactVerbatimRate": 0.21794871794871795,
+      "schemaValid": 156,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 1,
+        "predicted": 20,
+        "gold": 230,
+        "precision": 0.05,
+        "recall": 0.004347826086956522,
+        "f1": 0.008
+      }
+    },
+    "question": {
+      "n": 15,
+      "exact": 12,
+      "exactRate": 0.8,
+      "exactVerbatim": 12,
+      "exactVerbatimRate": 0.8,
+      "schemaValid": 15,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 4,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "quick-bar-line": {
+      "n": 6,
+      "exact": 6,
+      "exactRate": 1,
+      "exactVerbatim": 6,
+      "exactVerbatimRate": 1,
+      "schemaValid": 6,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 10,
+        "predicted": 10,
+        "gold": 10,
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      }
+    },
+    "scalars+lists": {
+      "n": 11,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 11,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 1,
+        "predicted": 5,
+        "gold": 30,
+        "precision": 0.2,
+        "recall": 0.03333333333333333,
+        "f1": 0.05714285714285715
+      }
+    },
+    "scalars-only": {
+      "n": 44,
+      "exact": 3,
+      "exactRate": 0.06818181818181818,
+      "exactVerbatim": 3,
+      "exactVerbatimRate": 0.06818181818181818,
+      "schemaValid": 44,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 3,
+        "predicted": 3,
+        "gold": 54,
+        "precision": 1,
+        "recall": 0.05555555555555555,
+        "f1": 0.10526315789473684
+      }
+    },
+    "stars": {
+      "n": 28,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 28,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 1,
+        "predicted": 15,
+        "gold": 80,
+        "precision": 0.06666666666666667,
+        "recall": 0.0125,
+        "f1": 0.02105263157894737
+      }
+    }
+  },
+  "mismatchCount": 122,
+  "mismatches": [
+    {
+      "id": "r0001",
+      "text": "I'm level 8 on 4-2 and 50 gold with ahri 1 sett 1",
+      "gold": {
+        "level": 8,
+        "gold": 50,
+        "stage": "4-2",
+        "set": [
+          {
+            "name": "ahri",
+            "stars": 1
+          },
+          {
+            "name": "sett",
+            "stars": 1
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0002",
+      "text": "On 2-1 I have cindering 1 pebbles 2 scuttle 1",
+      "gold": {
+        "stage": "2-1",
+        "set": [
+          {
+            "name": "cindering",
+            "stars": 1
+          },
+          {
+            "name": "pebbles",
+            "stars": 2
+          },
+          {
+            "name": "scuttle",
+            "stars": 1
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0003",
+      "text": "Bow chain cloak",
+      "gold": {
+        "set": [
+          {
+            "name": "Bow"
+          },
+          {
+            "name": "chain"
+          },
+          {
+            "name": "cloak"
+          }
+        ]
+      },
+      "output": "{\"craft\":[{\"name\":\"Bow\"},{\"name\":\"chain\"},{\"name\":\"cloak\"}]}",
+      "prediction": {
+        "craft": [
+          {
+            "name": "Bow"
+          },
+          {
+            "name": "chain"
+          },
+          {
+            "name": "cloak"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0004",
+      "text": "8 veigars sword belt",
+      "gold": {
+        "set": [
+          {
+            "name": "veigars",
+            "count": 8
+          },
+          {
+            "name": "sword"
+          },
+          {
+            "name": "belt"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0005",
+      "text": "Akali 2 Camille 2 blighting jewel",
+      "gold": {
+        "set": [
+          {
+            "name": "Akali",
+            "stars": 2
+          },
+          {
+            "name": "Camille",
+            "stars": 2
+          },
+          {
+            "name": "blighting jewel"
+          }
+        ]
+      },
+      "output": "{\"gold\":2,\"craft\":[{\"name\":\"Akali\"},{\"name\":\"Camille\"},{\"name\":\"blighting jewel\"}]}",
+      "prediction": {
+        "gold": 2,
+        "craft": [
+          {
+            "name": "Akali"
+          },
+          {
+            "name": "Camille"
+          },
+          {
+            "name": "blighting jewel"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0006",
+      "text": "Prismatic tons of stats, aphelios 2 nidalee 2 4-2",
+      "gold": {
+        "stage": "4-2",
+        "set": [
+          {
+            "name": "Prismatic tons of stats"
+          },
+          {
+            "name": "aphelios",
+            "stars": 2
+          },
+          {
+            "name": "nidalee",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{\"gold\":2,\"stage\":\"4-2\",\"craft\":[{\"name\":\"Prismatic tons of stats,\"},{\"name\":\"aphelios\"},{\"name\":\"nidalee\"}]}",
+      "prediction": {
+        "gold": 2,
+        "stage": "4-2",
+        "craft": [
+          {
+            "name": "Prismatic tons of stats,"
+          },
+          {
+            "name": "aphelios"
+          },
+          {
+            "name": "nidalee"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0007",
+      "text": "No scout no pivot akali 2",
+      "gold": {
+        "set": [
+          {
+            "name": "No scout no pivot"
+          },
+          {
+            "name": "akali",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{\"gold\":2,\"craft\":[{\"name\":\"No scout no pivot\"},{\"name\":\"akali\"}]}",
+      "prediction": {
+        "gold": 2,
+        "craft": [
+          {
+            "name": "No scout no pivot"
+          },
+          {
+            "name": "akali"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0008",
+      "text": "Azir 2 guinsoos",
+      "gold": {
+        "set": [
+          {
+            "name": "Azir",
+            "stars": 2
+          },
+          {
+            "name": "guinsoos"
+          }
+        ]
+      },
+      "output": "{\"gold\":2,\"craft\":[{\"name\":\"Azir\"},{\"name\":\"guinsoos\"}]}",
+      "prediction": {
+        "gold": 2,
+        "craft": [
+          {
+            "name": "Azir"
+          },
+          {
+            "name": "guinsoos"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0009",
+      "text": "bel'veth 3 star with titans resolve",
+      "gold": {
+        "set": [
+          {
+            "name": "bel'veth",
+            "stars": 3
+          },
+          {
+            "name": "titans resolve"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0010",
+      "text": "30 gold 2-1 full open",
+      "gold": {
+        "gold": 30,
+        "stage": "2-1"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0011",
+      "text": "i have scuttle 2 caitlyn 2 with gargoyle",
+      "gold": {
+        "set": [
+          {
+            "name": "scuttle",
+            "stars": 2
+          },
+          {
+            "name": "caitlyn",
+            "stars": 2
+          },
+          {
+            "name": "gargoyle"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0012",
+      "text": "80 gold 4-2",
+      "gold": {
+        "gold": 80,
+        "stage": "4-2"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0013",
+      "text": "slammed bow and cloak into kraken slayer with a caitlyn 2",
+      "gold": {
+        "set": [
+          {
+            "name": "caitlyn",
+            "stars": 2
+          }
+        ],
+        "craft": [
+          {
+            "name": "kraken slayer"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0014",
+      "text": "jg teemo 2 with pebbles and alistar",
+      "gold": {
+        "set": [
+          {
+            "name": "jg"
+          },
+          {
+            "name": "teemo",
+            "stars": 2
+          },
+          {
+            "name": "pebbles"
+          },
+          {
+            "name": "alistar"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0015",
+      "text": "rengar 2 kha'zix 2 with unrivaled",
+      "gold": {
+        "set": [
+          {
+            "name": "rengar",
+            "stars": 2
+          },
+          {
+            "name": "kha'zix",
+            "stars": 2
+          },
+          {
+            "name": "unrivaled"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0016",
+      "text": "taric 2 and skarner 2",
+      "gold": {
+        "set": [
+          {
+            "name": "taric",
+            "stars": 2
+          },
+          {
+            "name": "skarner",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0017",
+      "text": "sold malphite 3",
+      "gold": {
+        "remove": [
+          {
+            "name": "malphite",
+            "stars": 3
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0018",
+      "text": "used sword and bow to make giant slayer",
+      "gold": {
+        "craft": [
+          {
+            "name": "giant slayer"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0019",
+      "text": "lvl 23 50 zyra2",
+      "gold": {
+        "set": [
+          {
+            "name": "zyra",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0020",
+      "text": "hit level 9 with 50 gold",
+      "gold": {
+        "level": 9,
+        "gold": 50
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0025",
+      "text": "I leveled up to 8 and rolled 50 gold for sentinel 2",
+      "gold": {
+        "level": 8,
+        "goldChange": -50
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0028",
+      "text": "rod and bow -rod -bow guinsoos",
+      "gold": {
+        "set": [
+          {
+            "name": "rod"
+          },
+          {
+            "name": "bow"
+          },
+          {
+            "name": "guinsoos"
+          }
+        ],
+        "remove": [
+          {
+            "name": "rod"
+          },
+          {
+            "name": "bow"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0030",
+      "text": "sold units on my bench for 14 gold",
+      "gold": {
+        "goldChange": 14
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0031",
+      "text": "sold akali2 but have camille 2 on my board still",
+      "gold": {
+        "set": [
+          {
+            "name": "camille",
+            "stars": 2
+          }
+        ],
+        "remove": [
+          {
+            "name": "akali",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0032",
+      "text": "h64, health 59",
+      "gold": {
+        "hp": 59
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0033",
+      "text": "I'm at 80 hp",
+      "gold": {
+        "hp": 80
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0034",
+      "text": "Last round i lost 15 hp, should I roll down now?",
+      "gold": {
+        "hpChange": -15
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0036",
+      "text": "undo the last rounds information i entered",
+      "gold": {
+        "undo": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0037",
+      "text": "my board is akali 2* camille 2* varus yorick",
+      "gold": {
+        "clear": [
+          "board"
+        ],
+        "set": [
+          {
+            "name": "akali",
+            "stars": 2
+          },
+          {
+            "name": "camille",
+            "stars": 2
+          },
+          {
+            "name": "varus"
+          },
+          {
+            "name": "yorick"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0038",
+      "text": "my board is sett 2* ahri 2* morgana sentinel pebbles krugg hecarim 2-star karma",
+      "gold": {
+        "clear": [
+          "board"
+        ],
+        "set": [
+          {
+            "name": "sett",
+            "stars": 2
+          },
+          {
+            "name": "ahri",
+            "stars": 2
+          },
+          {
+            "name": "morgana"
+          },
+          {
+            "name": "sentinel"
+          },
+          {
+            "name": "pebbles"
+          },
+          {
+            "name": "krugg"
+          },
+          {
+            "name": "hecarim",
+            "stars": 2
+          },
+          {
+            "name": "karma"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0039",
+      "text": "i have no items",
+      "gold": {
+        "clear": [
+          "items"
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0040",
+      "text": "my augments are slammin, solo plate, invested",
+      "gold": {
+        "clear": [
+          "augments"
+        ],
+        "set": [
+          {
+            "name": "slammin"
+          },
+          {
+            "name": "solo plate"
+          },
+          {
+            "name": "invested"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0041",
+      "text": "my augments are prismatic ticket, no scout no pivot, verticality 2",
+      "gold": {
+        "clear": [
+          "augments"
+        ],
+        "set": [
+          {
+            "name": "prismatic ticket"
+          },
+          {
+            "name": "no scout no pivot"
+          },
+          {
+            "name": "verticality 2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0042",
+      "text": "my augments are shooga booga, bogus wogus, limpa dimpa",
+      "gold": {
+        "clear": [
+          "augments"
+        ],
+        "set": [
+          {
+            "name": "shooga booga"
+          },
+          {
+            "name": "bogus wogus"
+          },
+          {
+            "name": "limpa dimpa"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0043",
+      "text": "I took prismatic ticket on 2-1",
+      "gold": {
+        "add": [
+          {
+            "name": "prismatic ticket",
+            "at": "2-1"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0044",
+      "text": "I took verticality 4 on 4-2",
+      "gold": {
+        "add": [
+          {
+            "name": "verticality",
+            "at": "4-2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0045",
+      "text": "l8, g40, h55",
+      "gold": {
+        "level": 8,
+        "gold": 40,
+        "hp": 55
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0047",
+      "text": "got a bow from kruggs",
+      "gold": {
+        "add": [
+          {
+            "name": "bow"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0048",
+      "text": "got a azir with a rod from carousel",
+      "gold": {
+        "add": [
+          {
+            "name": "rod"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0049",
+      "text": "hit a sivir 2, what should I do now?",
+      "gold": {
+        "add": [
+          {
+            "name": "sivir",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0050",
+      "text": "took a ashe with a glove form the carousel",
+      "gold": {
+        "add": [
+          {
+            "name": "glove"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0052",
+      "text": "bought vi for 3, spent 8 on xp",
+      "gold": {
+        "goldChange": -11,
+        "add": [
+          {
+            "name": "vi"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0053",
+      "text": "rolled down to 0 gold and hit nothing",
+      "gold": {
+        "gold": 0
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0054",
+      "text": "rolled down to 10 gold from 50",
+      "gold": {
+        "gold": 10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0055",
+      "text": "sword sword bow",
+      "gold": {
+        "set": [
+          {
+            "name": "sword",
+            "count": 2
+          },
+          {
+            "name": "bow"
+          }
+        ]
+      },
+      "output": "{\"craft\":[{\"name\":\"sword\",\"count\":2},{\"name\":\"bow\"}]}",
+      "prediction": {
+        "craft": [
+          {
+            "name": "sword",
+            "count": 2
+          },
+          {
+            "name": "bow"
+          }
+        ]
+      },
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0056",
+      "text": "2 x chain",
+      "gold": {
+        "set": [
+          {
+            "name": "chain",
+            "count": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0057",
+      "text": "I went 8",
+      "gold": {
+        "level": 8
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0058",
+      "text": "I'm 5 right now and slow rolling",
+      "gold": {
+        "level": 5
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0059",
+      "text": "i thought i was 6 but i'm actually 7",
+      "gold": {
+        "level": 7
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0060",
+      "text": "sold alistar 2 for 5 gold",
+      "gold": {
+        "goldChange": 5,
+        "remove": [
+          {
+            "name": "alistar",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0061",
+      "text": "sold veigar for 1 gold",
+      "gold": {
+        "goldChange": 1,
+        "remove": [
+          {
+            "name": "veigar"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0062",
+      "text": "sold draven 2 for 14 gold",
+      "gold": {
+        "goldChange": 14,
+        "remove": [
+          {
+            "name": "draven",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0063",
+      "text": "sold ornn 2 for 3 gold",
+      "gold": {
+        "goldChange": 3,
+        "remove": [
+          {
+            "name": "ornn",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0064",
+      "text": "sold taric 3 for 50 gold",
+      "gold": {
+        "goldChange": 50,
+        "remove": [
+          {
+            "name": "taric",
+            "stars": 3
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0065",
+      "text": "sold gnar for 10 gold",
+      "gold": {
+        "goldChange": 10,
+        "remove": [
+          {
+            "name": "gnar"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0066",
+      "text": "rolled 10 gold",
+      "gold": {
+        "goldChange": -10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0067",
+      "text": "rolled 40 gold",
+      "gold": {
+        "goldChange": -40
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0068",
+      "text": "spend 20 gold in rolls",
+      "gold": {
+        "goldChange": -20
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0070",
+      "text": "spent 24 gold on EXP to level to 7",
+      "gold": {
+        "level": 7,
+        "goldChange": -24
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0071",
+      "text": "used 10 gold to level to 6",
+      "gold": {
+        "level": 6,
+        "goldChange": -10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0072",
+      "text": "spent 80 gold on xp to go 10",
+      "gold": {
+        "level": 10,
+        "goldChange": -80
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0073",
+      "text": "spent 8 gold and 4 gold on xp",
+      "gold": {
+        "goldChange": -12
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0074",
+      "text": "rolled 2 gold then rolled 10 gold",
+      "gold": {
+        "goldChange": -12
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0075",
+      "text": "sold veigar 2 and alistar 3 for 20 gold",
+      "gold": {
+        "goldChange": 20,
+        "remove": [
+          {
+            "name": "veigar",
+            "stars": 2
+          },
+          {
+            "name": "alistar",
+            "stars": 3
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0076",
+      "text": "rolled down to 10 gold",
+      "gold": {
+        "gold": 10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0077",
+      "text": "slow rolled to 50 gold",
+      "gold": {
+        "gold": 50
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0078",
+      "text": "got a vi off of carousel with a sword on it",
+      "gold": {
+        "add": [
+          {
+            "name": "sword"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0080",
+      "text": "leveled up to 8",
+      "gold": {
+        "level": 8
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0081",
+      "text": "leveled up to 4 on 2-1",
+      "gold": {
+        "level": 4,
+        "stage": "2-1"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0082",
+      "text": "health 10",
+      "gold": {
+        "hp": 10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0083",
+      "text": "health 80",
+      "gold": {
+        "hp": 80
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0084",
+      "text": "2 x ornn, 3 x bow, 1 x rod",
+      "gold": {
+        "set": [
+          {
+            "name": "ornn",
+            "count": 2
+          },
+          {
+            "name": "bow",
+            "count": 3
+          },
+          {
+            "name": "rod"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0096",
+      "text": "next round",
+      "gold": {
+        "next": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0097",
+      "text": "i'm done with this round, n",
+      "gold": {
+        "next": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0099",
+      "text": "undo the last entry i made",
+      "gold": {
+        "undo": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0100",
+      "text": "i fucked up and forgot to enter my gold before progressing to the next round, undo",
+      "gold": {
+        "undo": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0101",
+      "text": "undo to the past round",
+      "gold": {
+        "undo": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0102",
+      "text": "I made a infinity edge out of my bf sword and sparring glove",
+      "gold": {
+        "craft": [
+          {
+            "name": "infinity edge"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0103",
+      "text": "I used combined sword and bow to make gs",
+      "gold": {
+        "craft": [
+          {
+            "name": "gs"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0104",
+      "text": "i finished my glove into jeweled gauntlet by using the rod i got off of carousel",
+      "gold": {
+        "add": [
+          {
+            "name": "rod"
+          }
+        ],
+        "craft": [
+          {
+            "name": "jeweled gauntlet"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0105",
+      "text": "built gargoyle out of chain and cloak",
+      "gold": {
+        "craft": [
+          {
+            "name": "gargoyle"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0106",
+      "text": "slammed my void staff on my krugg",
+      "gold": {
+        "craft": [
+          {
+            "name": "void staff"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0108",
+      "text": "slammed rod onto my veigar and then got a tear off of carousel to finish the archangel",
+      "gold": {
+        "add": [
+          {
+            "name": "tear"
+          }
+        ],
+        "craft": [
+          {
+            "name": "archangel"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0109",
+      "text": "reforged my tear into a sword",
+      "gold": {
+        "remove": [
+          {
+            "name": "tear"
+          }
+        ],
+        "add": [
+          {
+            "name": "sword"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0110",
+      "text": "used reforger on my rabadons and got a gargoyle",
+      "gold": {
+        "remove": [
+          {
+            "name": "rabadons"
+          }
+        ],
+        "add": [
+          {
+            "name": "gargoyle"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0111",
+      "text": "item reforged my cloak into a tear",
+      "gold": {
+        "remove": [
+          {
+            "name": "cloak"
+          }
+        ],
+        "add": [
+          {
+            "name": "tear"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0112",
+      "text": "lost my bow from pandoras items, which rolled into a rod",
+      "gold": {
+        "set": [
+          {
+            "name": "pandoras items"
+          }
+        ],
+        "remove": [
+          {
+            "name": "bow"
+          }
+        ],
+        "add": [
+          {
+            "name": "rod"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0113",
+      "text": "don't have a tear anymore because i made an archangel",
+      "gold": {
+        "craft": [
+          {
+            "name": "archangel"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0114",
+      "text": "lost my bramble vest because i only had it temporarily this round",
+      "gold": {
+        "remove": [
+          {
+            "name": "bramble vest"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0115",
+      "text": "don't have a chain anymore because pandora's items changed it into a belt",
+      "gold": {
+        "set": [
+          {
+            "name": "pandora's items"
+          }
+        ],
+        "remove": [
+          {
+            "name": "chain"
+          }
+        ],
+        "add": [
+          {
+            "name": "belt"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0116",
+      "text": "board: teemo 2*, pebbles 2, alistar 1, kobuko",
+      "gold": {
+        "clear": [
+          "board"
+        ],
+        "set": [
+          {
+            "name": "teemo",
+            "stars": 2
+          },
+          {
+            "name": "pebbles",
+            "stars": 2
+          },
+          {
+            "name": "alistar",
+            "stars": 1
+          },
+          {
+            "name": "kobuko"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0117",
+      "text": "playing aphelios nidalee kog'maw sentinel amumu varus vi diana",
+      "gold": {
+        "clear": [
+          "board"
+        ],
+        "set": [
+          {
+            "name": "aphelios"
+          },
+          {
+            "name": "nidalee"
+          },
+          {
+            "name": "kog'maw"
+          },
+          {
+            "name": "sentinel"
+          },
+          {
+            "name": "amumu"
+          },
+          {
+            "name": "varus"
+          },
+          {
+            "name": "vi"
+          },
+          {
+            "name": "diana"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0118",
+      "text": "my board is empty",
+      "gold": {
+        "clear": [
+          "board"
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0119",
+      "text": "empty board",
+      "gold": {
+        "clear": [
+          "board"
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0120",
+      "text": "my team is just an akali 2 camille 2* and leona 1, it's ass",
+      "gold": {
+        "clear": [
+          "board"
+        ],
+        "set": [
+          {
+            "name": "akali",
+            "stars": 2
+          },
+          {
+            "name": "camille",
+            "stars": 2
+          },
+          {
+            "name": "leona",
+            "stars": 1
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0122",
+      "text": "my 3-2 augment was money hungry+",
+      "gold": {
+        "set": [
+          {
+            "name": "money hungry+",
+            "at": "3-2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0123",
+      "text": "my 4-2 augment was golden egg",
+      "gold": {
+        "set": [
+          {
+            "name": "golden egg",
+            "at": "4-2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0124",
+      "text": "i got sivir/nidalee beast within on 3-2",
+      "gold": {
+        "add": [
+          {
+            "name": "sivir/nidalee beast within",
+            "at": "3-2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0125",
+      "text": "i got gold tons of stats on 4-2 as my final augment",
+      "gold": {
+        "add": [
+          {
+            "name": "gold tons of stats",
+            "at": "4-2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0126",
+      "text": "i got a sprykin emblem from my spreading roots on 2-1, what should i play?",
+      "gold": {
+        "set": [
+          {
+            "name": "spreading roots",
+            "at": "2-1"
+          }
+        ],
+        "add": [
+          {
+            "name": "sprykin emblem"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0127",
+      "text": "i took glass cannon 2 for my caitlyn reroll comp",
+      "gold": {
+        "add": [
+          {
+            "name": "glass cannon 2"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0128",
+      "text": "the stage is 3-2 right now",
+      "gold": {
+        "stage": "3-2"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0129",
+      "text": "3-5 just started",
+      "gold": {
+        "stage": "3-5"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0133",
+      "text": "$80",
+      "gold": {
+        "gold": 80
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0134",
+      "text": "hp 72",
+      "gold": {
+        "hp": 72
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0137",
+      "text": "250 gold",
+      "gold": {
+        "gold": 250
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0139",
+      "text": "lv 8",
+      "gold": {
+        "level": 8
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0141",
+      "text": "i have 8 chains, wait nvm i have 4 chains",
+      "gold": {
+        "set": [
+          {
+            "name": "chains",
+            "count": 4
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0142",
+      "text": "i lost my gargoyle stoneplate and infinity edge because i have salvage bin, so i made steadfast heart and bt instead",
+      "gold": {
+        "set": [
+          {
+            "name": "salvage bin"
+          }
+        ],
+        "remove": [
+          {
+            "name": "gargoyle stoneplate"
+          },
+          {
+            "name": "infinity edge"
+          }
+        ],
+        "craft": [
+          {
+            "name": "steadfast heart"
+          },
+          {
+            "name": "bt"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0143",
+      "text": "i have galio 4",
+      "gold": {
+        "set": [
+          {
+            "name": "galio"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0144",
+      "text": "akali 4 from worth the wait",
+      "gold": {
+        "set": [
+          {
+            "name": "akali"
+          },
+          {
+            "name": "worth the wait"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0145",
+      "text": "i just got an azir 4",
+      "gold": {
+        "add": [
+          {
+            "name": "azir"
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0146",
+      "text": "my board: 3 star azir, 3 star rammus and some other units",
+      "gold": {
+        "set": [
+          {
+            "name": "azir",
+            "stars": 3
+          },
+          {
+            "name": "rammus",
+            "stars": 3
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0147",
+      "text": "master yi and rengar 2 are on my board right now",
+      "gold": {
+        "set": [
+          {
+            "name": "master yi"
+          },
+          {
+            "name": "rengar",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0155",
+      "text": "i have 5 veigar copies on my bench along with the 3 copies on my board, so i'm one off of 3-star",
+      "gold": {
+        "set": [
+          {
+            "name": "veigar",
+            "stars": 2
+          }
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0156",
+      "text": "+10 gold from gold subscription",
+      "gold": {
+        "goldChange": 10
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0157",
+      "text": "5 gold from an orb",
+      "gold": {
+        "goldChange": 5
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0158",
+      "text": "new game",
+      "gold": {
+        "newGame": true
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0160",
+      "text": "lost 15 hp from that last round",
+      "gold": {
+        "hpChange": -15
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0161",
+      "text": "after stage 2, i lost 30 hp total so i'm at 70 hp",
+      "gold": {
+        "hp": 70
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0162",
+      "text": "it's only stage 1 so i don't have any augments yet",
+      "gold": {
+        "clear": [
+          "augments"
+        ]
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    },
+    {
+      "id": "r0163",
+      "text": "it's stage 3-5 so i'm still waiting for my last augment, it needs to be good or i'm eighth",
+      "gold": {
+        "stage": "3-5"
+      },
+      "output": "{}",
+      "prediction": {},
+      "exact": false,
+      "exactVerbatim": false
+    }
+  ]
+}

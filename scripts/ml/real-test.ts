@@ -50,8 +50,8 @@ const LIKELY_LEVEL: Record<number, [number, number]> = {
   7: [7, 10],
 };
 const LISTS = ["set", "remove", "add", "craft"] as const;
-/** A question mark, or a message that opens like a question (rule 21). */
-const QUESTION = /\?|^\s*(what|which|how|why|when|where|who|should|can|could|would|do|does|is|are)\b/;
+/** A question mark, or a message that opens like a question (rule 21). Test it on lowercased text. */
+export const QUESTION = /\?|^\s*(what|which|how|why|when|where|who|should|can|could|would|do|does|is|are)\b/;
 const NUMBER =(n: number) => new RegExp(`(?<!\\d)${n}(?!\\d)`);
 
 /** An id's kind and display name, from the whole catalog (the generator's vocab leaves some names out). */
