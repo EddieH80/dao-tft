@@ -367,8 +367,8 @@ r0156 last (relabeled +10 gold). With `hpChange`, `newGame` and the
 
 **2026-11-19: Step 5 prompt builder and prompt export (CPU, local; no GPU or browser run).**
 - Tests: 19 new in `src/assistant/prompt.test.ts`; full suite 299 passing; typecheck and lint clean.
-- `npm run ml:prompts` (prompt-v1, working tree uncommitted at the time, so the headers say
-  `dirty: true`):
+- `npm run ml:prompts` (prompt-v1). Re-exported after committing, so the headers record commit
+  `7175019` with `dirty: false`; the numbers didn't change:
 
   | Test set | Prompts | Candidate recall (labeled names) | Candidates per message | Longest prompt |
   |---|---|---|---|---|
