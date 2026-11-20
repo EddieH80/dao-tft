@@ -79,6 +79,10 @@ the model now sees candidate names, but still no ids, catalog or state.
   `predict_hf.py` renders the messages with WebLLM's `llama-3_1` conv_template (a leading system
   message replaces the default one, as in WebLLM's chat API), decodes greedily, and writes raw
   outputs.
+- The first Colab full run (batch 16, T4) ran out of GPU memory: a 6.52 GiB allocation, matching
+  the fp16 prefill logits for 16 prompts of about 1,700 tokens over the 128k vocabulary. The runner
+  now asks `generate` for the last position's logits only (`logits_to_keep=1`), and splits a batch
+  in half on out-of-memory. The batch sizes actually run are recorded in `notes`. Not yet re-run.
 - Known differences from the browser: Python runs fp16/bf16 Hugging Face weights, not WebLLM's
   q4f16_1. Batches are left-padded (batch size recorded in `notes`). So a browser run can still
   differ.

@@ -135,7 +135,7 @@ Then, locally, move both files into `ml-data/predictions/` and score them:
 npm run ml:score -- ml-data/predictions/llama-3.2-1b-prompted.real.jsonl ml-data/predictions/llama-3.2-1b-prompted.synthetic-v1.jsonl
 ```
 
-If a batch runs out of GPU memory, lower `--batch-size` (default 16). The batch size is recorded in the
+If a batch runs out of GPU memory, the runner splits it in half and retries; `--batch-size` (default 16) sets the starting size. The batch size is recorded in the
 header's `notes`, because left-padded batches can change greedy output slightly compared with one at a time.
 
 ## Baselines

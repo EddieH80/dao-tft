@@ -149,18 +149,39 @@ def main():
         # Longest first, so batches hold similar lengths and an out-of-memory error shows up at once.
         order = sorted(range(len(rows)), key=lambda i: -lengths[i])
         outputs, truncated = [None] * len(rows), 0
-        start = time.time()
-        for b in range(0, len(order), args.batch_size):
-            batch = order[b : b + args.batch_size]
+        sizes_used = set()
+
+        def run(batch):
+            """Generates for one batch; on out-of-memory, splits it in half and retries."""
+            nonlocal truncated
             width = max(lengths[i] for i in batch)
-            ids = torch.tensor([[pad_id] * (width - lengths[i]) + encoded[i] for i in batch], device=device)
-            mask = torch.tensor([[0] * (width - lengths[i]) + [1] * lengths[i] for i in batch], device=device)
-            with torch.no_grad():
-                out = model.generate(
-                    input_ids=ids, attention_mask=mask, max_new_tokens=args.max_new_tokens,
-                    do_sample=False, num_beams=1, temperature=None, top_p=None, top_k=None,
-                    eos_token_id=stop_ids, pad_token_id=pad_id,
-                )
+            oom = False
+            try:
+                ids = torch.tensor([[pad_id] * (width - lengths[i]) + encoded[i] for i in batch], device=device)
+                mask = torch.tensor([[0] * (width - lengths[i]) + [1] * lengths[i] for i in batch], device=device)
+                with torch.no_grad():
+                    out = model.generate(
+                        input_ids=ids, attention_mask=mask, max_new_tokens=args.max_new_tokens,
+                        do_sample=False, num_beams=1, temperature=None, top_p=None, top_k=None,
+                        eos_token_id=stop_ids, pad_token_id=pad_id,
+                        # Only the last position's logits: the full prefill logits are
+                        # batch x prompt length x 128k vocab, several GiB at batch 16.
+                        logits_to_keep=1,
+                    )
+            except torch.OutOfMemoryError:
+                if len(batch) == 1:
+                    raise
+                oom = True
+            if oom:
+                # Outside the except block, so the traceback no longer holds the failed batch's tensors.
+                ids = mask = None
+                torch.cuda.empty_cache()
+                half = len(batch) // 2
+                log(f"  out of memory at batch {len(batch)}; retrying as {half} + {len(batch) - half}")
+                run(batch[:half])
+                run(batch[half:])
+                return
+            sizes_used.add(len(batch))
             for row, i in enumerate(batch):
                 new = out[row, width:].tolist()
                 ended = any(t in stop_ids for t in new)
@@ -170,9 +191,14 @@ def main():
                     truncated += 1
                 # Raw text, unrepaired: the scorer counts invalid outputs.
                 outputs[i] = tok.decode(new, skip_special_tokens=True)
+
+        start = time.time()
+        for b in range(0, len(order), args.batch_size):
+            run(order[b : b + args.batch_size])
             done = min(b + args.batch_size, len(order))
             log(f"  {done}/{len(order)}  {time.time() - start:.0f}s")
         seconds = time.time() - start
+        batches = "/".join(str(s) for s in sorted(sizes_used, reverse=True))
 
         valid_json = 0
         for o in outputs:
@@ -184,7 +210,7 @@ def main():
         notes = (
             f"{args.model}, prompt {header['promptVersion']} (git {header['git']['commit'][:12]}"
             f"{', dirty' if header['git']['dirty'] else ''}), WebLLM llama-3_1 template from {PREBUILT_REPO}; "
-            f"greedy, max_new_tokens {args.max_new_tokens}, batch {args.batch_size} (left-padded); "
+            f"greedy, max_new_tokens {args.max_new_tokens}, batch {args.batch_size}, sizes run {batches} (left-padded); "
             f"{str(dtype).replace('torch.', '')} on {gpu}, transformers {transformers.__version__}, torch {torch.__version__}; "
             f"{truncated} hit max_new_tokens; {seconds:.0f}s"
         )
