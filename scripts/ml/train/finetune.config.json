@@ -1,0 +1,56 @@
+{
+  "run_name": "ft-v1",
+  "system": "llama-3.2-1b-ft-v1",
+  "seed": 1234,
+  "work_dir": "/content/drive/MyDrive/dao-tft/finetune",
+
+  "base_model": "meta-llama/Llama-3.2-1B-Instruct",
+  "prebuilt_repo": "mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC",
+  "quantization": "q4f16_1",
+  "context_window": 4096,
+
+  "data": {
+    "train_prompts": "prompts/train.synthetic-v1.jsonl",
+    "test_prompts": ["prompts/real.jsonl", "prompts/synthetic-v1.jsonl"],
+    "prompt_version": "prompt-v1",
+    "data_version": "v1",
+    "val_examples": 256,
+    "max_train_examples": null
+  },
+
+  "lora": {
+    "r": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_modules": "all-linear"
+  },
+
+  "train": {
+    "epochs": 1,
+    "learning_rate": 0.0002,
+    "warmup_fraction": 0.03,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "micro_batch_size": 4,
+    "grad_accum_steps": 4,
+    "gradient_checkpointing": true,
+    "amp_dtype": "float16",
+    "log_every_steps": 10,
+    "eval_every_steps": 250,
+    "save_every_steps": 50
+  },
+
+  "merge": {
+    "save_dtype": "bfloat16",
+    "smoke_val_examples": 16
+  },
+
+  "predict": {
+    "batch_size": 8,
+    "max_new_tokens": 256
+  },
+
+  "upload": {
+    "hf_repo": "YOUR_HF_NAME/Llama-3.2-1B-dao-tft-ft-v1-q4f16_1-MLC"
+  }
+}

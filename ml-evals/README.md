@@ -140,6 +140,110 @@ runner splits it in half, retries, and keeps the smaller size for the rest of th
 recorded in the header's `notes`, because left-padded batches can change greedy output slightly compared
 with one at a time.
 
+## Fine-tune (step 6)
+
+`scripts/ml/train/finetune.py` and its config `scripts/ml/train/finetune.config.json` (every setting is in the
+config). Stages: `train` (LoRA), `merge`, `predict` (both test sets, through `predict_hf.py`), `convert` (MLC
+`q4f16_1`, as in `experiments/export-test/`) and `upload` (Hugging Face, the repo name must start with `Llama`).
+
+Training rows come from `npm run ml:prompts`, which also writes `ml-data/prompts/train.synthetic-v1.jsonl`: each
+train example's prompt built by the app's own `buildPrompt`, with its target. Python renders it with
+`predict_hf.py`'s `render()`, so training, eval and the browser see one format. The run directory
+(`<work_dir>/<run_name>/`) holds the adapter with `config.json`, `data.json` (data version, hashes, val ids),
+`train_log.jsonl` and `training.json`. It also holds `merged/`, `merge_check.json`, `predictions/` and `mlc-q4f16_1/`.
+
+Before Colab: commit, then run `npm run ml:prompts`, so all three prompt headers record a clean commit.
+
+### Colab cells (T4)
+
+Times are estimates, not measured. Training prints a measured ETA after its first 10 steps.
+
+```python
+# 1. GPU, Drive, dependencies (~2 min). The run directory is on Drive so a reset loses nothing.
+!nvidia-smi --query-gpu=name,memory.total --format=csv
+!pip uninstall -y torchao
+!pip -q install -U "transformers>=4.56" peft accelerate huggingface_hub safetensors
+from google.colab import drive
+drive.mount("/content/drive")
+```
+
+```python
+# 2. Hugging Face login: a WRITE token with access to meta-llama/Llama-3.2-1B-Instruct
+from huggingface_hub import login
+login()
+```
+
+```python
+# 3. Upload finetune.py, finetune.config.json, scripts/ml/eval/predict_hf.py and the three files in
+#    ml-data/prompts/ (train.synthetic-v1.jsonl, real.jsonl, synthetic-v1.jsonl). Kept on Drive (~1 min).
+import os, shutil
+from google.colab import files
+CODE = "/content/drive/MyDrive/dao-tft/code"
+os.makedirs(f"{CODE}/prompts", exist_ok=True)
+for name in files.upload():
+    shutil.move(name, f"{CODE}/prompts/{name}" if name.endswith(".jsonl") else f"{CODE}/{name}")
+%cd {CODE}
+!ls -la . prompts/
+```
+
+```python
+# 4. The upload repo. It must start with "Llama" (Llama 3.2 license); the script refuses other names.
+import json
+cfg = json.load(open("finetune.config.json"))
+cfg["upload"]["hf_repo"] = "YOUR_NAME/Llama-3.2-1B-dao-tft-ft-v1-q4f16_1-MLC"
+json.dump(cfg, open("finetune.config.json", "w"), indent=2)
+```
+
+```python
+# 5. Train (~3-4.5 h: 1,234 steps of 16 examples, ~1,800 tokens each). Checkpoints every 50 steps.
+#    After a disconnect: run cells 1 and 2, then `%cd /content/drive/MyDrive/dao-tft/code` and this cell; it resumes.
+!python finetune.py --stages train
+```
+
+```python
+# 6. Merge, then check 16 held-out train rows (~5 min)
+!python finetune.py --stages merge
+```
+
+```python
+# 7. Predictions for both test sets (~0.5-1.5 h; the base model took 98 min, with longer replies).
+#    A test set whose predictions file is complete is skipped on a rerun.
+!python finetune.py --stages predict
+```
+
+```python
+# 8. Download the predictions and the run record
+from google.colab import files
+RUN = "/content/drive/MyDrive/dao-tft/finetune/ft-v1"
+for name in ["predictions/llama-3.2-1b-ft-v1.real.jsonl", "predictions/llama-3.2-1b-ft-v1.synthetic-v1.jsonl",
+             "config.json", "data.json", "train_log.jsonl", "training.json", "merge_check.json"]:
+    files.download(f"{RUN}/{name}")
+```
+
+```python
+# 9. MLC-LLM (~3 min; the export test README's step 3a). Pick the cu tag at or below nvidia-smi's CUDA Version.
+!pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cu128 mlc-ai-nightly-cu128
+!pip list 2>/dev/null | grep -iE "^mlc"        # exactly two lines, same cu tag
+!python -m mlc_llm --help | head -3
+```
+
+```python
+# 10. Convert and upload (~5-10 min: convert_weight, layout check, ~700 MB upload)
+!python finetune.py --stages convert,upload
+# If convert segfaults (exit -11), set up the Python 3.12 MLC env (export test README step 3b), then:
+# !MLC_PYTHON=/content/mlc312/bin/python python finetune.py --stages convert,upload
+```
+
+Then, locally, move the two predictions files into `ml-data/predictions/` and score them:
+
+```
+npm run ml:score -- ml-data/predictions/llama-3.2-1b-ft-v1.real.jsonl ml-data/predictions/llama-3.2-1b-ft-v1.synthetic-v1.jsonl
+```
+
+A config change that would alter training (anything but `work_dir`, logging, `predict`, `merge`, `upload`, or a
+memory trade-off at the same effective batch) is refused for an existing run: use a new `run_name`. Out of GPU
+memory in training: halve `train.micro_batch_size`, double `train.grad_accum_steps` and rerun; it resumes.
+
 ## Baselines
 
 The quick-bar parser (`src/engine/quick.ts`'s `parseQuick`), read as a contract label by rules 22–25:

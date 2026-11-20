@@ -46,11 +46,49 @@ engine decides, stop and raise it.
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
 | 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
 | 5. Base model with prompting | Done: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`). Done 2026-11-19: base model run on Colab and scored. Exact 19.8% on real and 8.9% on synthetic, below `quickbar`; micro F1 24.2% and 37.8% (experiment log) |
-| 6. Fine-tune, error analysis, iterate | Not started |
+| 6. Fine-tune, error analysis, iterate | In progress: pipeline written (`scripts/ml/train/finetune.py` plus `finetune.config.json`; train prompts from `npm run ml:prompts`; Colab cells in `ml-evals/README.md`). Smoke-tested on CPU with a tiny random model only. Not run on a GPU yet: no training, predictions, conversion or upload |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-19: The fine-tune trains on the app's prompt exactly: prompt-v1, preamble included**
+(player's call: "training matches production exactly"; this settles the open question about it).
+- `npm run ml:prompts` now also writes `ml-data/prompts/train.synthetic-v1.jsonl`. Each train row's
+  prompt comes from the app's own `buildPrompt`, with its target. The header records the prompt
+  and data versions, the train file's sha256 and the generator manifest. Python renders the rows
+  with `predict_hf.py`'s `render()`, the function the eval uses, never a copy.
+- Cost: the 14 example turns make the prompt long. Measured with the Llama 3.2 tokenizer: 1,807
+  tokens per example on average (max 1,979), 26 of them reply, 35.7M tokens per epoch. A shorter
+  prompt-v2 would train about 5× faster and cut the browser's prefill. That would be a new prompt
+  version for both app and training, so it isn't done here.
+- The target is the label as the app's schema reads it (`StateUpdateSchema.parse`, then the
+  canonical serializer). In data v1 this changes one row: `train-012836` labels
+  `"makeshift armor "` with a trailing space, which the schema trims. It's a generator bug, still
+  unfixed, because fixing it changes data v1 (open questions).
+- Training (all in `finetune.config.json`):
+  - LoRA r 16, alpha 32, dropout 0.05, all-linear (lm_head stays tied and untrained);
+  - 1 epoch, AdamW at 2e-4 with cosine decay and 3% warmup, effective batch 16 (4 × 4), clip 1.0, seed 1234;
+  - fp32 master weights with fp16 autocast and a grad scaler, because a T4 has no bf16;
+  - gradient checkpointing on.
+- Loss is on the reply tokens only, ending with `<|eot_id|>`, and logits are computed only at those
+  positions. Full logits over the prompt would take several GiB per row; the same problem hit the
+  eval runner.
+- 256 validation rows are held out from the **train** split by the seed. Their loss is logged, and
+  the merge stage checks 16 of them. The test sets are read only by the predict stage.
+- Reproducibility: the run saves `config.json`, `data.json` (versions, hashes, val ids),
+  `train_log.jsonl` and `training.json` next to the adapter. A config change that would alter
+  training is refused for an existing run. Checkpoints go to Drive every 50 steps, and a rerun
+  resumes from the last one.
+- Merge runs in fp32 and saves in bf16 (the export test merged in bf16), so the merge adds no
+  rounding of its own.
+- Predictions come from the merged bf16 model through `predict_hf.py`, the same runner as the base
+  model, as system `llama-3.2-1b-ft-v1`. The predict stage refuses test prompts whose preamble
+  differs from the one trained on.
+- Convert and upload are the export test's code (layout check against the prebuilt repo, config
+  and tokenizer copied verbatim, repo name must start with `Llama`, "Built with Llama" card). The
+  card adds `dao-training.json`. These steps are **not proven** yet: the Llama export test hasn't
+  been run (experiment log).
 
 **2026-11-19: The prompt is the message plus the names found in it, built by app code** (player's
 call: TypeScript, since the app uses it at runtime; candidates by deterministic fuzzy matching,
@@ -422,11 +460,32 @@ Batches of 16 ran out of memory and split to 8 (the pre-`318a23a` runner), so th
 - Reading: prompting alone doesn't reach a usable translator at 1B. This is the number fine-tuning
   (step 6) has to beat.
 
+**2026-11-19: Step 6 fine-tune pipeline, CPU smoke test (local; no GPU or browser run).**
+- Run in a scratch venv (Python 3.14, torch 2.15.0, transformers 5.23.0, peft 0.22.0). It used a
+  tiny random Llama (2 layers, hidden 64), the real Llama 3.2 tokenizer and conv_template from the
+  prebuilt repo, and 20 train rows. Only the code paths were checked; its outputs are noise by design.
+- Checked:
+  - `train` and `merge` run end to end;
+  - the reply-only loss equals Hugging Face's own label-masked loss (11.794581 vs 11.794582);
+  - a run interrupted while writing a checkpoint resumes from the last complete one, with adapter
+    weights and loss log identical to an uninterrupted run;
+  - `predict` writes harness-format files through `predict_hf.py`, and skips complete ones on a rerun;
+  - a changed `lora.r` is refused for an existing run.
+- Not exercised: CUDA paths (fp16 autocast, grad scaler, gradient checkpointing on GPU), memory at
+  micro-batch 4, `convert` and `upload`. The T4 times in `ml-evals/README.md` are estimates, not
+  measurements.
+- `npm run ml:prompts`: 20,000 train prompts. 1 target was normalized by the schema
+  (`train-012836`). Test-set prompt stats unchanged.
+- Tests: 302 passing (3 new for the train prompt export); typecheck and lint clean.
+- **Fine-tuned Llama 3.2 1B (`llama-3.2-1b-ft-v1`): not run yet.**
+
 ## Open questions
 
-- Should the fine-tune train on this same prompt? Keeping the candidate list probably helps names.
-  Dropping the 14 example turns would cut most of the prompt. Decide in step 6. In the browser,
-  the long preamble's prefill cost per message is unmeasured (step 7).
+- Settled: the fine-tune trains on prompt-v1 as is (decision log). Still open: once a fine-tune
+  works, would a prompt-v2 without the 14 example turns do as well? It would cut training time about
+  5× and the browser's prefill, which is unmeasured (step 7).
+- Generator bug: `train-012836` has a label name with a trailing space (`"makeshift armor "`). The
+  train export trims it. Fix it in the generator with the next data version.
 - Worth trying later: WebLLM's JSON-schema constrained decoding (`response_format`) as a separate
   system. Greedy free-text decoding is the baseline here.
 
