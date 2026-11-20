@@ -82,7 +82,11 @@ the model now sees candidate names, but still no ids, catalog or state.
 - The first Colab full run (batch 16, T4) ran out of GPU memory: a 6.52 GiB allocation, matching
   the fp16 prefill logits for 16 prompts of about 1,700 tokens over the 128k vocabulary. The runner
   now asks `generate` for the last position's logits only (`logits_to_keep=1`), and splits a batch
-  in half on out-of-memory. The batch sizes actually run are recorded in `notes`. Not yet re-run.
+  in half on out-of-memory. The batch sizes actually run are recorded in `notes`.
+- The re-run still ran out of memory at 16, with allocations matching full prefill logits again, so
+  `logits_to_keep=1` had no effect in that `transformers` version (cause not known yet). Batches of
+  8 succeeded. So the default batch size is now 8, and after an out-of-memory error the runner keeps
+  the smaller size for the rest of the run instead of failing at the larger size on every batch.
 - Known differences from the browser: Python runs fp16/bf16 Hugging Face weights, not WebLLM's
   q4f16_1. Batches are left-padded (batch size recorded in `notes`). So a browser run can still
   differ.

@@ -101,7 +101,8 @@ def main():
     ap.add_argument("--system", default="llama-3.2-1b-prompted", help="system name in the predictions header")
     ap.add_argument("--out-dir", default="predictions")
     ap.add_argument("--max-new-tokens", type=int, default=256)
-    ap.add_argument("--batch-size", type=int, default=16)
+    # 8 fits a T4 (16 GB) with these ~1,700-token prompts; 16 ran out of memory there.
+    ap.add_argument("--batch-size", type=int, default=8, help="starting batch size; halved for the rest of the run on out-of-memory")
     ap.add_argument("--dtype", choices=["auto", "bfloat16", "float16", "float32"], default="auto")
     ap.add_argument("--limit", type=int, default=0, help="first N rows only: a smoke test the scorer will refuse")
     args = ap.parse_args()
@@ -129,6 +130,9 @@ def main():
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    # The current batch size. After an out-of-memory error it stays at the size that fit, for the
+    # rest of the run (later files too), instead of failing at the larger size on every batch.
+    size = args.batch_size
     for path in args.prompts:
         header, rows = read_prompts(path)
         if args.limit:
@@ -152,8 +156,9 @@ def main():
         sizes_used = set()
 
         def run(batch):
-            """Generates for one batch; on out-of-memory, splits it in half and retries."""
-            nonlocal truncated
+            """Generates for one batch; on out-of-memory, splits it in half, retries, and lowers the
+            batch size for later batches."""
+            nonlocal truncated, size
             width = max(lengths[i] for i in batch)
             oom = False
             try:
@@ -177,7 +182,8 @@ def main():
                 ids = mask = None
                 torch.cuda.empty_cache()
                 half = len(batch) // 2
-                log(f"  out of memory at batch {len(batch)}; retrying as {half} + {len(batch) - half}")
+                size = min(size, half)
+                log(f"  out of memory at batch {len(batch)}; retrying as {half} + {len(batch) - half}, batch size {size} from here")
                 run(batch[:half])
                 run(batch[half:])
                 return
@@ -193,9 +199,11 @@ def main():
                 outputs[i] = tok.decode(new, skip_special_tokens=True)
 
         start = time.time()
-        for b in range(0, len(order), args.batch_size):
-            run(order[b : b + args.batch_size])
-            done = min(b + args.batch_size, len(order))
+        done = 0
+        while done < len(order):
+            batch = order[done : done + size]
+            run(batch)
+            done += len(batch)
             log(f"  {done}/{len(order)}  {time.time() - start:.0f}s")
         seconds = time.time() - start
         batches = "/".join(str(s) for s in sorted(sizes_used, reverse=True))
@@ -210,7 +218,7 @@ def main():
         notes = (
             f"{args.model}, prompt {header['promptVersion']} (git {header['git']['commit'][:12]}"
             f"{', dirty' if header['git']['dirty'] else ''}), WebLLM llama-3_1 template from {PREBUILT_REPO}; "
-            f"greedy, max_new_tokens {args.max_new_tokens}, batch {args.batch_size}, sizes run {batches} (left-padded); "
+            f"greedy, max_new_tokens {args.max_new_tokens}, starting batch {args.batch_size}, sizes run {batches} (left-padded); "
             f"{str(dtype).replace('torch.', '')} on {gpu}, transformers {transformers.__version__}, torch {torch.__version__}; "
             f"{truncated} hit max_new_tokens; {seconds:.0f}s"
         )
