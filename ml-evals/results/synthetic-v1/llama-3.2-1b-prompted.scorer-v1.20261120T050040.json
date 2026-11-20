@@ -1,0 +1,596 @@
+{
+  "scorerVersion": 1,
+  "system": "llama-3.2-1b-prompted",
+  "testSet": "synthetic-v1",
+  "testSetSha256": "b4cf8b5e2bd9fbfce1ba11f0a07ba8f7268e2ce23f2465d26e494ce37c683498",
+  "predictions": {
+    "predictions": 1,
+    "system": "llama-3.2-1b-prompted",
+    "testSet": "synthetic-v1",
+    "testSetSha256": "b4cf8b5e2bd9fbfce1ba11f0a07ba8f7268e2ce23f2465d26e494ce37c683498",
+    "createdAt": "2026-11-20T01:53:37.011354Z",
+    "git": {
+      "commit": "717501901c2f041ec9b245a66d803ed1ffc8f318",
+      "dirty": false
+    },
+    "notes": "meta-llama/Llama-3.2-1B-Instruct, prompt prompt-v1 (git 717501901c2f), WebLLM llama-3_1 template from mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC; greedy, max_new_tokens 256, batch 16, sizes run 8 (left-padded); bfloat16 on Tesla T4, transformers 5.23.0, torch 2.14.1+cu130; 10 hit max_new_tokens; 5483s"
+  },
+  "scoredAt": "2026-11-20T05:00:40.071Z",
+  "summary": {
+    "n": 2000,
+    "exact": 179,
+    "exactRate": 0.0895,
+    "exactVerbatim": 172,
+    "exactVerbatimRate": 0.086,
+    "schemaValid": 1753,
+    "schemaValidRate": 0.8765,
+    "micro": {
+      "tp": 2671,
+      "predicted": 7029,
+      "gold": 7100,
+      "precision": 0.37999715464504197,
+      "recall": 0.37619718309859157,
+      "f1": 0.37808762120461464
+    }
+  },
+  "fields": {
+    "undo": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 1,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+    },
+    "newGame": {
+      "tp": 0,
+      "predicted": 0,
+      "gold": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+    },
+    "level": {
+      "tp": 387,
+      "predicted": 481,
+      "gold": 832,
+      "precision": 0.8045738045738046,
+      "recall": 0.4651442307692308,
+      "f1": 0.5894897182025896
+    },
+    "next": {
+      "tp": 67,
+      "predicted": 105,
+      "gold": 130,
+      "precision": 0.638095238095238,
+      "recall": 0.5153846153846153,
+      "f1": 0.5702127659574467
+    },
+    "gold": {
+      "tp": 685,
+      "predicted": 1363,
+      "gold": 937,
+      "precision": 0.5025678650036683,
+      "recall": 0.7310565635005336,
+      "f1": 0.5956521739130435
+    },
+    "goldChange": {
+      "tp": 0,
+      "predicted": 31,
+      "gold": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null
+    },
+    "hp": {
+      "tp": 158,
+      "predicted": 239,
+      "gold": 503,
+      "precision": 0.6610878661087866,
+      "recall": 0.31411530815109345,
+      "f1": 0.4258760107816712
+    },
+    "hpChange": {
+      "tp": 0,
+      "predicted": 14,
+      "gold": 0,
+      "precision": 0,
+      "recall": null,
+      "f1": null
+    },
+    "stage": {
+      "tp": 54,
+      "predicted": 65,
+      "gold": 455,
+      "precision": 0.8307692307692308,
+      "recall": 0.11868131868131868,
+      "f1": 0.20769230769230768
+    },
+    "clear": {
+      "tp": 23,
+      "predicted": 323,
+      "gold": 188,
+      "precision": 0.07120743034055728,
+      "recall": 0.12234042553191489,
+      "f1": 0.09001956947162426
+    },
+    "set": {
+      "tp": 850,
+      "predicted": 2120,
+      "gold": 2130,
+      "precision": 0.4009433962264151,
+      "recall": 0.39906103286384975,
+      "f1": 0.4
+    },
+    "remove": {
+      "tp": 20,
+      "predicted": 117,
+      "gold": 260,
+      "precision": 0.17094017094017094,
+      "recall": 0.07692307692307693,
+      "f1": 0.10610079575596817
+    },
+    "add": {
+      "tp": 185,
+      "predicted": 529,
+      "gold": 1070,
+      "precision": 0.3497164461247637,
+      "recall": 0.17289719626168223,
+      "f1": 0.2313946216385241
+    },
+    "craft": {
+      "tp": 242,
+      "predicted": 1642,
+      "gold": 594,
+      "precision": 0.14738124238733252,
+      "recall": 0.4074074074074074,
+      "f1": 0.21645796064400719
+    }
+  },
+  "categories": {
+    "at": {
+      "n": 206,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 174,
+      "schemaValidRate": 0.8446601941747572,
+      "micro": {
+        "tp": 139,
+        "predicted": 690,
+        "gold": 652,
+        "precision": 0.20144927536231885,
+        "recall": 0.21319018404907975,
+        "f1": 0.20715350223546944
+      }
+    },
+    "clear": {
+      "n": 188,
+      "exact": 10,
+      "exactRate": 0.05319148936170213,
+      "exactVerbatim": 10,
+      "exactVerbatimRate": 0.05319148936170213,
+      "schemaValid": 159,
+      "schemaValidRate": 0.8457446808510638,
+      "micro": {
+        "tp": 348,
+        "predicted": 768,
+        "gold": 961,
+        "precision": 0.453125,
+        "recall": 0.36212278876170656,
+        "f1": 0.4025448235974552
+      }
+    },
+    "command": {
+      "n": 1,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 1,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 1,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "count": {
+      "n": 231,
+      "exact": 1,
+      "exactRate": 0.004329004329004329,
+      "exactVerbatim": 1,
+      "exactVerbatimRate": 0.004329004329004329,
+      "schemaValid": 202,
+      "schemaValidRate": 0.8744588744588745,
+      "micro": {
+        "tp": 294,
+        "predicted": 985,
+        "gold": 1028,
+        "precision": 0.2984771573604061,
+        "recall": 0.28599221789883267,
+        "f1": 0.29210134128166915
+      }
+    },
+    "empty": {
+      "n": 39,
+      "exact": 16,
+      "exactRate": 0.41025641025641024,
+      "exactVerbatim": 16,
+      "exactVerbatimRate": 0.41025641025641024,
+      "schemaValid": 37,
+      "schemaValidRate": 0.9487179487179487,
+      "micro": {
+        "tp": 0,
+        "predicted": 71,
+        "gold": 0,
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      }
+    },
+    "lists-only": {
+      "n": 361,
+      "exact": 21,
+      "exactRate": 0.05817174515235457,
+      "exactVerbatim": 20,
+      "exactVerbatimRate": 0.055401662049861494,
+      "schemaValid": 312,
+      "schemaValidRate": 0.8642659279778393,
+      "micro": {
+        "tp": 207,
+        "predicted": 1014,
+        "gold": 877,
+        "precision": 0.20414201183431951,
+        "recall": 0.23603192702394526,
+        "f1": 0.21893178212585934
+      }
+    },
+    "mode:plain": {
+      "n": 1673,
+      "exact": 140,
+      "exactRate": 0.08368200836820083,
+      "exactVerbatim": 137,
+      "exactVerbatimRate": 0.08188882247459653,
+      "schemaValid": 1454,
+      "schemaValidRate": 0.8690974297668859,
+      "micro": {
+        "tp": 2195,
+        "predicted": 6006,
+        "gold": 6004,
+        "precision": 0.36546786546786547,
+        "recall": 0.3655896069287142,
+        "f1": 0.3655287260616153
+      }
+    },
+    "mode:quick": {
+      "n": 326,
+      "exact": 39,
+      "exactRate": 0.1196319018404908,
+      "exactVerbatim": 35,
+      "exactVerbatimRate": 0.10736196319018405,
+      "schemaValid": 298,
+      "schemaValidRate": 0.9141104294478528,
+      "micro": {
+        "tp": 476,
+        "predicted": 1023,
+        "gold": 1095,
+        "precision": 0.46529814271749753,
+        "recall": 0.434703196347032,
+        "f1": 0.449480642115203
+      }
+    },
+    "mode:undo": {
+      "n": 1,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 1,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 1,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "next": {
+      "n": 130,
+      "exact": 36,
+      "exactRate": 0.27692307692307694,
+      "exactVerbatim": 36,
+      "exactVerbatimRate": 0.27692307692307694,
+      "schemaValid": 120,
+      "schemaValidRate": 0.9230769230769231,
+      "micro": {
+        "tp": 198,
+        "predicted": 399,
+        "gold": 382,
+        "precision": 0.49624060150375937,
+        "recall": 0.518324607329843,
+        "f1": 0.5070422535211268
+      }
+    },
+    "plain-text": {
+      "n": 1681,
+      "exact": 140,
+      "exactRate": 0.08328375966686496,
+      "exactVerbatim": 137,
+      "exactVerbatimRate": 0.08149910767400356,
+      "schemaValid": 1461,
+      "schemaValidRate": 0.8691255205234979,
+      "micro": {
+        "tp": 2202,
+        "predicted": 6029,
+        "gold": 6035,
+        "precision": 0.36523469895505056,
+        "recall": 0.3648715824357912,
+        "f1": 0.36505305039787794
+      }
+    },
+    "question": {
+      "n": 86,
+      "exact": 16,
+      "exactRate": 0.18604651162790697,
+      "exactVerbatim": 16,
+      "exactVerbatimRate": 0.18604651162790697,
+      "schemaValid": 73,
+      "schemaValidRate": 0.8488372093023255,
+      "micro": {
+        "tp": 61,
+        "predicted": 244,
+        "gold": 223,
+        "precision": 0.25,
+        "recall": 0.273542600896861,
+        "f1": 0.2612419700214133
+      }
+    },
+    "quick-bar-line": {
+      "n": 319,
+      "exact": 39,
+      "exactRate": 0.12225705329153605,
+      "exactVerbatim": 35,
+      "exactVerbatimRate": 0.109717868338558,
+      "schemaValid": 292,
+      "schemaValidRate": 0.9153605015673981,
+      "micro": {
+        "tp": 469,
+        "predicted": 1000,
+        "gold": 1065,
+        "precision": 0.469,
+        "recall": 0.4403755868544601,
+        "f1": 0.4542372881355932
+      }
+    },
+    "scalars+lists": {
+      "n": 1361,
+      "exact": 58,
+      "exactRate": 0.0426157237325496,
+      "exactVerbatim": 52,
+      "exactVerbatimRate": 0.03820720058780309,
+      "schemaValid": 1190,
+      "schemaValidRate": 0.8743570903747244,
+      "micro": {
+        "tp": 2164,
+        "predicted": 5300,
+        "gold": 5741,
+        "precision": 0.40830188679245283,
+        "recall": 0.3769378157115485,
+        "f1": 0.3919934788515533
+      }
+    },
+    "scalars-only": {
+      "n": 238,
+      "exact": 84,
+      "exactRate": 0.35294117647058826,
+      "exactVerbatim": 84,
+      "exactVerbatimRate": 0.35294117647058826,
+      "schemaValid": 213,
+      "schemaValidRate": 0.8949579831932774,
+      "micro": {
+        "tp": 300,
+        "predicted": 644,
+        "gold": 481,
+        "precision": 0.4658385093167702,
+        "recall": 0.6237006237006237,
+        "f1": 0.5333333333333334
+      }
+    },
+    "scenario:augments": {
+      "n": 113,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 92,
+      "schemaValidRate": 0.8141592920353983,
+      "micro": {
+        "tp": 51,
+        "predicted": 313,
+        "gold": 294,
+        "precision": 0.16293929712460065,
+        "recall": 0.17346938775510204,
+        "f1": 0.16803953871499178
+      }
+    },
+    "scenario:board": {
+      "n": 116,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 101,
+      "schemaValidRate": 0.8706896551724138,
+      "micro": {
+        "tp": 277,
+        "predicted": 616,
+        "gold": 747,
+        "precision": 0.4496753246753247,
+        "recall": 0.3708165997322624,
+        "f1": 0.40645634629493765
+      }
+    },
+    "scenario:clear": {
+      "n": 72,
+      "exact": 10,
+      "exactRate": 0.1388888888888889,
+      "exactVerbatim": 10,
+      "exactVerbatimRate": 0.1388888888888889,
+      "schemaValid": 58,
+      "schemaValidRate": 0.8055555555555556,
+      "micro": {
+        "tp": 71,
+        "predicted": 152,
+        "gold": 214,
+        "precision": 0.46710526315789475,
+        "recall": 0.3317757009345794,
+        "f1": 0.3879781420765027
+      }
+    },
+    "scenario:distractor": {
+      "n": 39,
+      "exact": 16,
+      "exactRate": 0.41025641025641024,
+      "exactVerbatim": 16,
+      "exactVerbatimRate": 0.41025641025641024,
+      "schemaValid": 37,
+      "schemaValidRate": 0.9487179487179487,
+      "micro": {
+        "tp": 0,
+        "predicted": 71,
+        "gold": 0,
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      }
+    },
+    "scenario:events": {
+      "n": 463,
+      "exact": 22,
+      "exactRate": 0.047516198704103674,
+      "exactVerbatim": 21,
+      "exactVerbatimRate": 0.04535637149028078,
+      "schemaValid": 415,
+      "schemaValidRate": 0.896328293736501,
+      "micro": {
+        "tp": 363,
+        "predicted": 1404,
+        "gold": 1236,
+        "precision": 0.25854700854700857,
+        "recall": 0.2936893203883495,
+        "f1": 0.275
+      }
+    },
+    "scenario:mixed": {
+      "n": 225,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 198,
+      "schemaValidRate": 0.88,
+      "micro": {
+        "tp": 347,
+        "predicted": 1095,
+        "gold": 1141,
+        "precision": 0.31689497716894977,
+        "recall": 0.3041191936897458,
+        "f1": 0.3103756708407871
+      }
+    },
+    "scenario:next": {
+      "n": 71,
+      "exact": 32,
+      "exactRate": 0.4507042253521127,
+      "exactVerbatim": 32,
+      "exactVerbatimRate": 0.4507042253521127,
+      "schemaValid": 67,
+      "schemaValidRate": 0.9436619718309859,
+      "micro": {
+        "tp": 104,
+        "predicted": 208,
+        "gold": 148,
+        "precision": 0.5,
+        "recall": 0.7027027027027027,
+        "f1": 0.5842696629213484
+      }
+    },
+    "scenario:quick": {
+      "n": 326,
+      "exact": 39,
+      "exactRate": 0.1196319018404908,
+      "exactVerbatim": 35,
+      "exactVerbatimRate": 0.10736196319018405,
+      "schemaValid": 298,
+      "schemaValidRate": 0.9141104294478528,
+      "micro": {
+        "tp": 476,
+        "predicted": 1023,
+        "gold": 1095,
+        "precision": 0.46529814271749753,
+        "recall": 0.434703196347032,
+        "f1": 0.449480642115203
+      }
+    },
+    "scenario:snapshot": {
+      "n": 574,
+      "exact": 60,
+      "exactRate": 0.10452961672473868,
+      "exactVerbatim": 58,
+      "exactVerbatimRate": 0.10104529616724739,
+      "schemaValid": 486,
+      "schemaValidRate": 0.8466898954703833,
+      "micro": {
+        "tp": 982,
+        "predicted": 2147,
+        "gold": 2224,
+        "precision": 0.4573823940381928,
+        "recall": 0.44154676258992803,
+        "f1": 0.4493250972317548
+      }
+    },
+    "scenario:undo": {
+      "n": 1,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 1,
+      "schemaValidRate": 1,
+      "micro": {
+        "tp": 0,
+        "predicted": 0,
+        "gold": 1,
+        "precision": null,
+        "recall": 0,
+        "f1": null
+      }
+    },
+    "stars": {
+      "n": 220,
+      "exact": 0,
+      "exactRate": 0,
+      "exactVerbatim": 0,
+      "exactVerbatimRate": 0,
+      "schemaValid": 192,
+      "schemaValidRate": 0.8727272727272727,
+      "micro": {
+        "tp": 379,
+        "predicted": 1100,
+        "gold": 1200,
+        "precision": 0.34454545454545454,
+        "recall": 0.31583333333333335,
+        "f1": 0.32956521739130434
+      }
+    }
+  },
+  "mismatchCount": 1828,
+  "mismatchesFile": "ml-data/eval-results/synthetic-v1/llama-3.2-1b-prompted.scorer-v1.20261120T050040.json"
+}

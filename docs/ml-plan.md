@@ -45,7 +45,7 @@ engine decides, stop and raise it.
 | 2. Game-state contract: exactly what the model outputs | Done: `docs/ml-state-contract.md`, schema in `src/assistant/contract.ts`; no open questions |
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
 | 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
-| 5. Base model with prompting | In progress: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`); base-model run not done yet |
+| 5. Base model with prompting | Done: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`). Done 2026-11-19: base model run on Colab and scored. Exact 19.8% on real and 8.9% on synthetic, below `quickbar`; micro F1 24.2% and 37.8% (experiment log) |
 | 6. Fine-tune, error analysis, iterate | Not started |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
@@ -390,12 +390,40 @@ r0156 last (relabeled +10 gold). With `hpChange`, `newGame` and the
   scored in memory (no results file written): the scorer accepted the hashes and ids. As a floor
   for reading model results, always answering `{}` scores 21.0% exact on real (its 34 empty labels)
   and 2.0% on synthetic.
-- **Base Llama 3.2 1B, prompted: not run yet.** The model was not loaded or run, locally or on
-  Colab. No predictions or scores exist.
+- **Base Llama 3.2 1B, prompted:** run later the same day on Colab; see the next entry.
+
+**2026-11-19: Step 5 base Llama 3.2 1B, prompted (Colab T4 run by the player; scored locally).**
+`meta-llama/Llama-3.2-1B-Instruct`, prompt-v1 from the clean export at `7175019`, WebLLM llama-3_1
+template, greedy, max_new_tokens 256, bf16 on a Tesla T4, transformers 5.23.0, torch 2.14.1+cu130.
+Batches of 16 ran out of memory and split to 8 (the pre-`318a23a` runner), so the sizes run were
+8 (and a final 2 on real). Took 389 s for real and 5,483 s for synthetic. Scorer v1; results in
+`ml-evals/results/real/llama-3.2-1b-prompted.scorer-v1.20261120T050039.json` and
+`ml-evals/results/synthetic-v1/llama-3.2-1b-prompted.scorer-v1.20261120T050040.json`.
+
+| System | Test set | n | Exact | Verbatim exact | Schema-valid | Micro P | Micro R | Micro F1 |
+|---|---|---|---|---|---|---|---|---|
+| `llama-3.2-1b-prompted` | synthetic-v1 | 2000 | 8.9% | 8.6% | 87.6% | 38.0% | 37.6% | 37.8% |
+| `llama-3.2-1b-prompted` | real (confirmed) | 162 | 19.8% | 19.8% | 88.3% | 19.9% | 30.8% | 24.2% |
+| `quickbar` (for comparison) | synthetic-v1 | 2000 | 17.9% | 17.9% | 100% | 99.0% | 15.1% | 26.2% |
+| `quickbar` (for comparison) | real (confirmed) | 162 | 24.7% | 24.7% | 100% | 36.7% | 4.6% | 8.1% |
+
+- Exact match is below `quickbar` on both sets. On real it is also below the always-`{}` floor
+  (21.0%): it gets only 29.4% of the 34 empty labels right.
+- It finds more than the quick bar (micro F1 24.2% vs 8.1% on real, 37.8% vs 26.2% on synthetic),
+  and it predicts fields the quick bar never does (`set`, `clear`, `newGame`). Precision is low.
+- Over-prediction on real: `gold` 76 predicted for 13 gold (precision 13.2%), `craft` 90 for 15
+  (4.4%), `clear` 30 for 12. `remove` is never predicted on real (20 gold). `at`, `count` and
+  `stars` examples are never exact on either set.
+- About 12% of outputs are not schema-valid. On synthetic, 84 of 2,000 aren't JSON at all: 46 put
+  other fields inside a `set` mention (`{"name":"stage":"2-5"}`), and 38 add a trailing `"` after
+  the object. The rest parse but fail the schema. Real-set mismatches were not inspected, to keep
+  prompt and training changes from being tuned to the test set.
+- 1 real and 10 synthetic outputs hit max_new_tokens.
+- Reading: prompting alone doesn't reach a usable translator at 1B. This is the number fine-tuning
+  (step 6) has to beat.
 
 ## Open questions
 
-- Step 5 results are pending: run the Colab cells in `ml-evals/README.md`, then score both files.
 - Should the fine-tune train on this same prompt? Keeping the candidate list probably helps names.
   Dropping the 14 example turns would cut most of the prompt. Decide in step 6. In the browser,
   the long preamble's prefill cost per message is unmeasured (step 7).
