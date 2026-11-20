@@ -8,6 +8,7 @@ test set, so the rule-based baseline, Python model runs and browser runs are all
 npm run ml:predict -- --system quickbar --test synthetic   # a baseline's predictions → ml-data/predictions/
 npm run ml:score -- ml-data/predictions/quickbar.synthetic-v1.jsonl
 npm run ml:baseline                                         # both baselines on both test sets, predicted and scored
+npm run ml:prompts                                          # the app's prompt for every test example → ml-data/prompts/
 ```
 
 The two test sets are always reported apart:
@@ -64,6 +65,78 @@ Bump `SCORER_VERSION` when any definition changes, and don't compare results acr
   can be regenerated. It goes into a full copy under `ml-data/eval-results/` (gitignored), named in `mismatchesFile`.
 
 Predictions files live in `ml-data/predictions/`, which is gitignored and can be regenerated.
+
+## Model runs (Python)
+
+A model gets the app's own prompt (`src/assistant/prompt.ts`): the system message, worked examples as chat
+turns, then the message with the names found in it. `npm run ml:prompts` exports it for both test sets to
+`ml-data/prompts/<testSet>.jsonl` (gitignored):
+
+```json
+{"prompts":1,"promptVersion":"prompt-v1","testSet":"real","testSetSha256":"…","chatTemplate":"llama-3_1","createdAt":"…","git":{…},"preamble":[{"role":"system","content":"…"},{"role":"user","content":"…"},{"role":"assistant","content":"…"}]}
+{"id":"r0001","user":"Names in the message:\n\"ahri\" = Ahri (unit)\nMessage: …"}
+```
+
+The messages for a row are `preamble` plus `{"role":"user","content":user}`. `scripts/ml/eval/predict_hf.py`
+renders them with WebLLM's `llama-3_1` conv_template (fetched from `mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC`),
+decodes greedily, and writes a predictions file with the prompts file's test-set hash and git commit. It refuses
+prompts longer than WebLLM's 4k context minus `--max-new-tokens`. Export after committing, so the header's
+commit is clean.
+
+### Colab cells
+
+Runtime → Change runtime type → T4 GPU. Your Hugging Face token needs access to
+`meta-llama/Llama-3.2-1B-Instruct` (accept the license on its model page first).
+
+```python
+# 1. Dependencies (Colab already has torch)
+!pip -q install -U transformers accelerate huggingface_hub
+!nvidia-smi --query-gpu=name,memory.total --format=csv
+```
+
+```python
+# 2. Hugging Face login (paste a read token)
+from huggingface_hub import login
+login()
+```
+
+```python
+# 3. Upload scripts/ml/eval/predict_hf.py, ml-data/prompts/real.jsonl and ml-data/prompts/synthetic-v1.jsonl
+import os, shutil
+from google.colab import files
+uploaded = files.upload()
+os.makedirs("prompts", exist_ok=True)
+for name in uploaded:
+    if name.endswith(".jsonl"):
+        shutil.move(name, f"prompts/{name}")
+!ls -la predict_hf.py prompts/
+```
+
+```python
+# 4. Smoke test: 5 real prompts. Check the printed prompt ends with the assistant header and the outputs look like JSON.
+!python predict_hf.py prompts/real.jsonl --limit 5
+```
+
+```python
+# 5. Full run: base Llama 3.2 1B, greedy, both test sets
+!python predict_hf.py prompts/real.jsonl prompts/synthetic-v1.jsonl --system llama-3.2-1b-prompted
+```
+
+```python
+# 6. Download the predictions
+from google.colab import files
+for name in ["llama-3.2-1b-prompted.real.jsonl", "llama-3.2-1b-prompted.synthetic-v1.jsonl"]:
+    files.download(f"predictions/{name}")
+```
+
+Then, locally, move both files into `ml-data/predictions/` and score them:
+
+```
+npm run ml:score -- ml-data/predictions/llama-3.2-1b-prompted.real.jsonl ml-data/predictions/llama-3.2-1b-prompted.synthetic-v1.jsonl
+```
+
+If a batch runs out of GPU memory, lower `--batch-size` (default 16). The batch size is recorded in the
+header's `notes`, because left-padded batches can change greedy output slightly compared with one at a time.
 
 ## Baselines
 

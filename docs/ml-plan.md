@@ -45,12 +45,43 @@ engine decides, stop and raise it.
 | 2. Game-state contract: exactly what the model outputs | Done: `docs/ml-state-contract.md`, schema in `src/assistant/contract.ts`; no open questions |
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
 | 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
-| 5. Base model with prompting | Not started |
+| 5. Base model with prompting | In progress: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`); base-model run not done yet |
 | 6. Fine-tune, error analysis, iterate | Not started |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-19: The prompt is the message plus the names found in it, built by app code** (player's
+call: TypeScript, since the app uses it at runtime; candidates by deterministic fuzzy matching,
+aliases first; never the whole snapshot). This changes the contract's "Prompt input" (section 1):
+the model now sees candidate names, but still no ids, catalog or state.
+- `src/assistant/prompt.ts`, `PROMPT_VERSION` prompt-v1. `buildPrompt` returns chat messages: a
+  system message (the contract condensed: fields, lists, mention parts, rules), 14 examples as
+  earlier chat turns, then `Names in the message: "ie" = Infinity Edge (item) …` and
+  `Message: <text>`. A typo match reads "maybe …"; ambiguous names list up to 3 options.
+- Candidate matching (`findCandidates`). At each word it tries tiers in order, longest run first, as
+  the quick bar does:
+  - exact: alias, name, plural, or a trailing 1–3 / i–iii read as a numeral;
+  - then, per run length, a unique prefix of 3+ letters (never a single-word augment) and a typo
+    (1 edit at 5–7 letters, 2 at 8+, aliases before names; adjacent swaps count as one edit).
+  - Quick-bar commands, signs, attached star digits and `x2` are never part of a name. Cue words,
+    verbs and other stopwords are never a name on their own, and runs don't cross commas.
+- The matcher was tuned on the synthetic **train** split only (recall of labeled names 97.8% →
+  99.4%). The real-world test set's misses were not looked at, so its recall is a report, not a
+  tuning target.
+- Examples: 13 copied verbatim from the train split (ids in the code, checked by a test), so they
+  use only train-pool phrasings. One more, for `goldChange` and `hpChange`, is written from
+  contract rules 16b/17b, because the generator has neither yet. Tests check that no example equals
+  a real-world or synthetic test text. "u" was dropped as an example because it is also a
+  real-world test text; the instructions cover undo.
+- The prompts file stores the preamble once in its header, and each row holds the final user turn.
+  `predict_hf.py` renders the messages with WebLLM's `llama-3_1` conv_template (a leading system
+  message replaces the default one, as in WebLLM's chat API), decodes greedily, and writes raw
+  outputs.
+- Known differences from the browser: Python runs fp16/bf16 Hugging Face weights, not WebLLM's
+  q4f16_1. Batches are left-padded (batch size recorded in `notes`). So a browser run can still
+  differ.
 
 **2026-11-19: Eval harness: prediction and scoring are separate, and one TypeScript scorer scores
 everything** (`scripts/ml/eval/`, formats in `ml-evals/README.md`).
@@ -334,7 +365,34 @@ r0156 last (relabeled +10 gold). With `hpChange`, `newGame` and the
 - Tests: 280 passing (15 new: scorer metrics checked against hand-worked values, the baseline,
   categories). Typecheck and lint clean. `ml:check-real`: 0 errors.
 
+**2026-11-19: Step 5 prompt builder and prompt export (CPU, local; no GPU or browser run).**
+- Tests: 19 new in `src/assistant/prompt.test.ts`; full suite 299 passing; typecheck and lint clean.
+- `npm run ml:prompts` (prompt-v1, working tree uncommitted at the time, so the headers say
+  `dirty: true`):
+
+  | Test set | Prompts | Candidate recall (labeled names) | Candidates per message | Longest prompt |
+  |---|---|---|---|---|
+  | synthetic-v1 | 2000 | 99.4% | 2.12 | 5,609 chars |
+  | real (confirmed) | 162 | 90.8% | 1.13 | 5,472 chars |
+
+  The rendered prompt for r0001 is 6,927 characters with template tokens (no tokenizer was run
+  locally, so the token count is unmeasured; `predict_hf.py` prints it and stops if it is over the 4k context).
+- Format check: `predict_hf.py`'s `read_prompts`, `render` (with the real `mlc-chat-config.json`)
+  and `write_predictions` were run locally on both exports. The placeholder `{}` outputs were
+  scored in memory (no results file written): the scorer accepted the hashes and ids. As a floor
+  for reading model results, always answering `{}` scores 21.0% exact on real (its 34 empty labels)
+  and 2.0% on synthetic.
+- **Base Llama 3.2 1B, prompted: not run yet.** The model was not loaded or run, locally or on
+  Colab. No predictions or scores exist.
+
 ## Open questions
+
+- Step 5 results are pending: run the Colab cells in `ml-evals/README.md`, then score both files.
+- Should the fine-tune train on this same prompt? Keeping the candidate list probably helps names.
+  Dropping the 14 example turns would cut most of the prompt. Decide in step 6. In the browser,
+  the long preamble's prefill cost per message is unmeasured (step 7).
+- Worth trying later: WebLLM's JSON-schema constrained decoding (`response_format`) as a separate
+  system. Greedy free-text decoding is the baseline here.
 
 - Synthetic-data gaps: only one undo example per split survives dedupe ("u" / "undo"). Not
   generated yet: a count on a unit (A5), numbered augment names typed with digits (A10), "no X" for a

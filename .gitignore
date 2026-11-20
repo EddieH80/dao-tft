@@ -49,3 +49,4 @@ ml-data/*
 *.bin
 *.gguf
 params_shard_*
+__pycache__/

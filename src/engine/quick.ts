@@ -123,6 +123,14 @@ export class QuickLexicon {
     return alias ? [alias] : (this.byKey.get(key) ?? []);
   }
 
+  /** Every alias key and full-name key with what it names, aliases first. For the assistant's prompt builder. */
+  keys(): { key: string; entry: Entry; alias: boolean }[] {
+    return [
+      ...[...this.aliases].map(([key, entry]) => ({ key, entry, alias: true })),
+      ...this.entries.map((entry) => ({ key: entry.key, entry, alias: false })),
+    ];
+  }
+
   /**
    * Names starting with `key`. When one match is the start of all the others
    * ("Heroic Grab Bag" and its "+" and "++" upgrades), that one wins.
@@ -229,6 +237,9 @@ function command(word: string): Action | null {
   if (word === "n" || word === "next") return { kind: "next" };
   return null;
 }
+
+/** Whether a word is a quick-bar command (`52`, `g52`, `l7`, `h64`, `4-2`, `n`), not a name. */
+export const isQuickCommand = (word: string) => command(word.toLowerCase()) !== null;
 
 export { starsOn };
 

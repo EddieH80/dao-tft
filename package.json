@@ -18,7 +18,8 @@
     "ml:check-real": "tsx scripts/ml/real-test.ts",
     "ml:predict": "tsx scripts/ml/eval/predict.ts",
     "ml:score": "tsx scripts/ml/eval/score.ts",
-    "ml:baseline": "tsx scripts/ml/eval/predict.ts --system quickbar --test synthetic && tsx scripts/ml/eval/predict.ts --system quickbar --test real && tsx scripts/ml/eval/predict.ts --system quickbar-lenient --test synthetic && tsx scripts/ml/eval/predict.ts --system quickbar-lenient --test real && tsx scripts/ml/eval/score.ts ml-data/predictions/quickbar.synthetic-v1.jsonl ml-data/predictions/quickbar.real.jsonl ml-data/predictions/quickbar-lenient.synthetic-v1.jsonl ml-data/predictions/quickbar-lenient.real.jsonl"
+    "ml:baseline": "tsx scripts/ml/eval/predict.ts --system quickbar --test synthetic && tsx scripts/ml/eval/predict.ts --system quickbar --test real && tsx scripts/ml/eval/predict.ts --system quickbar-lenient --test synthetic && tsx scripts/ml/eval/predict.ts --system quickbar-lenient --test real && tsx scripts/ml/eval/score.ts ml-data/predictions/quickbar.synthetic-v1.jsonl ml-data/predictions/quickbar.real.jsonl ml-data/predictions/quickbar-lenient.synthetic-v1.jsonl ml-data/predictions/quickbar-lenient.real.jsonl",
+    "ml:prompts": "tsx scripts/ml/eval/prompts.ts"
   },
   "dependencies": {
     "next": "16.3.8",

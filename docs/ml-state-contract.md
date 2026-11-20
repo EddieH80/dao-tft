@@ -57,9 +57,14 @@ Limits match the quick bar (`MIN_LEVEL`, `MAX_LEVEL`, `MAX_GOLD`, `MAX_HP`) and 
 player said them. Evals parse the JSON and compare objects, so key order doesn't affect scoring;
 the fixed order just makes training targets consistent.
 
-**Prompt input:** the player's message only. The model is not given the current state or the
-catalog. It doesn't need them, because every field is either absolute (`level: 7`) or an event
-(`add`) that the app applies to the state it already has.
+**Prompt input:** the player's message, plus the names found in it (`src/assistant/prompt.ts`,
+player's call 2026-11-19). The app matches the message against the snapshot and aliases
+(deterministic: aliases first, then names, prefixes and typos) and lists each run of typed words
+with what it could be: `"ie" = Infinity Edge (item)`. The model still copies the typed words
+(rule 1); the list is a hint, and the app resolves names itself (section 4). The model is never
+given the whole catalog, ids or the current state. It doesn't need the state, because every field
+is either absolute (`level: 7`) or an event (`add`) that the app applies to the state it already
+has.
 
 ## 2. Applying an update
 
