@@ -48,7 +48,7 @@ STAGES = ["train", "merge", "predict", "convert", "upload"]
 # Settings that may change between sessions of one run, because they don't change what is trained:
 # where files live, memory trade-offs at the same effective batch, logging, and the later stages.
 RUNTIME_KEYS = {
-    "work_dir", "predict", "upload", "merge",
+    "work_dir", "predict", "upload", "merge", "convert",
     "train.micro_batch_size", "train.grad_accum_steps", "train.gradient_checkpointing",
     "train.log_every_steps", "train.eval_every_steps", "train.save_every_steps",
 }
@@ -550,9 +550,15 @@ def stage_convert(cfg, d):
     out = d / f"mlc-{cfg['quantization']}"
     if out.exists():
         shutil.rmtree(out)  # never mix shards from an earlier conversion
-    result = subprocess.run(mlc + ["convert_weight", str(merged), "--quantization", cfg["quantization"], "-o", str(out)])
+    # "auto" lets MLC pick (the GPU on Colab). "cpu" quantizes with LLVM instead of compiling a CUDA
+    # kernel; the output format is the same, and the layout check below still applies.
+    device = cfg.get("convert", {}).get("device", "auto")
+    device_args = [] if device == "auto" else ["--device", device]
+    result = subprocess.run(mlc + ["convert_weight", str(merged), "--quantization", cfg["quantization"],
+                                   *device_args, "-o", str(out)])
     if result.returncode != 0:
-        hint = " (segfault: run MLC from a Python 3.12 environment via MLC_PYTHON)" if result.returncode == -11 else ""
+        hint = (" (segfault: try convert.device \"cpu\" in the config, or run MLC from another environment via "
+                "MLC_PYTHON)") if result.returncode == -11 else ""
         sys.exit(f"convert_weight failed with exit code {result.returncode}{hint}")
 
     # Config, chat template and tokenizer come verbatim from the prebuilt build: the fine-tune

@@ -46,11 +46,33 @@ engine decides, stop and raise it.
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
 | 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
 | 5. Base model with prompting | Done: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`). Done 2026-11-19: base model run on Colab and scored. Exact 19.8% on real and 8.9% on synthetic, below `quickbar`; micro F1 24.2% and 37.8% (experiment log) |
-| 6. Fine-tune, error analysis, iterate | In progress: pipeline written (`scripts/ml/train/finetune.py` plus `finetune.config.json`; train prompts from `npm run ml:prompts`; Colab cells in `ml-evals/README.md`). Smoke-tested on CPU with a tiny random model only. Not run on a GPU yet: no training, predictions, conversion or upload |
+| 6. Fine-tune, error analysis, iterate | In progress (pass bar in the decision log, 2026-11-22): pipeline written (`scripts/ml/train/finetune.py` plus `finetune.config.json`; train prompts from `npm run ml:prompts`; Colab cells in `ml-evals/README.md`). Smoke-tested on CPU with a tiny random model only. Not run on a GPU yet: no training, predictions, conversion or upload |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
 
 ## Decision log
+
+**2026-11-22: Pass bar for a fine-tune, set before any fine-tune result is seen** (player's call;
+numbers proposed by Claude). A fine-tune ships to step 7 only if it meets all four. It isn't moved
+after results arrive; changing it needs a new dated entry that gives the reason.
+1. **Real-world set, exact match ≥ 35%.** That is `quickbar`'s 24.7% plus 10 points. With 162
+   examples, differences under about 7 points could be noise, so a smaller gain doesn't count as
+   clearly better.
+2. **Real-world set, micro precision ≥ 36.7%** (`quickbar`'s). Recall must not come from
+   over-predicting, the base model's failure (19.9% precision).
+3. **Schema-valid ≥ 95% on both test sets.** The base model reached 88%.
+4. **Browser speed: median ≤ 2 s per message** on a mid-range laptop, from sending the message to
+   the full reply, with the model already loaded (WebLLM, `q4f16_1`). Measured in step 7. Until
+   then a fine-tune can pass 1–3 only provisionally.
+
+The synthetic test set is reported next to these but doesn't gate: its phrasings come from the
+generator's own templates. A fine-tune whose synthetic exact match is below `quickbar`'s 17.9%
+still points to a pipeline bug, and is investigated before anything else.
+
+**If a fine-tune misses**, the default isn't more training. First compare it with two cheaper
+options: extending the quick bar to common plain-text forms, and WebLLM's schema-constrained
+decoding on the base model. Then decide which to pursue. If only bar 4 fails, try a shorter prompt
+(prompt-v2) first.
 
 **2026-11-19: The fine-tune trains on the app's prompt exactly: prompt-v1, preamble included**
 (player's call: "training matches production exactly"; this settles the open question about it).
@@ -478,6 +500,25 @@ Batches of 16 ran out of memory and split to 8 (the pre-`318a23a` runner), so th
   (`train-012836`). Test-set prompt stats unchanged.
 - Tests: 302 passing (3 new for the train prompt export); typecheck and lint clean.
 - **Fine-tuned Llama 3.2 1B (`llama-3.2-1b-ft-v1`): not run yet.**
+
+**2026-11-20/21: First Colab run of `ft-v1` (T4, run by the player; reported in chat).**
+- Training first failed on import: Colab's preinstalled torchao 0.10.0 is too old for peft
+  ("only versions above 0.16.0 are supported"). Removing torchao fixed it.
+- Training and merge then completed: `merged/` exists on Drive, and convert read it. The training
+  losses, `merge_check.json` and predictions haven't been sent yet, so there are no results to
+  record.
+- MLC (convert), in order:
+  1. In Colab's Python: `OSError: libtvm_runtime_extra.so` on import. A clean reinstall of one
+     matching nightly pair fixed the import.
+  2. `convert_weight` then failed: "Could not convert T.float16 to a NumPy dtype". Colab's NumPy
+     is 2.5.5.
+  3. A fresh Python 3.12 venv (export test step 3b) failed with `libtvm_runtime_extra.so` on import,
+     including after pinning the versions. Not solved; the exact versions weren't sent.
+  4. Colab's Python, with `numpy<2.3` put first via `PYTHONPATH`, got past the NumPy error. It
+     loaded the weights, then segfaulted (exit -11) in `tvm::Script` / `ReprPrint` while compiling
+     the CUDA quantize function for the embedding (128256 × 2048).
+- Next: `convert.device` (new config key, default `auto`) passes `--device cpu` to `convert_weight`,
+  which avoids the CUDA kernel compile. Not tried yet.
 
 ## Open questions
 

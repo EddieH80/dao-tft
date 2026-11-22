@@ -161,10 +161,18 @@ Times are estimates, not measured. Training prints a measured ETA after its firs
 ```python
 # 1. GPU, Drive, dependencies (~2 min). The run directory is on Drive so a reset loses nothing.
 !nvidia-smi --query-gpu=name,memory.total --format=csv
+# Colab's torchao (0.10) is too old for peft and breaks its import; it isn't used, so remove it (twice
+# in case of a second copy) and check it's gone before going on.
+!pip uninstall -y torchao
 !pip uninstall -y torchao
 !pip -q install -U "transformers>=4.56" peft accelerate huggingface_hub safetensors
+!python -c "import importlib.util as u; assert u.find_spec('torchao') is None, 'torchao still installed: run this cell again'; import peft; print('ok: peft', peft.__version__)"
+import os
 from google.colab import drive
 drive.mount("/content/drive")
+CODE = "/content/drive/MyDrive/dao-tft/code"
+os.makedirs(f"{CODE}/prompts", exist_ok=True)
+%cd {CODE}
 ```
 
 ```python
@@ -188,15 +196,18 @@ for name in files.upload():
 
 ```python
 # 4. The upload repo. It must start with "Llama" (Llama 3.2 license); the script refuses other names.
+#    Convert on the CPU: on the GPU, MLC segfaulted compiling its quantize kernel (docs/ml-plan.md).
 import json
 cfg = json.load(open("finetune.config.json"))
 cfg["upload"]["hf_repo"] = "YOUR_NAME/Llama-3.2-1B-dao-tft-ft-v1-q4f16_1-MLC"
+cfg["convert"] = {"device": "cpu"}
 json.dump(cfg, open("finetune.config.json", "w"), indent=2)
+print(cfg["upload"], cfg["convert"])
 ```
 
 ```python
 # 5. Train (~3-4.5 h: 1,234 steps of 16 examples, ~1,800 tokens each). Checkpoints every 50 steps.
-#    After a disconnect: run cells 1 and 2, then `%cd /content/drive/MyDrive/dao-tft/code` and this cell; it resumes.
+#    After a disconnect: run cells 1 and 2, then this cell; it resumes. A finished run is skipped.
 !python finetune.py --stages train
 ```
 
@@ -221,17 +232,26 @@ for name in ["predictions/llama-3.2-1b-ft-v1.real.jsonl", "predictions/llama-3.2
 ```
 
 ```python
-# 9. MLC-LLM (~3 min; the export test README's step 3a). Pick the cu tag at or below nvidia-smi's CUDA Version.
-!pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cu128 mlc-ai-nightly-cu128
+# 9. MLC-LLM (~3 min), in Colab's own Python. The Python 3.12 venv (export test step 3b) couldn't load
+#    MLC (libtvm_runtime_extra.so missing), and a mixed install gave the same error, so this removes every
+#    MLC/TVM package and installs one matching pair. CU: the highest tag at or below nvidia-smi's CUDA Version.
+#    MLC breaks on Colab's NumPy 2.5, so an older NumPy goes in a side folder that only the MLC commands use
+#    (PYTHONPATH); Colab's own NumPy is untouched.
+CU = "cu128"
+!pip list --format=freeze | grep -iE "^(mlc|tvm|apache-tvm)" | cut -d= -f1 | xargs -r pip uninstall -y
+!pip install -q --pre --no-cache-dir -f https://mlc.ai/wheels mlc-llm-nightly-{CU} mlc-ai-nightly-{CU}
 !pip list 2>/dev/null | grep -iE "^mlc"        # exactly two lines, same cu tag
-!python -m mlc_llm --help | head -3
+!pip install -q --target /content/numpy_old "numpy<2.3"
+!PYTHONPATH=/content/numpy_old python -c "import numpy; print('numpy for MLC:', numpy.__version__)"
+!PYTHONPATH=/content/numpy_old python -m mlc_llm --help | head -3   # usage text, not a traceback
 ```
 
 ```python
 # 10. Convert and upload (~5-10 min: convert_weight, layout check, ~700 MB upload)
-!python finetune.py --stages convert,upload
-# If convert segfaults (exit -11), set up the Python 3.12 MLC env (export test README step 3b), then:
-# !MLC_PYTHON=/content/mlc312/bin/python python finetune.py --stages convert,upload
+!PYTHONPATH=/content/numpy_old python finetune.py --stages convert,upload
+# Success ends with "all N parameters match ...'s layout", then the repo URL. Another MLC environment:
+# MLC_PYTHON=/path/to/python. The fixes in cells 1, 4 and 9 come from the first Colab run (docs/ml-plan.md);
+# CPU conversion hasn't been seen to work yet.
 ```
 
 Then, locally, move the two predictions files into `ml-data/predictions/` and score them:

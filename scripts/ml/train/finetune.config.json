@@ -50,6 +50,10 @@
     "max_new_tokens": 256
   },
 
+  "convert": {
+    "device": "auto"
+  },
+
   "upload": {
     "hf_repo": "YOUR_HF_NAME/Llama-3.2-1B-dao-tft-ft-v1-q4f16_1-MLC"
   }
