@@ -46,7 +46,7 @@ engine decides, stop and raise it.
 | 3. Data: synthetic generator, plus a hand-written real-world test set | In progress: synthetic generator done (`npm run ml:data`, data v1); real-world test set: format and checker done (`npm run ml:check-real`), 162 confirmed examples |
 | 4. Eval harness and rule-based baseline | Done: `scripts/ml/eval/` (`npm run ml:predict`, `ml:score`, `ml:baseline`), formats in `ml-evals/README.md`, scorer v1; baseline results in `ml-evals/results/` |
 | 5. Base model with prompting | Done: prompt builder `src/assistant/prompt.ts` (prompt-v1, tested), prompt export (`npm run ml:prompts`), Colab runner `scripts/ml/eval/predict_hf.py` (cells in `ml-evals/README.md`). Done 2026-11-19: base model run on Colab and scored. Exact 19.8% on real and 8.9% on synthetic, below `quickbar`; micro F1 24.2% and 37.8% (experiment log) |
-| 6. Fine-tune, error analysis, iterate | In progress (pass bar in the decision log, 2026-11-22): pipeline written (`scripts/ml/train/finetune.py` plus `finetune.config.json`; train prompts from `npm run ml:prompts`; Colab cells in `ml-evals/README.md`). Smoke-tested on CPU with a tiny random model only. Not run on a GPU yet: no training, predictions, conversion or upload |
+| 6. Fine-tune, error analysis, iterate | In progress (pass bar in the decision log, 2026-11-22): pipeline written (`scripts/ml/train/finetune.py` plus `finetune.config.json`; train prompts from `npm run ml:prompts`; Colab cells in `ml-evals/README.md`). ft-v1 is trained and merged on Colab. On 2026-11-23 it was converted to q4f16_1 on a Mac (`scripts/ml/train/conda_env.yml`; steps in `ml-evals/README.md`) and uploaded to Hugging Face. Its predictions are downloaded but not yet scored against the pass bar. WebLLM loading and browser timing haven't run |
 | 7. App integration: assistant module, then UI | Not started |
 | 8. Write-up and model card | Not started |
 
@@ -519,6 +519,63 @@ Batches of 16 ran out of memory and split to 8 (the pre-`318a23a` runner), so th
      the CUDA quantize function for the embedding (128256 × 2048).
 - Next: `convert.device` (new config key, default `auto`) passes `--device cpu` to `convert_weight`,
   which avoids the CUDA kernel compile. Not tried yet.
+- 2026-11-22, a fresh runtime with the README's new cells: Colab's Python is now 3.13. MLC failed
+  to import again (`libtvm_runtime_extra.so`) after cell 9's clean install, so convert stopped
+  before `convert_weight`. CPU conversion and upload still haven't run.
+- The wheel index (https://mlc.ai/wheels, checked 2026-11-22) keeps only the latest nightly of each
+  package: `mlc-ai-nightly-*` 0.26.dev246 and `mlc-llm-nightly-*` 0.26.dev6. So no older nightly
+  pair can be pinned. It also has stable builds: `mlc-ai-{cpu,cu124,cu128,cu130}` 0.20.0 and
+  `mlc-llm-{cpu,cu128,cu130}` 0.20.0.dev0 for Linux, and the `cpu` pair for macOS 26 arm64. All
+  are `py3-none`, so the Python version doesn't matter.
+- The stable CPU pair installed on Colab but failed to import: `libtvm_runtime.so: undefined symbol
+  tvm::ffi::json::Stringify(Any const&, Optional<int>)`. `mlc-ai-cpu` 0.20.0 doesn't pin
+  `apache-tvm-ffi`, and pip took the latest, 0.1.16.
+- Static check, run locally with pyelftools on the Linux wheels (2026-11-22). It compared the tvm-ffi
+  symbols that `mlc-ai-cpu` 0.20.0 (34) and `mlc-llm-cpu` 0.20.0.dev0 (26) leave undefined with
+  what each `apache-tvm-ffi` release's `libtvm_ffi.so` exports:
+  - only 0.1.10, 0.1.11 and 0.1.12 export all of them;
+  - 0.1.0–0.1.9 lack `tvm::ffi::ReprPrint`;
+  - 0.1.13–0.1.16 lack that `Stringify`.
+
+  This shows the libraries link; it doesn't show the conversion works.
+- The stable pair with `apache-tvm-ffi==0.1.12` on Colab: it imported, then aborted at startup with
+  "TypeAttr `__ffi_repr__` is already registered for type index 130". Not solved. Then the Colab
+  runtime disconnected, so conversion moved to the Mac.
+- 2026-11-23, MLC on the Mac (macOS 26.6, arm64), tested by converting a tiny random Llama (2
+  layers, hidden size 128, llama3 rope) to q4f16_1. The real `merged/` model hasn't been
+  converted yet:
+  - The macOS arm64 wheels' dylibs have invalid code signatures, so macOS kills Python on
+    `import tvm` (exit 137). An ad-hoc `codesign --force --sign -` of every `.dylib`/`.so` under
+    `tvm/` and `mlc_llm/` fixes it.
+  - Python 3.14 only has NumPy 2.3 or newer, and 2.3.5, 2.4.6 and 2.5.5 all fail in
+    `convert_weight`'s dtype conversion. Python 3.12 with NumPy 2.2.6 works.
+  - With NumPy from conda-forge, `libomp` loads twice, once from its OpenBLAS and once from
+    torch's bundled copy, so Python aborts with OMP Error #15. NumPy from pip avoids this.
+  - The nightly pair (`mlc-ai-nightly-cpu` 0.26.dev246, `mlc-llm-nightly-cpu` 0.26.dev6) declares
+    `apache-tvm-ffi>=0.1.13`:
+    - with 0.1.16, the latest, quantizing segfaults in `tvm::s_tir::Schedule` on both CPU and
+      Metal. This is probably the same failure as Colab's CUDA segfault;
+    - 0.1.15 and 0.1.14, both yanked, abort (exit 134);
+    - 0.1.13, also yanked, converts (exit 0). The output has `q_weight` uint32 and `q_scale`
+      float16 tensors, and a rebuilt environment wrote a byte-identical shard.
+  - Saved as `scripts/ml/train/conda_env.yml` (the `dao-tft` env): Python 3.12, pip NumPy 2.2.6,
+    the nightly pair and ffi 0.1.13 pinned, torch 2.15.0, huggingface_hub 2.4.0, plus the
+    re-sign step.
+  - ft-v1 converted on the Mac, 2026-11-23, using `finetune.py --stages convert` in `dao-tft` with
+    `convert.device` "cpu".
+    - Input: `merged/` downloaded from Drive. Drive renamed `model.safetensors` to
+      `model-001.safetensors`, so it was renamed back, after checking it was complete (146 bf16
+      tensors, 16 layers).
+    - It took 25 s wall time, with 2.3 GB peak RAM.
+    - Output: 22 shards, 0.647 GB, 4.501 bits per parameter. All 163 parameters match the layout of
+      `mlc-ai/Llama-3.2-1B-Instruct-q4f16_1-MLC`.
+    - Uploaded the same day (`--stages upload`) to
+      https://huggingface.co/edhu8045/Llama-3.2-1B-dao-tft-ft-v1-q4f16_1-MLC. It is public, at
+      commit `a66c59b8f0`.
+    - The repo has 32 files, 0.705 GB in total: the 22 shards, `tensor-cache.json`,
+      `ndarray-cache.json`, `mlc-chat-config.json`, the tokenizer files, the model card (with
+      "Built with Llama"), LICENSE.txt, USE_POLICY.md and `dao-training.json`.
+    - WebLLM loading and browser evals haven't run yet.
 
 ## Open questions
 

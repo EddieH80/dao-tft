@@ -1,0 +1,30 @@
+# Environment for finetune.py's convert and upload stages on a Mac (Apple Silicon).
+#
+# conda env create -f conda_env.yml
+#
+# Then re-sign MLC's libraries (the macOS arm64 wheels ship with broken code signatures, so
+# macOS kills Python, exit 137, as soon as it loads TVM):
+#   SP=$(conda run -n dao-tft python -c "import site; print(site.getsitepackages()[0])")
+#   find $SP/tvm $SP/mlc_llm \( -name '*.dylib' -o -name '*.so' \) -exec codesign --force --sign - {} \;
+
+name: dao-tft
+dependencies:
+  - python=3.12
+  - psutil           # mlc_llm imports it but doesn't declare it
+  - pip
+  - pip:
+    - --pre
+    - -f https://mlc.ai/wheels
+    # 2.3+ breaks mlc_llm convert_weight (dtype error), and Python 3.13+ only has 2.3+.
+    # From pip, not conda: conda-forge's NumPy loads its own libomp, which clashes with
+    # torch's bundled copy (OMP Error #15, abort).
+    - numpy<2.3
+    - mlc-ai-nightly-cpu==0.26.dev246
+    - mlc-llm-nightly-cpu==0.26.dev6
+    # The nightly only asks for >=0.1.13, so pip takes the latest. With 0.1.16, quantizing
+    # segfaults (CPU and Metal); 0.1.14 and 0.1.15 (both yanked) abort. 0.1.13 (also yanked;
+    # an exact pin still installs it) converts.
+    - apache-tvm-ffi==0.1.13
+    - huggingface_hub
+
+# conda remove --name dao-tft --all

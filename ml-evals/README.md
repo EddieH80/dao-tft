@@ -250,9 +250,53 @@ CU = "cu128"
 # 10. Convert and upload (~5-10 min: convert_weight, layout check, ~700 MB upload)
 !PYTHONPATH=/content/numpy_old python finetune.py --stages convert,upload
 # Success ends with "all N parameters match ...'s layout", then the repo URL. Another MLC environment:
-# MLC_PYTHON=/path/to/python. The fixes in cells 1, 4 and 9 come from the first Colab run (docs/ml-plan.md);
-# CPU conversion hasn't been seen to work yet.
+# MLC_PYTHON=/path/to/python. The fixes in cells 1, 4 and 9 come from the first Colab run (docs/ml-plan.md).
+# Cells 9-10 never got MLC working on Colab: use the Mac steps below instead (they worked for ft-v1).
 ```
+
+### Convert and upload on a Mac (Apple Silicon)
+
+This path converted and uploaded ft-v1 on 2026-11-23, on macOS 26.6 arm64. Conversion took 25 s on the CPU and
+the upload took about 1 min. It needs Miniforge or another conda. The environment file pins the versions that
+worked, and its comments explain each pin (`docs/ml-plan.md`, experiment log).
+
+1. **Create the environment** (`dao-tft`, ~3 min), then re-sign MLC's libraries. The macOS wheels ship with broken
+   code signatures, so without this step macOS kills Python on `import tvm` (exit 137).
+
+   ```bash
+   conda env create -f scripts/ml/train/conda_env.yml
+   SP=$(conda run -n dao-tft python -c "import site; print(site.getsitepackages()[0])")
+   find $SP/tvm $SP/mlc_llm \( -name '*.dylib' -o -name '*.so' \) -exec codesign --force --sign - {} \;
+   conda run -n dao-tft python -m mlc_llm convert_weight --help | head -3   # usage text, not a crash
+   ```
+
+   MLC's wheel index keeps only the latest nightly. If the pinned `mlc-*-nightly-cpu` builds are gone, unpin them
+   and recheck that `apache-tvm-ffi==0.1.13` still converts.
+
+2. **Download the run folder from Drive:** `MyDrive/dao-tft/finetune/<run_name>/`. You need `merged/`,
+   `config.json`, `data.json` and `training.json`; leave out `checkpoint/` and any `mlc-q4f16_1/`.
+   - Drive may rename `merged/model.safetensors` to `model-001.safetensors`. If it does, rename it back,
+     because MLC only looks for `model.safetensors`.
+   - Check the file is about 2.5 GB.
+
+3. **Write a local config:** a copy of `finetune.config.json` with three changes:
+   - `work_dir` set to the folder that holds `<run_name>/`;
+   - `"convert": {"device": "cpu"}`;
+   - `upload.hf_repo` set to `YOUR_HF_NAME/Llama-...`.
+
+   These are runtime keys, so the run's frozen config still matches.
+
+4. **Log in to Hugging Face, then convert and upload.** Use a write token with access to
+   `meta-llama/Llama-3.2-1B-Instruct`: upload copies Meta's LICENSE.txt and USE_POLICY.md from there. The upload
+   creates a **public** repo, because WebLLM fetches weights without auth.
+
+   ```bash
+   conda activate dao-tft
+   hf auth login
+   cd scripts/ml/train
+   python finetune.py --config /path/to/local.config.json --stages convert   # ends "all 163 parameters match ..."
+   python finetune.py --config /path/to/local.config.json --stages upload
+   ```
 
 Then, locally, move the two predictions files into `ml-data/predictions/` and score them:
 
